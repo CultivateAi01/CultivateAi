@@ -23,22 +23,22 @@ export const CTA: React.FC = () => {
 
   return (
     <section className="py-32 px-6 relative overflow-hidden">
-      {/* Seamless background that starts exactly where contact ends */}
+      {/* Enhanced background with multiple gradient layers */}
       <div className="absolute inset-0">
-        {/* Start with exact contact end color */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-yellow-500/5" />
+        {/* Smooth transition from contact */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-yellow-500/8 to-transparent" />
         
-        {/* Enhanced gradient layers for CTA impact */}
-        <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/8 via-blue-600/10 to-purple-600/8" />
-        <div className="absolute inset-0 bg-gradient-to-tl from-orange-500/8 via-transparent to-cyan-500/8" />
+        {/* Main gradient layers */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/15 via-purple-600/10 to-pink-600/15" />
+        <div className="absolute inset-0 bg-gradient-to-tl from-orange-500/10 via-transparent to-cyan-500/10" />
         
         {/* Radial gradients for depth */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(59,130,246,0.12),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(139,92,246,0.12),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(236,72,153,0.08),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(59,130,246,0.15),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(139,92,246,0.15),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(236,72,153,0.1),transparent_60%)]" />
         
-        {/* End with black for footer */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-black" />
+        {/* Smooth transition to footer */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-black/50" />
       </div>
 
       {/* Floating animated elements */}
