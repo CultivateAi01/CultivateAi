@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Clock, FolderOpen, Zap, Plus } from 'lucide-react';
+import { Send, Clock, FolderOpen, Zap, Plus, ArrowRight } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { MultipleAIActionSelector } from '../components/dashboard/MultipleAIActionSelector';
@@ -32,7 +32,7 @@ export const Dashboard: React.FC = () => {
       // Reset height to auto to get the correct scrollHeight
       textarea.style.height = 'auto';
       // Set height based on scrollHeight with min and max constraints
-      const newHeight = Math.max(150, Math.min(500, textarea.scrollHeight));
+      const newHeight = Math.max(120, Math.min(400, textarea.scrollHeight));
       textarea.style.height = `${newHeight}px`;
     }
   }, [appIdea]);
@@ -172,21 +172,40 @@ export const Dashboard: React.FC = () => {
           <div className="relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-300" />
             
-            <div className="relative bg-white/[0.08] backdrop-blur-md border border-white/[0.12] rounded-2xl p-2">
-              <textarea
-                ref={textareaRef}
-                value={appIdea}
-                onChange={(e) => setAppIdea(e.target.value)}
-                placeholder="Describe your startup idea in detail... What problem does it solve? Who is your target audience? What makes it unique? The more details you provide, the better our AI can analyze and help you build your startup."
-                className="w-full px-6 py-4 bg-transparent text-white placeholder-gray-400 text-base resize-none focus:outline-none leading-relaxed overflow-hidden"
-                style={{
-                  minHeight: '150px',
-                  maxHeight: '500px',
-                  wordWrap: 'break-word',
-                  whiteSpace: 'pre-wrap'
-                }}
-                rows={1}
-              />
+            <div className="relative bg-white/[0.08] backdrop-blur-md border border-white/[0.12] rounded-2xl p-4">
+              <div className="relative">
+                <textarea
+                  ref={textareaRef}
+                  value={appIdea}
+                  onChange={(e) => setAppIdea(e.target.value)}
+                  placeholder="Describe your startup idea in detail... What problem does it solve? Who is your target audience? What makes it unique? The more details you provide, the better our AI can analyze and help you build your startup."
+                  className="w-full px-6 py-4 bg-transparent text-white placeholder-gray-400 text-base resize-none focus:outline-none leading-relaxed overflow-hidden pr-16"
+                  style={{
+                    minHeight: '120px',
+                    maxHeight: '400px',
+                    wordWrap: 'break-word',
+                    whiteSpace: 'pre-wrap'
+                  }}
+                  rows={1}
+                />
+                
+                {/* Small Get Started button in bottom right corner */}
+                <button
+                  onClick={handleRunActions}
+                  disabled={!canRunActions}
+                  className={`absolute bottom-4 right-4 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 ${
+                    canRunActions
+                      ? 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl hover:scale-110'
+                      : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                  }`}
+                >
+                  {isProcessing ? (
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <ArrowRight className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
               
               {uploadedFiles.length > 0 && (
                 <div className="px-6 pb-4">
@@ -236,18 +255,6 @@ export const Dashboard: React.FC = () => {
                       </div>
                     </div>
                   )}
-                  
-                  <Button 
-                    variant="primary" 
-                    size="md" 
-                    className="px-6"
-                    onClick={handleRunActions}
-                    disabled={!canRunActions}
-                    loading={isProcessing}
-                  >
-                    <Send className="w-4 h-4" />
-                    {isProcessing ? 'Processing...' : 'Run Analysis'}
-                  </Button>
                 </div>
               </div>
             </div>

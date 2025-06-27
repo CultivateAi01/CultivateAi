@@ -108,14 +108,14 @@ export const Hero: React.FC = () => {
           <div className="max-w-3xl mx-auto">
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-300" />
-              <div className="relative bg-white/[0.08] backdrop-blur-md border border-white/[0.12] rounded-3xl p-2">
-                <div className="flex flex-col md:flex-row gap-2">
+              <div className="relative bg-white/[0.08] backdrop-blur-md border border-white/[0.12] rounded-3xl p-3">
+                <div className="relative">
                   <textarea
                     ref={textareaRef}
                     value={idea}
                     onChange={(e) => setIdea(e.target.value)}
                     placeholder="Describe your startup idea... e.g., 'AI-powered fitness app for busy professionals'"
-                    className="flex-1 px-6 py-4 bg-transparent text-white placeholder-gray-400 text-base focus:outline-none resize-none overflow-hidden leading-relaxed"
+                    className="w-full px-6 py-4 bg-transparent text-white placeholder-gray-400 text-base focus:outline-none resize-none overflow-hidden leading-relaxed pr-16"
                     style={{
                       minHeight: '60px',
                       maxHeight: '200px',
@@ -124,17 +124,14 @@ export const Hero: React.FC = () => {
                     }}
                     rows={1}
                   />
-                  <div className="flex items-end">
-                    <Button
-                      variant="primary"
-                      size="lg"
-                      onClick={handleGetStarted}
-                      className="px-8 py-4 rounded-2xl font-semibold whitespace-nowrap"
-                    >
-                      Get Started Free
-                      <ArrowRight className="w-5 h-5" />
-                    </Button>
-                  </div>
+                  
+                  {/* Small Get Started button in bottom right corner */}
+                  <button
+                    onClick={handleGetStarted}
+                    className="absolute bottom-4 right-4 w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
+                  >
+                    <ArrowRight className="w-5 h-5" />
+                  </button>
                 </div>
               </div>
             </div>
