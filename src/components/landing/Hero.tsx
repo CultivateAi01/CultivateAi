@@ -19,8 +19,10 @@ export const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900/20 to-black" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.15),transparent_50%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(139,92,246,0.15),transparent_50%)]" />
-        {/* Smooth transition to features section */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-blue-500/8" />
+        
+        {/* Extended smooth transition to features section */}
+        <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-b from-transparent via-blue-500/6 to-blue-500/12" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-blue-500/15" />
       </div>
 
       {/* Floating elements */}
