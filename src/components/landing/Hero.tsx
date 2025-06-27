@@ -14,15 +14,14 @@ export const Hero: React.FC = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center px-6 pt-20 overflow-hidden">
-      {/* Enhanced background with smooth gradient transitions */}
+      {/* Simplified background with smooth transition to features */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900/20 to-black" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.15),transparent_50%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(139,92,246,0.15),transparent_50%)]" />
         
-        {/* Extended smooth transition to features section */}
-        <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-b from-transparent via-blue-500/6 to-blue-500/12" />
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-blue-500/15" />
+        {/* Single smooth transition to features section */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-blue-500/8" />
       </div>
 
       {/* Floating elements */}
@@ -56,7 +55,7 @@ export const Hero: React.FC = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto text-center">
         {/* Badge */}
-        {/* <motion.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -66,7 +65,7 @@ export const Hero: React.FC = () => {
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
             <span className="text-sm font-medium text-gray-300">AI-Powered • Trusted by 10,000+ founders</span>
           </div>
-        </motion.div>*/}
+        </motion.div>
 
         {/* Main headline - Further reduced sizes */}
         <motion.div
@@ -78,10 +77,15 @@ export const Hero: React.FC = () => {
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] mb-6">
             <span className="text-white">Turn your </span>
             <span className="relative">
-              <span className="text-white">
+              <span className="bg-gradient-to-r from-orange-400 to-yellow-500 bg-clip-text text-transparent">
                 ideas
               </span>
-              
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.8, delay: 1 }}
+                className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 to-yellow-500 rounded-full"
+              />
             </span>
             <br />
             <span className="text-white">into </span>
@@ -89,7 +93,7 @@ export const Hero: React.FC = () => {
               startups
             </span>
             <span className="text-white">, in </span>
-            <span className="text-white">
+            <span className="bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent">
               minutes
             </span>
           </h1>
