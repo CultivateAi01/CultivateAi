@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles, Users, Play } from 'lucide-react';
+import { ArrowRight, Play } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { useNavigate } from 'react-router-dom';
 
@@ -54,19 +54,6 @@ export const Hero: React.FC = () => {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto text-center">
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-8"
-        >
-          <div className="inline-flex items-center gap-2 bg-white/[0.08] backdrop-blur-md border border-white/[0.12] rounded-full px-4 py-2">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            <span className="text-sm font-medium text-gray-300">AI-Powered • Trusted by 10,000+ founders</span>
-          </div>
-        </motion.div>
-
         {/* Main headline - Further reduced sizes */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -142,33 +129,14 @@ export const Hero: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Social proof */}
+        {/* Simple CTA */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
           className="flex flex-col md:flex-row items-center justify-center gap-8"
         >
-          <div className="flex items-center gap-4">
-            <div className="flex -space-x-3">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <div
-                  key={i}
-                  className="w-12 h-12 rounded-full border-2 border-gray-800 bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold"
-                >
-                  {i === 1 && <Users className="w-5 h-5" />}
-                  {i !== 1 && String.fromCharCode(64 + i)}
-                </div>
-              ))}
-            </div>
-            <div className="text-left">
-              <div className="text-white font-semibold">10,000+ entrepreneurs</div>
-              <div className="text-gray-400 text-sm">have validated their ideas</div>
-            </div>
-          </div>
-
           <div className="flex items-center gap-3 text-gray-400">
-            <div className="w-px h-8 bg-gray-700" />
             <Button variant="glass" size="sm" className="gap-2">
               <Play className="w-4 h-4" />
               Watch Demo
