@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthStore } from './store/authStore';
 import { supabase } from './lib/supabase';
+import { LoadingScreen } from './components/ui/LoadingScreen';
 import { Header } from './components/layout/Header';
 import { Dashboard } from './pages/Dashboard';
 import { Projects } from './pages/Projects';
@@ -13,6 +14,7 @@ import { Landing } from './pages/Landing';
 
 function App() {
   const { user, setUser, setLoading, isLoading } = useAuthStore();
+  const [showLoadingScreen, setShowLoadingScreen] = useState(true);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -93,6 +95,17 @@ function App() {
     };
   }, [setUser, setLoading]);
 
+  // Show loading screen on initial load
+  if (showLoadingScreen) {
+    return (
+      <LoadingScreen 
+        onComplete={() => setShowLoadingScreen(false)}
+        minDuration={2500}
+      />
+    );
+  }
+
+  // Show simple spinner while checking auth
   if (isLoading) {
     return (
       <div className="min-h-screen bg-black relative flex items-center justify-center">

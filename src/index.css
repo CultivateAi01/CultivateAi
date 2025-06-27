@@ -32,6 +32,39 @@ body {
   .input-glass {
     @apply bg-white/[0.05] border border-white/[0.08] backdrop-blur-md focus:border-white/20 focus:bg-white/[0.08] transition-all duration-200;
   }
+
+  /* 3D Cube transforms */
+  .transform-gpu {
+    transform-style: preserve-3d;
+  }
+  
+  .rotateY-0 {
+    transform: rotateY(0deg) translateZ(24px);
+  }
+  
+  .rotateY-90 {
+    transform: rotateY(90deg) translateZ(24px);
+  }
+  
+  .rotateY-180 {
+    transform: rotateY(180deg) translateZ(24px);
+  }
+  
+  .rotateY-270 {
+    transform: rotateY(270deg) translateZ(24px);
+  }
+  
+  .rotateX-90 {
+    transform: rotateX(90deg) translateZ(24px);
+  }
+  
+  .rotateX-270 {
+    transform: rotateX(-90deg) translateZ(24px);
+  }
+  
+  .translateZ-6 {
+    transform: translateZ(24px);
+  }
 }
 
 /* Custom scrollbar */
@@ -50,4 +83,17 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #444444;
+}
+
+/* Loading screen specific styles */
+@keyframes cubeRotate {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  25% { transform: rotateX(90deg) rotateY(0deg); }
+  50% { transform: rotateX(90deg) rotateY(90deg); }
+  75% { transform: rotateX(0deg) rotateY(90deg); }
+  100% { transform: rotateX(0deg) rotateY(0deg); }
+}
+
+.cube-animation {
+  animation: cubeRotate 3s infinite ease-in-out;
 }
