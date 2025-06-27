@@ -147,35 +147,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
               )}
             </AnimatePresence>
 
-            {/* Loading indicator */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.5 }}
-              className="absolute bottom-20 left-1/2 transform -translate-x-1/2"
-            >
-              <div className="flex items-center gap-2">
-                <div className="flex gap-1">
-                  {[0, 1, 2].map((i) => (
-                    <motion.div
-                      key={i}
-                      className="w-2 h-2 bg-white/60 rounded-full"
-                      animate={{
-                        scale: [1, 1.2, 1],
-                        opacity: [0.6, 1, 0.6],
-                      }}
-                      transition={{
-                        duration: 1,
-                        repeat: Infinity,
-                        delay: i * 0.2,
-                      }}
-                    />
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
+ 
       )}
     </AnimatePresence>
   );
