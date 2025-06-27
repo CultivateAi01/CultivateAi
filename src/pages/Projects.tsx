@@ -113,11 +113,19 @@ export const Projects: React.FC = () => {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 relative">
+      {/* Smooth color transitions */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-b from-purple-500/5 to-transparent" />
+        <div className="absolute top-1/3 left-0 right-0 h-64 bg-gradient-to-b from-transparent via-blue-500/3 to-transparent" />
+        <div className="absolute bottom-1/3 left-0 right-0 h-64 bg-gradient-to-b from-transparent via-green-500/3 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-b from-transparent to-orange-500/5" />
+      </div>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between"
+        className="flex items-center justify-between relative z-10"
       >
         <div>
           <h1 className="text-3xl font-bold text-white mb-2">Projects</h1>
@@ -134,124 +142,126 @@ export const Projects: React.FC = () => {
         </Button>
       </motion.div>
 
-      {projects.length === 0 ? (
-        <Card className="text-center py-16">
-          <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
-            <FolderOpen className="w-10 h-10 text-white" />
-          </div>
-          <h3 className="text-xl font-semibold text-white mb-2">No projects yet</h3>
-          <p className="text-gray-400 mb-6 max-w-md mx-auto">
-            Create your first project to start analyzing and building your startup ideas with AI-powered tools.
-          </p>
-          <Button 
-            variant="primary" 
-            size="lg"
-            onClick={() => setIsCreateModalOpen(true)}
-          >
-            <Plus className="w-5 h-5" />
-            Create Your First Project
-          </Button>
-        </Card>
-      ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
+      <div className="relative z-10">
+        {projects.length === 0 ? (
+          <Card className="text-center py-16">
+            <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <FolderOpen className="w-10 h-10 text-white" />
+            </div>
+            <h3 className="text-xl font-semibold text-white mb-2">No projects yet</h3>
+            <p className="text-gray-400 mb-6 max-w-md mx-auto">
+              Create your first project to start analyzing and building your startup ideas with AI-powered tools.
+            </p>
+            <Button 
+              variant="primary" 
+              size="lg"
+              onClick={() => setIsCreateModalOpen(true)}
             >
-              <Card hover className="h-full relative">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-                    <FolderOpen className="w-6 h-6 text-white" />
+              <Plus className="w-5 h-5" />
+              Create Your First Project
+            </Button>
+          </Card>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+            {projects.map((project, index) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Card hover className="h-full relative">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                      <FolderOpen className="w-6 h-6 text-white" />
+                    </div>
+                    
+                    <div className="relative">
+                      <button 
+                        className="text-gray-400 hover:text-white p-1 transition-colors"
+                        onClick={() => toggleDropdown(project.id)}
+                      >
+                        <MoreVertical className="w-4 h-4" />
+                      </button>
+                      
+                      {openDropdown === project.id && (
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0.95, y: -10 }}
+                          animate={{ opacity: 1, scale: 1, y: 0 }}
+                          className="absolute right-0 top-8 bg-white/[0.08] backdrop-blur-md border border-white/[0.12] rounded-xl p-2 z-10 min-w-[140px]"
+                        >
+                          <button
+                            onClick={() => openEditModal(project)}
+                            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/[0.08] rounded-lg transition-colors"
+                          >
+                            <Edit3 className="w-4 h-4" />
+                            Edit Project
+                          </button>
+                          <button
+                            onClick={() => {
+                              setProjectToDelete(project.id);
+                              setOpenDropdown(null);
+                            }}
+                            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                            Delete
+                          </button>
+                        </motion.div>
+                      )}
+                    </div>
                   </div>
                   
-                  <div className="relative">
-                    <button 
-                      className="text-gray-400 hover:text-white p-1 transition-colors"
-                      onClick={() => toggleDropdown(project.id)}
+                  <h3 className="text-lg font-semibold text-white mb-2">{project.title}</h3>
+                  <p className="text-gray-400 text-sm mb-4 line-clamp-2">{project.description}</p>
+                  
+                  <div className="flex items-center justify-between mb-4">
+                    <div className={`px-3 py-1 rounded-full text-xs font-medium ${
+                      project.status === 'active' 
+                        ? 'bg-green-500/20 text-green-400' 
+                        : project.status === 'completed'
+                        ? 'bg-blue-500/20 text-blue-400'
+                        : 'bg-gray-500/20 text-gray-400'
+                    }`}>
+                      {project.status}
+                    </div>
+                    <div className="text-sm text-gray-500">{project.actionsRun || 0} actions run</div>
+                  </div>
+                  
+                  <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
+                    <div className="flex items-center">
+                      <Clock className="w-3 h-3 mr-1" />
+                      {getTimeAgo(project.updated_at)}
+                    </div>
+                    <div>Created {formatDate(project.created_at)}</div>
+                  </div>
+                  
+                  <div className="flex space-x-2">
+                    <Button 
+                      variant="glass" 
+                      size="sm" 
+                      className="flex-1 gap-2"
+                      onClick={() => handleViewDetails(project.id)}
                     >
-                      <MoreVertical className="w-4 h-4" />
-                    </button>
-                    
-                    {openDropdown === project.id && (
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.95, y: -10 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        className="absolute right-0 top-8 bg-white/[0.08] backdrop-blur-md border border-white/[0.12] rounded-xl p-2 z-10 min-w-[140px]"
-                      >
-                        <button
-                          onClick={() => openEditModal(project)}
-                          className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/[0.08] rounded-lg transition-colors"
-                        >
-                          <Edit3 className="w-4 h-4" />
-                          Edit Project
-                        </button>
-                        <button
-                          onClick={() => {
-                            setProjectToDelete(project.id);
-                            setOpenDropdown(null);
-                          }}
-                          className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                          Delete
-                        </button>
-                      </motion.div>
-                    )}
+                      <Eye className="w-4 h-4" />
+                      View Details
+                    </Button>
+                    <Button 
+                      variant="primary" 
+                      size="sm" 
+                      className="flex-1 gap-2"
+                      onClick={() => handleRunAction(project.id)}
+                    >
+                      <Play className="w-4 h-4" />
+                      Run Action
+                    </Button>
                   </div>
-                </div>
-                
-                <h3 className="text-lg font-semibold text-white mb-2">{project.title}</h3>
-                <p className="text-gray-400 text-sm mb-4 line-clamp-2">{project.description}</p>
-                
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`px-3 py-1 rounded-full text-xs font-medium ${
-                    project.status === 'active' 
-                      ? 'bg-green-500/20 text-green-400' 
-                      : project.status === 'completed'
-                      ? 'bg-blue-500/20 text-blue-400'
-                      : 'bg-gray-500/20 text-gray-400'
-                  }`}>
-                    {project.status}
-                  </div>
-                  <div className="text-sm text-gray-500">{project.actionsRun || 0} actions run</div>
-                </div>
-                
-                <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
-                  <div className="flex items-center">
-                    <Clock className="w-3 h-3 mr-1" />
-                    {getTimeAgo(project.updated_at)}
-                  </div>
-                  <div>Created {formatDate(project.created_at)}</div>
-                </div>
-                
-                <div className="flex space-x-2">
-                  <Button 
-                    variant="glass" 
-                    size="sm" 
-                    className="flex-1 gap-2"
-                    onClick={() => handleViewDetails(project.id)}
-                  >
-                    <Eye className="w-4 h-4" />
-                    View Details
-                  </Button>
-                  <Button 
-                    variant="primary" 
-                    size="sm" 
-                    className="flex-1 gap-2"
-                    onClick={() => handleRunAction(project.id)}
-                  >
-                    <Play className="w-4 h-4" />
-                    Run Action
-                  </Button>
-                </div>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-      )}
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        )}
+      </div>
 
       {/* Create Project Modal */}
       <Modal

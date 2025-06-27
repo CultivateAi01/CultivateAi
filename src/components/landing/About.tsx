@@ -93,10 +93,13 @@ const stats = [
 export const About: React.FC = () => {
   return (
     <section id="about" className="py-32 px-6 relative">
-      {/* Background effects */}
+      {/* Smooth color transition from pricing */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-green-500/5 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-green-500/5 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-green-500/5 to-orange-500/5" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.1),transparent_70%)]" />
+        {/* Transition to next section */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-orange-500/5" />
       </div>
       
       <div className="max-w-7xl mx-auto relative">

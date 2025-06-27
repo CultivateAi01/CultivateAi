@@ -123,15 +123,21 @@ export const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-16 relative">
+      {/* Smooth color transitions throughout dashboard */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-b from-blue-500/5 to-transparent" />
+        <div className="absolute top-1/4 left-0 right-0 h-64 bg-gradient-to-b from-transparent via-purple-500/3 to-transparent" />
+        <div className="absolute bottom-1/4 left-0 right-0 h-64 bg-gradient-to-b from-transparent via-green-500/3 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-b from-transparent to-orange-500/5" />
+      </div>
+
       {/* Header Section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center"
+        className="text-center relative z-10"
       >
-       
-
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
           What would you build today?
         </h1>
@@ -145,6 +151,7 @@ export const Dashboard: React.FC = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
+        className="relative z-10"
       >
         <div className="max-w-4xl mx-auto">
           <div className="relative group">
@@ -225,6 +232,7 @@ export const Dashboard: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
+        className="relative z-10"
       >
         <MultipleAIActionSelector
           selectedActions={selectedActions}
@@ -241,6 +249,7 @@ export const Dashboard: React.FC = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
+        className="relative z-10"
       >
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl font-bold text-white">My Recent Projects</h2>
