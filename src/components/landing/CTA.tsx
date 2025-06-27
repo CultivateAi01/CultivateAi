@@ -16,12 +16,11 @@ export const CTA: React.FC = () => {
 
   return (
     <section className="py-32 px-6 relative">
-      {/* Smooth color transition from contact */}
+      {/* Smooth color transition from contact to footer */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-yellow-500/5 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-yellow-500/8 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-pink-600/10" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.1),transparent_70%)]" />
-        {/* Transition to footer */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-black" />
       </div>
 

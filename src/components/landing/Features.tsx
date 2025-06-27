@@ -63,13 +63,12 @@ const stats = [
 export const Features: React.FC = () => {
   return (
     <section id="features" className="py-32 px-6 relative">
-      {/* Smooth color transition from hero */}
+      {/* Smooth color transition from hero to pricing */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-blue-500/5 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/5 to-purple-500/5" />
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-blue-500/8 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/5 to-purple-500/8" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.1),transparent_70%)]" />
-        {/* Transition to next section */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-purple-500/5" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-purple-500/8" />
       </div>
       
       <div className="max-w-7xl mx-auto relative">
