@@ -24,6 +24,17 @@ export const Navigation: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const scrollToSection = (href: string) => {
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+    setIsOpen(false);
+  };
+
   return (
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
@@ -53,14 +64,14 @@ export const Navigation: React.FC = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
-              <a
+              <button
                 key={item.label}
-                href={item.href}
+                onClick={() => scrollToSection(item.href)}
                 className="text-gray-300 hover:text-white transition-colors duration-200 font-medium relative group"
               >
                 {item.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-500 group-hover:w-full transition-all duration-300" />
-              </a>
+              </button>
             ))}
           </div>
 
@@ -102,14 +113,13 @@ export const Navigation: React.FC = () => {
         >
           <div className="py-4 space-y-4">
             {navItems.map((item) => (
-              <a
+              <button
                 key={item.label}
-                href={item.href}
-                className="block text-gray-300 hover:text-white transition-colors duration-200 font-medium py-2"
-                onClick={() => setIsOpen(false)}
+                onClick={() => scrollToSection(item.href)}
+                className="block text-gray-300 hover:text-white transition-colors duration-200 font-medium py-2 w-full text-left"
               >
                 {item.label}
-              </a>
+              </button>
             ))}
             <div className="flex flex-col gap-3 pt-4 border-t border-white/10">
               <Button 
