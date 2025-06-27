@@ -147,7 +147,8 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
               )}
             </AnimatePresence>
 
- 
+            {/* Loading indicator */}
+
       )}
     </AnimatePresence>
   );
