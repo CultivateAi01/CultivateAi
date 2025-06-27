@@ -46,12 +46,17 @@ export const Contact: React.FC = () => {
 
   return (
     <section id="contact" className="py-32 px-6 relative">
-      {/* Smooth color transition from about to CTA */}
+      {/* Seamless background that starts exactly where about ends */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-orange-500/8 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-orange-500/5 to-yellow-500/8" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.1),transparent_70%)]" />
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-yellow-500/8" />
+        {/* Start with exact about end color */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-orange-500/5" />
+        
+        {/* Main contact background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-orange-500/5 via-orange-500/3 to-yellow-500/5" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.08),transparent_70%)]" />
+        
+        {/* End with exact CTA start color */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-yellow-500/5" />
       </div>
       
       <div className="max-w-4xl mx-auto relative">

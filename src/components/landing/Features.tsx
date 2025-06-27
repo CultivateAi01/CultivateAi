@@ -63,17 +63,17 @@ const stats = [
 export const Features: React.FC = () => {
   return (
     <section id="features" className="py-32 px-6 relative">
-      {/* Simplified background that continues from hero */}
+      {/* Seamless background that starts exactly where hero ends */}
       <div className="absolute inset-0">
-        {/* Smooth continuation from hero */}
-        <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-blue-500/8 to-transparent" />
+        {/* Start with exact hero end color */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-blue-500/5" />
         
         {/* Main features background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/5 to-purple-500/8" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.1),transparent_70%)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-blue-500/3 to-purple-500/5" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.08),transparent_70%)]" />
         
-        {/* Smooth transition to pricing */}
-        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-purple-500/8" />
+        {/* End with exact pricing start color */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-purple-500/5" />
       </div>
       
       <div className="max-w-7xl mx-auto relative">

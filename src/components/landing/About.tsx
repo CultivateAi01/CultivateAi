@@ -2,37 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Users, Target, Award, Heart, Lightbulb, Rocket, Globe, TrendingUp } from 'lucide-react';
 
-// const team = [
-//   {
-//     name: 'Sarah Chen',
-//     role: 'CEO & Co-founder',
-//     bio: 'Former VP of Product at Stripe. Built and scaled products used by millions.',
-//     image: 'https://images.pexels.com/photos/3785077/pexels-photo-3785077.jpeg?auto=compress&cs=tinysrgb&w=400',
-//     linkedin: '#'
-//   },
-//   {
-//     name: 'Marcus Rodriguez',
-//     role: 'CTO & Co-founder',
-//     bio: 'Ex-Google AI researcher. PhD in Machine Learning from Stanford.',
-//     image: 'https://images.pexels.com/photos/3777943/pexels-photo-3777943.jpeg?auto=compress&cs=tinysrgb&w=400',
-//     linkedin: '#'
-//   },
-//   {
-//     name: 'Emily Watson',
-//     role: 'Head of AI',
-//     bio: 'Former OpenAI researcher. Expert in natural language processing and business intelligence.',
-//     image: 'https://images.pexels.com/photos/3756679/pexels-photo-3756679.jpeg?auto=compress&cs=tinysrgb&w=400',
-//     linkedin: '#'
-//   },
-//   {
-//     name: 'David Kim',
-//     role: 'Head of Design',
-//     bio: 'Previously at Airbnb and Figma. Passionate about creating intuitive user experiences.',
-//     image: 'https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=400',
-//     linkedin: '#'
-//   }
-// ];
-
 const values = [
   {
     icon: Lightbulb,
@@ -60,29 +29,6 @@ const values = [
   }
 ];
 
-// const milestones = [
-//   {
-//     year: '2022',
-//     title: 'Founded',
-//     description: 'Started with a vision to democratize startup success'
-//   },
-//   {
-//     year: '2023',
-//     title: 'AI Launch',
-//     description: 'Released our first AI-powered business planning tools'
-//   },
-//   {
-//     year: '2024',
-//     title: '10K Users',
-//     description: 'Reached 10,000 entrepreneurs using our platform'
-//   },
-//   {
-//     year: '2024',
-//     title: '$50M Raised',
-//     description: 'Our users have collectively raised over $50M in funding'
-//   }
-// ];
-
 const stats = [
   { number: '10,000+', label: 'Entrepreneurs Served', icon: Users },
   { number: '50,000+', label: 'Ideas Validated', icon: Lightbulb },
@@ -93,12 +39,17 @@ const stats = [
 export const About: React.FC = () => {
   return (
     <section id="about" className="py-32 px-6 relative">
-      {/* Smooth color transition from pricing to contact */}
+      {/* Seamless background that starts exactly where pricing ends */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-green-500/8 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-green-500/5 to-orange-500/8" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.1),transparent_70%)]" />
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-orange-500/8" />
+        {/* Start with exact pricing end color */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-green-500/5" />
+        
+        {/* Main about background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-green-500/5 via-green-500/3 to-orange-500/5" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.08),transparent_70%)]" />
+        
+        {/* End with exact contact start color */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-orange-500/5" />
       </div>
       
       <div className="max-w-7xl mx-auto relative">
@@ -220,96 +171,6 @@ export const About: React.FC = () => {
             })}
           </div>
         </motion.div>
-
-        {/* Timeline - Commented Out */}
-        {/* <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          viewport={{ once: true }}
-          className="mb-20"
-        >
-          <div className="text-center mb-16">
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">Our Journey</h3>
-            <p className="text-gray-400 max-w-2xl mx-auto">
-              From a simple idea to empowering thousands of entrepreneurs worldwide.
-            </p>
-          </div>
-
-          <div className="relative">
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-green-500 to-emerald-500 rounded-full" />
-            
-            <div className="space-y-12">
-              {milestones.map((milestone, index) => (
-                <motion.div
-                  key={milestone.year}
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                  className={`flex items-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
-                >
-                  <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8 text-left'}`}>
-                    <div className="bg-white/[0.03] backdrop-blur-md border border-white/[0.08] rounded-xl p-6">
-                      <div className="text-green-400 font-bold text-lg mb-2">{milestone.year}</div>
-                      <h4 className="text-white font-semibold text-xl mb-2">{milestone.title}</h4>
-                      <p className="text-gray-400">{milestone.description}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="relative z-10 w-6 h-6 bg-green-500 rounded-full border-4 border-black" />
-                  
-                  <div className="w-1/2" />
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.div> */}
-
-        {/* Team - Commented Out */}
-        {/* <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <div className="text-center mb-16">
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">Meet Our Team</h3>
-            <p className="text-gray-400 max-w-2xl mx-auto">
-              Passionate builders, researchers, and entrepreneurs dedicated to your success.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {team.map((member, index) => (
-              <motion.div
-                key={member.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="group"
-              >
-                <div className="bg-white/[0.03] backdrop-blur-md border border-white/[0.08] rounded-2xl p-6 text-center group-hover:bg-white/[0.06] transition-all duration-300">
-                  <div className="relative mb-6">
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="w-24 h-24 rounded-full mx-auto object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
-                    <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                      <div className="w-3 h-3 bg-white rounded-full" />
-                    </div>
-                  </div>
-                  
-                  <h4 className="text-lg font-semibold text-white mb-1">{member.name}</h4>
-                  <div className="text-green-400 text-sm font-medium mb-3">{member.role}</div>
-                  <p className="text-gray-400 text-sm leading-relaxed">{member.bio}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div> */}
       </div>
     </section>
   );
