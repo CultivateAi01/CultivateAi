@@ -80,7 +80,9 @@ export const Hero: React.FC = () => {
             <span className="relative">
               <span className="text-white">
                 ideas
-           
+              </span>
+              
+            </span>
             <br />
             <span className="text-white">into </span>
             <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
