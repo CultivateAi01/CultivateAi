@@ -34,6 +34,13 @@ export const Dashboard: React.FC = () => {
       // Set height based on scrollHeight with min and max constraints
       const newHeight = Math.max(120, Math.min(400, textarea.scrollHeight));
       textarea.style.height = `${newHeight}px`;
+      
+      // Enable scrolling if content exceeds max height
+      if (textarea.scrollHeight > 400) {
+        textarea.style.overflowY = 'auto';
+      } else {
+        textarea.style.overflowY = 'hidden';
+      }
     }
   }, [appIdea]);
 
@@ -179,12 +186,13 @@ export const Dashboard: React.FC = () => {
                   value={appIdea}
                   onChange={(e) => setAppIdea(e.target.value)}
                   placeholder="Describe your startup idea in detail... What problem does it solve? Who is your target audience? What makes it unique? The more details you provide, the better our AI can analyze and help you build your startup."
-                  className="w-full px-6 py-4 bg-transparent text-white placeholder-gray-400 text-base resize-none focus:outline-none leading-relaxed overflow-hidden pr-16"
+                  className="w-full px-6 py-4 bg-transparent text-white placeholder-gray-400 text-base resize-none focus:outline-none leading-relaxed pr-16"
                   style={{
                     minHeight: '120px',
                     maxHeight: '400px',
                     wordWrap: 'break-word',
-                    whiteSpace: 'pre-wrap'
+                    whiteSpace: 'pre-wrap',
+                    overflowY: 'auto'
                   }}
                   rows={1}
                 />

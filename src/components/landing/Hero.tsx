@@ -22,6 +22,13 @@ export const Hero: React.FC = () => {
       // Set height based on scrollHeight with min and max constraints
       const newHeight = Math.max(60, Math.min(200, textarea.scrollHeight));
       textarea.style.height = `${newHeight}px`;
+      
+      // Enable scrolling if content exceeds max height
+      if (textarea.scrollHeight > 200) {
+        textarea.style.overflowY = 'auto';
+      } else {
+        textarea.style.overflowY = 'hidden';
+      }
     }
   }, [idea]);
 
@@ -115,12 +122,13 @@ export const Hero: React.FC = () => {
                     value={idea}
                     onChange={(e) => setIdea(e.target.value)}
                     placeholder="Describe your startup idea... e.g., 'AI-powered fitness app for busy professionals'"
-                    className="w-full px-6 py-4 bg-transparent text-white placeholder-gray-400 text-base focus:outline-none resize-none overflow-hidden leading-relaxed pr-16"
+                    className="w-full px-6 py-4 bg-transparent text-white placeholder-gray-400 text-base focus:outline-none resize-none leading-relaxed pr-16"
                     style={{
                       minHeight: '60px',
                       maxHeight: '200px',
                       wordWrap: 'break-word',
-                      whiteSpace: 'pre-wrap'
+                      whiteSpace: 'pre-wrap',
+                      overflowY: 'auto'
                     }}
                     rows={1}
                   />
