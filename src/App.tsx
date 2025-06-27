@@ -32,24 +32,49 @@ function App() {
             });
           } catch (error) {
             console.error('Failed to fetch profile:', error);
-            // Fallback to basic user data
-            setUser({
-              id: currentUser.id,
-              email: currentUser.email!,
-              name: currentUser.user_metadata?.name || 'User',
-              credits: 0,
-              created_at: currentUser.created_at!
-            });
+            // If profile fetch fails, it might mean the user session is invalid
+            // Clear the user and let them sign in again
+            setUser(null);
           }
+        } else {
+          // No user session found
+          setUser(null);
         }
       } catch (error) {
         console.error('Auth check error:', error);
+        // Clear user on auth error
+        setUser(null);
       } finally {
         setLoading(false);
       }
     };
 
     checkAuth();
+
+    // Listen for auth state changes
+    const { supabase } = authHelpers;
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_OUT' || !session) {
+        setUser(null);
+      } else if (event === 'SIGNED_IN' && session) {
+        try {
+          const profileResponse = await apiClient.getProfile();
+          setUser({
+            id: session.user.id,
+            email: session.user.email!,
+            name: profileResponse.profile?.first_name || session.user.user_metadata?.name || 'User',
+            credits: profileResponse.credits?.balance || 0,
+            created_at: session.user.created_at!
+          });
+        } catch (error) {
+          console.error('Failed to fetch profile on sign in:', error);
+        }
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, [setUser, setLoading]);
 
   if (isLoading) {
