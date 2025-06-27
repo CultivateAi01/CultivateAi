@@ -42,11 +42,13 @@ export const Header: React.FC = () => {
 
   const handleLogout = async () => {
     try {
-      await logout();
       setIsDropdownOpen(false);
-      navigate('/');
+      await logout();
+      // The logout function now handles the redirect
     } catch (error) {
       console.error('Logout error:', error);
+      // Force redirect even if logout fails
+      window.location.href = '/';
     }
   };
 

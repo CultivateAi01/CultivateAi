@@ -17,17 +17,34 @@ function App() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession();
+        // Get current session
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          console.error('Session error:', error);
+          setUser(null);
+          setLoading(false);
+          return;
+        }
         
         if (session?.user) {
-          // Set basic user data from session
-          setUser({
-            id: session.user.id,
-            email: session.user.email!,
-            name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
-            credits: 100, // Default credits
-            created_at: session.user.created_at!
-          });
+          // Verify the session is still valid
+          const { data: { user: currentUser }, error: userError } = await supabase.auth.getUser();
+          
+          if (userError || !currentUser) {
+            console.log('Invalid session, clearing...');
+            await supabase.auth.signOut({ scope: 'global' });
+            setUser(null);
+          } else {
+            // Set user data from valid session
+            setUser({
+              id: currentUser.id,
+              email: currentUser.email!,
+              name: currentUser.user_metadata?.name || currentUser.email?.split('@')[0] || 'User',
+              credits: 100, // Default credits
+              created_at: currentUser.created_at!
+            });
+          }
         } else {
           setUser(null);
         }
@@ -46,8 +63,21 @@ function App() {
       console.log('Auth state changed:', event, session?.user?.email);
       
       if (event === 'SIGNED_OUT' || !session) {
+        console.log('User signed out, clearing state...');
         setUser(null);
-      } else if (event === 'SIGNED_IN' && session) {
+        // Clear any cached data
+        localStorage.removeItem('supabase.auth.token');
+      } else if (event === 'SIGNED_IN' && session?.user) {
+        console.log('User signed in, setting state...');
+        setUser({
+          id: session.user.id,
+          email: session.user.email!,
+          name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
+          credits: 100, // Default credits
+          created_at: session.user.created_at!
+        });
+      } else if (event === 'TOKEN_REFRESHED' && session?.user) {
+        // Update user data on token refresh
         setUser({
           id: session.user.id,
           email: session.user.email!,
