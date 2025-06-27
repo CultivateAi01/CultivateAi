@@ -67,12 +67,12 @@ export const Hero: React.FC = () => {
               <span className="text-white">
                 ideas
               </span>
-              <motion.div
+              {/*}   <motion.div
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 0.8, delay: 1 }}
                 className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 to-yellow-500 rounded-full"
-              />
+              /> */}
             </span>
             <br />
             <span className="text-white">into </span>
