@@ -113,7 +113,7 @@ export const ActionGrid: React.FC<ActionGridProps> = ({ onActionSelect, agents }
     return (
       <div className="text-center py-12">
         <div className="w-16 h-16 bg-gray-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
-          <Icons.Zap className="w-8 h-8 text-gray-400" />
+          <Icons.Box className="w-8 h-8 text-gray-400" />
         </div>
         <h3 className="text-lg font-medium text-white mb-2">No AI actions available</h3>
         <p className="text-gray-400">AI actions will appear here once they're configured.</p>

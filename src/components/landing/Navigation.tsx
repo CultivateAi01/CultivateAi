@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X, Zap } from 'lucide-react';
+import { Menu, X, Box } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { useNavigate } from 'react-router-dom';
 
@@ -43,10 +43,10 @@ export const Navigation: React.FC = () => {
             onClick={() => navigate('/')}
           >
             <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-              <Zap className="w-5 h-5 text-white" />
+              <Box className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-              Cultivate.ai
+              UnCubed
             </span>
           </motion.div>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Zap, Twitter, Github, Linkedin, Mail, ArrowUpRight } from 'lucide-react';
+import { Box, Twitter, Github, Linkedin, Mail, ArrowUpRight } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const footerSections = {
@@ -49,10 +49,10 @@ export const Footer: React.FC = () => {
           <div className="lg:col-span-4">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-                <Zap className="w-6 h-6 text-white" />
+                <Box className="w-6 h-6 text-white" />
               </div>
               <span className="text-2xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                Cultivate.ai
+                UnCubed
               </span>
             </div>
             
@@ -106,7 +106,7 @@ export const Footer: React.FC = () => {
         <div className="border-t border-white/10 pt-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-gray-400 text-sm">
-              © 2024 Cultivate.ai. All rights reserved.
+              © 2024 UnCubed. All rights reserved.
             </p>
             
             <div className="flex items-center gap-6">

@@ -6,7 +6,7 @@ import {
   Settings, 
   LogOut, 
   HelpCircle, 
-  Zap, 
+  Box, 
   Home, 
   FolderOpen, 
   ChevronDown 
@@ -18,7 +18,7 @@ import { useLocation, Link } from 'react-router-dom';
 const navigationItems = [
   { icon: Home, label: 'Home', path: '/home' },
   { icon: FolderOpen, label: 'Projects', path: '/projects' },
-  { icon: Zap, label: 'AI Actions', path: '/actions' },
+  { icon: Box, label: 'AI Actions', path: '/actions' },
 ];
 
 export const Header: React.FC = () => {
@@ -55,10 +55,10 @@ export const Header: React.FC = () => {
           {/* Logo */}
           <Link to="/home" className="flex items-center gap-3 group">
             <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-              <Zap className="w-5 h-5 text-white" />
+              <Box className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-              Cultivate.ai
+              UnCubed
             </span>
           </Link>
           
