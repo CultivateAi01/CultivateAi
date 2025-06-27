@@ -87,7 +87,7 @@ export const Hero: React.FC = () => {
           
           {/* Subtext - Further reduced from lg to base */}
           <p className="text-base md:text-lg text-gray-400 max-w-4xl mx-auto leading-relaxed font-light">
-            The first all-in-one AI platform to research, validate, and build your startup ideas with 
+            Transform your idea into a startup — built using AI agents for research, MVPs, branding, and more.
             <span className="text-white font-medium"> professional-grade tools</span>
           </p>
         </motion.div>
