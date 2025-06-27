@@ -32,7 +32,7 @@ export const Dashboard: React.FC = () => {
       // Reset height to auto to get the correct scrollHeight
       textarea.style.height = 'auto';
       // Set height based on scrollHeight with min and max constraints
-      const newHeight = Math.max(120, Math.min(400, textarea.scrollHeight));
+      const newHeight = Math.max(150, Math.min(500, textarea.scrollHeight));
       textarea.style.height = `${newHeight}px`;
     }
   }, [appIdea]);
@@ -177,11 +177,11 @@ export const Dashboard: React.FC = () => {
                 ref={textareaRef}
                 value={appIdea}
                 onChange={(e) => setAppIdea(e.target.value)}
-                placeholder="Describe the app you want to create... Be as detailed as possible about your vision, target audience, key features, and what problem it solves."
-                className="w-full px-6 py-4 bg-transparent text-white placeholder-gray-400 text-base resize-none focus:outline-none leading-relaxed"
+                placeholder="Describe your startup idea in detail... What problem does it solve? Who is your target audience? What makes it unique? The more details you provide, the better our AI can analyze and help you build your startup."
+                className="w-full px-6 py-4 bg-transparent text-white placeholder-gray-400 text-base resize-none focus:outline-none leading-relaxed overflow-hidden"
                 style={{
-                  minHeight: '120px',
-                  maxHeight: '400px',
+                  minHeight: '150px',
+                  maxHeight: '500px',
                   wordWrap: 'break-word',
                   whiteSpace: 'pre-wrap'
                 }}

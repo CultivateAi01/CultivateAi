@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Play } from 'lucide-react';
 import { Button } from '../ui/Button';
@@ -7,10 +7,23 @@ import { useNavigate } from 'react-router-dom';
 export const Hero: React.FC = () => {
   const [idea, setIdea] = useState('');
   const navigate = useNavigate();
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleGetStarted = () => {
     navigate('/signup');
   };
+
+  // Auto-resize textarea based on content
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      // Reset height to auto to get the correct scrollHeight
+      textarea.style.height = 'auto';
+      // Set height based on scrollHeight with min and max constraints
+      const newHeight = Math.max(60, Math.min(200, textarea.scrollHeight));
+      textarea.style.height = `${newHeight}px`;
+    }
+  }, [idea]);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center px-6 pt-20 overflow-hidden">
@@ -67,12 +80,6 @@ export const Hero: React.FC = () => {
               <span className="text-white">
                 ideas
               </span>
-              {/*}   <motion.div
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.8, delay: 1 }}
-                className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 to-yellow-500 rounded-full"
-              /> */}
             </span>
             <br />
             <span className="text-white">into </span>
@@ -88,7 +95,6 @@ export const Hero: React.FC = () => {
           {/* Subtext - Further reduced from lg to base */}
           <p className="text-base md:text-lg text-gray-400 max-w-4xl mx-auto leading-relaxed font-light">
             Transform your idea into a startup — built using AI agents for research, MVPs, branding, and more.
-          {/*  <span className="text-white font-medium"> professional-grade tools</span>  */}
           </p>
         </motion.div>
 
@@ -104,22 +110,31 @@ export const Hero: React.FC = () => {
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-300" />
               <div className="relative bg-white/[0.08] backdrop-blur-md border border-white/[0.12] rounded-3xl p-2">
                 <div className="flex flex-col md:flex-row gap-2">
-                  <input
-                    type="text"
+                  <textarea
+                    ref={textareaRef}
                     value={idea}
                     onChange={(e) => setIdea(e.target.value)}
                     placeholder="Describe your startup idea... e.g., 'AI-powered fitness app for busy professionals'"
-                    className="flex-1 px-6 py-4 bg-transparent text-white placeholder-gray-400 text-base focus:outline-none"
+                    className="flex-1 px-6 py-4 bg-transparent text-white placeholder-gray-400 text-base focus:outline-none resize-none overflow-hidden leading-relaxed"
+                    style={{
+                      minHeight: '60px',
+                      maxHeight: '200px',
+                      wordWrap: 'break-word',
+                      whiteSpace: 'pre-wrap'
+                    }}
+                    rows={1}
                   />
-                  <Button
-                    variant="primary"
-                    size="lg"
-                    onClick={handleGetStarted}
-                    className="px-8 py-4 rounded-2xl font-semibold whitespace-nowrap"
-                  >
-                    Get Started Free
-                    <ArrowRight className="w-5 h-5" />
-                  </Button>
+                  <div className="flex items-end">
+                    <Button
+                      variant="primary"
+                      size="lg"
+                      onClick={handleGetStarted}
+                      className="px-8 py-4 rounded-2xl font-semibold whitespace-nowrap"
+                    >
+                      Get Started Free
+                      <ArrowRight className="w-5 h-5" />
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
