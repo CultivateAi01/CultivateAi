@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Clock, FolderOpen, Zap, Plus } from 'lucide-react';
 import { Button } from '../components/ui/Button';
@@ -18,11 +18,24 @@ export const Dashboard: React.FC = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   
   const { user } = useAuthStore();
   const { projects, loading: projectsLoading, createProject } = useProjects();
   const { agents, loading: agentsLoading, runAgent } = useAgents();
   const navigate = useNavigate();
+
+  // Auto-resize textarea based on content
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      // Reset height to auto to get the correct scrollHeight
+      textarea.style.height = 'auto';
+      // Set height based on scrollHeight with min and max constraints
+      const newHeight = Math.max(120, Math.min(400, textarea.scrollHeight));
+      textarea.style.height = `${newHeight}px`;
+    }
+  }, [appIdea]);
 
   // Get recent projects (limit to 3)
   const recentProjects = projects.slice(0, 3);
@@ -161,10 +174,18 @@ export const Dashboard: React.FC = () => {
             
             <div className="relative bg-white/[0.08] backdrop-blur-md border border-white/[0.12] rounded-2xl p-2">
               <textarea
+                ref={textareaRef}
                 value={appIdea}
                 onChange={(e) => setAppIdea(e.target.value)}
-                placeholder="Describe the app you want to create..."
-                className="w-full h-32 px-6 py-4 bg-transparent text-white placeholder-gray-400 text-base resize-none focus:outline-none"
+                placeholder="Describe the app you want to create... Be as detailed as possible about your vision, target audience, key features, and what problem it solves."
+                className="w-full px-6 py-4 bg-transparent text-white placeholder-gray-400 text-base resize-none focus:outline-none leading-relaxed"
+                style={{
+                  minHeight: '120px',
+                  maxHeight: '400px',
+                  wordWrap: 'break-word',
+                  whiteSpace: 'pre-wrap'
+                }}
+                rows={1}
               />
               
               {uploadedFiles.length > 0 && (
@@ -196,6 +217,11 @@ export const Dashboard: React.FC = () => {
                     <FolderOpen className="w-4 h-4" />
                     Upload Files
                   </Button>
+                  
+                  {/* Character count indicator */}
+                  <div className="text-xs text-gray-500">
+                    {appIdea.length} characters
+                  </div>
                 </div>
                 
                 <div className="flex items-center gap-3">
@@ -225,6 +251,13 @@ export const Dashboard: React.FC = () => {
                 </div>
               </div>
             </div>
+          </div>
+          
+          {/* Helper text */}
+          <div className="mt-4 text-center">
+            <p className="text-sm text-gray-500">
+              💡 Tip: The more detailed your description, the better our AI can analyze and help build your startup
+            </p>
           </div>
         </div>
       </motion.div>
