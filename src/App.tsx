@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthStore } from './store/authStore';
-import { authHelpers } from './lib/supabase';
-import { apiClient } from './lib/api';
+import { supabase } from './lib/supabase';
 import { Header } from './components/layout/Header';
 import { Dashboard } from './pages/Dashboard';
 import { Projects } from './pages/Projects';
@@ -18,31 +17,22 @@ function App() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const { user: currentUser } = await authHelpers.getCurrentUser();
-        if (currentUser) {
-          // Get user profile from backend
-          try {
-            const profileResponse = await apiClient.getProfile();
-            setUser({
-              id: currentUser.id,
-              email: currentUser.email!,
-              name: profileResponse.profile?.first_name || currentUser.user_metadata?.name || 'User',
-              credits: profileResponse.credits?.balance || 0,
-              created_at: currentUser.created_at!
-            });
-          } catch (error) {
-            console.error('Failed to fetch profile:', error);
-            // If profile fetch fails, it might mean the user session is invalid
-            // Clear the user and let them sign in again
-            setUser(null);
-          }
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (session?.user) {
+          // Set basic user data from session
+          setUser({
+            id: session.user.id,
+            email: session.user.email!,
+            name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
+            credits: 100, // Default credits
+            created_at: session.user.created_at!
+          });
         } else {
-          // No user session found
           setUser(null);
         }
       } catch (error) {
         console.error('Auth check error:', error);
-        // Clear user on auth error
         setUser(null);
       } finally {
         setLoading(false);
@@ -52,23 +42,19 @@ function App() {
     checkAuth();
 
     // Listen for auth state changes
-    const { supabase } = authHelpers;
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('Auth state changed:', event, session?.user?.email);
+      
       if (event === 'SIGNED_OUT' || !session) {
         setUser(null);
       } else if (event === 'SIGNED_IN' && session) {
-        try {
-          const profileResponse = await apiClient.getProfile();
-          setUser({
-            id: session.user.id,
-            email: session.user.email!,
-            name: profileResponse.profile?.first_name || session.user.user_metadata?.name || 'User',
-            credits: profileResponse.credits?.balance || 0,
-            created_at: session.user.created_at!
-          });
-        } catch (error) {
-          console.error('Failed to fetch profile on sign in:', error);
-        }
+        setUser({
+          id: session.user.id,
+          email: session.user.email!,
+          name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
+          credits: 100, // Default credits
+          created_at: session.user.created_at!
+        });
       }
     });
 

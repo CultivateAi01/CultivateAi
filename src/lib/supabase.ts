@@ -7,8 +7,6 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Auth helpers
 export const authHelpers = {
-  supabase, // Export supabase instance for auth state listening
-  
   signUp: async (email: string, password: string, name: string) => {
     const { data, error } = await supabase.auth.signUp({
       email,

@@ -8,10 +8,15 @@ class ApiClient {
   }
 
   private async getAuthToken(): Promise<string | null> {
-    // Try to get token from Supabase session
-    const { supabase } = await import('./supabase');
-    const { data: { session } } = await supabase.auth.getSession();
-    return session?.access_token || null;
+    try {
+      // Try to get token from Supabase session
+      const { supabase } = await import('./supabase');
+      const { data: { session } } = await supabase.auth.getSession();
+      return session?.access_token || null;
+    } catch (error) {
+      console.error('Error getting auth token:', error);
+      return null;
+    }
   }
 
   private async request<T>(
