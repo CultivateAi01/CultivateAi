@@ -23,12 +23,13 @@ export const CTA: React.FC = () => {
 
   return (
     <section className="py-32 px-6 relative overflow-hidden">
-      {/* Enhanced background with multiple gradient layers */}
+      {/* Clean background that starts and ends with black */}
       <div className="absolute inset-0">
-        {/* Smooth transition from contact */}
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-yellow-500/8 to-transparent" />
+        {/* Start with black from contact */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black to-transparent" />
         
-        {/* Main gradient layers */}
+        {/* Main CTA background with enhanced gradients */}
+        <div className="absolute inset-0 bg-black" />
         <div className="absolute inset-0 bg-gradient-to-br from-blue-600/15 via-purple-600/10 to-pink-600/15" />
         <div className="absolute inset-0 bg-gradient-to-tl from-orange-500/10 via-transparent to-cyan-500/10" />
         
@@ -37,8 +38,8 @@ export const CTA: React.FC = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(139,92,246,0.15),transparent_50%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(236,72,153,0.1),transparent_60%)]" />
         
-        {/* Smooth transition to footer */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-black/50" />
+        {/* End with black for footer transition */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-black" />
       </div>
 
       {/* Floating animated elements */}

@@ -81,12 +81,17 @@ export const Pricing: React.FC = () => {
 
   return (
     <section id="pricing" className="py-32 px-6 relative">
-      {/* Smooth color transition from features to about */}
+      {/* Clean background that starts and ends with black */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-purple-500/8 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/5 to-green-500/8" />
+        {/* Start with black from features */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black to-transparent" />
+        
+        {/* Main pricing background */}
+        <div className="absolute inset-0 bg-black" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(139,92,246,0.1),transparent_70%)]" />
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-green-500/8" />
+        
+        {/* End with black for about transition */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-black" />
       </div>
       
       <div className="max-w-7xl mx-auto relative">
