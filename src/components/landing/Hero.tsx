@@ -85,11 +85,11 @@ export const Hero: React.FC = () => {
             </span>
             <br />
             <span className="text-white">into </span>
-            <span className="text-white">
+            <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
               startups
             </span>
             <span className="text-white">, in </span>
-            <span className="bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent">
+            <span className="text-white">
               minutes
             </span>
           </h1>
