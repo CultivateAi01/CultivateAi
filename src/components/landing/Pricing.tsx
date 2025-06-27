@@ -248,7 +248,7 @@ export const Pricing: React.FC = () => {
           })}
         </div>
 
-        {/* FAQ Section */}
+        {/* FAQ Section - Moved to end of pricing */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

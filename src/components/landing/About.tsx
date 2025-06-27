@@ -2,36 +2,36 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Users, Target, Award, Heart, Lightbulb, Rocket, Globe, TrendingUp } from 'lucide-react';
 
-const team = [
-  {
-    name: 'Sarah Chen',
-    role: 'CEO & Co-founder',
-    bio: 'Former VP of Product at Stripe. Built and scaled products used by millions.',
-    image: 'https://images.pexels.com/photos/3785077/pexels-photo-3785077.jpeg?auto=compress&cs=tinysrgb&w=400',
-    linkedin: '#'
-  },
-  {
-    name: 'Marcus Rodriguez',
-    role: 'CTO & Co-founder',
-    bio: 'Ex-Google AI researcher. PhD in Machine Learning from Stanford.',
-    image: 'https://images.pexels.com/photos/3777943/pexels-photo-3777943.jpeg?auto=compress&cs=tinysrgb&w=400',
-    linkedin: '#'
-  },
-  {
-    name: 'Emily Watson',
-    role: 'Head of AI',
-    bio: 'Former OpenAI researcher. Expert in natural language processing and business intelligence.',
-    image: 'https://images.pexels.com/photos/3756679/pexels-photo-3756679.jpeg?auto=compress&cs=tinysrgb&w=400',
-    linkedin: '#'
-  },
-  {
-    name: 'David Kim',
-    role: 'Head of Design',
-    bio: 'Previously at Airbnb and Figma. Passionate about creating intuitive user experiences.',
-    image: 'https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=400',
-    linkedin: '#'
-  }
-];
+// const team = [
+//   {
+//     name: 'Sarah Chen',
+//     role: 'CEO & Co-founder',
+//     bio: 'Former VP of Product at Stripe. Built and scaled products used by millions.',
+//     image: 'https://images.pexels.com/photos/3785077/pexels-photo-3785077.jpeg?auto=compress&cs=tinysrgb&w=400',
+//     linkedin: '#'
+//   },
+//   {
+//     name: 'Marcus Rodriguez',
+//     role: 'CTO & Co-founder',
+//     bio: 'Ex-Google AI researcher. PhD in Machine Learning from Stanford.',
+//     image: 'https://images.pexels.com/photos/3777943/pexels-photo-3777943.jpeg?auto=compress&cs=tinysrgb&w=400',
+//     linkedin: '#'
+//   },
+//   {
+//     name: 'Emily Watson',
+//     role: 'Head of AI',
+//     bio: 'Former OpenAI researcher. Expert in natural language processing and business intelligence.',
+//     image: 'https://images.pexels.com/photos/3756679/pexels-photo-3756679.jpeg?auto=compress&cs=tinysrgb&w=400',
+//     linkedin: '#'
+//   },
+//   {
+//     name: 'David Kim',
+//     role: 'Head of Design',
+//     bio: 'Previously at Airbnb and Figma. Passionate about creating intuitive user experiences.',
+//     image: 'https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=400',
+//     linkedin: '#'
+//   }
+// ];
 
 const values = [
   {
@@ -60,28 +60,28 @@ const values = [
   }
 ];
 
-const milestones = [
-  {
-    year: '2022',
-    title: 'Founded',
-    description: 'Started with a vision to democratize startup success'
-  },
-  {
-    year: '2023',
-    title: 'AI Launch',
-    description: 'Released our first AI-powered business planning tools'
-  },
-  {
-    year: '2024',
-    title: '10K Users',
-    description: 'Reached 10,000 entrepreneurs using our platform'
-  },
-  {
-    year: '2024',
-    title: '$50M Raised',
-    description: 'Our users have collectively raised over $50M in funding'
-  }
-];
+// const milestones = [
+//   {
+//     year: '2022',
+//     title: 'Founded',
+//     description: 'Started with a vision to democratize startup success'
+//   },
+//   {
+//     year: '2023',
+//     title: 'AI Launch',
+//     description: 'Released our first AI-powered business planning tools'
+//   },
+//   {
+//     year: '2024',
+//     title: '10K Users',
+//     description: 'Reached 10,000 entrepreneurs using our platform'
+//   },
+//   {
+//     year: '2024',
+//     title: '$50M Raised',
+//     description: 'Our users have collectively raised over $50M in funding'
+//   }
+// ];
 
 const stats = [
   { number: '10,000+', label: 'Entrepreneurs Served', icon: Users },
@@ -214,8 +214,8 @@ export const About: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Timeline */}
-        <motion.div
+        {/* Timeline - Commented Out */}
+        {/* <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
@@ -230,7 +230,6 @@ export const About: React.FC = () => {
           </div>
 
           <div className="relative">
-            {/* Timeline line */}
             <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-green-500 to-emerald-500 rounded-full" />
             
             <div className="space-y-12">
@@ -251,7 +250,6 @@ export const About: React.FC = () => {
                     </div>
                   </div>
                   
-                  {/* Timeline dot */}
                   <div className="relative z-10 w-6 h-6 bg-green-500 rounded-full border-4 border-black" />
                   
                   <div className="w-1/2" />
@@ -259,10 +257,10 @@ export const About: React.FC = () => {
               ))}
             </div>
           </div>
-        </motion.div>
+        </motion.div> */}
 
-        {/* Team */}
-        <motion.div
+        {/* Team - Commented Out */}
+        {/* <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
@@ -304,7 +302,7 @@ export const About: React.FC = () => {
               </motion.div>
             ))}
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );
