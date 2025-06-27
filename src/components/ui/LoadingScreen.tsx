@@ -172,7 +172,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
                     />
                   ))}
                 </div>
-                <span className="text-white/60 text-sm ml-2">Loading...</span>
+                <span className="text-white/60 text-sm ml-2">Loadinasdg...</span>
               </div>
             </motion.div>
           </div>
