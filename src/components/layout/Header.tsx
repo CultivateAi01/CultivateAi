@@ -113,77 +113,95 @@ export const Header: React.FC = () => {
               {/* Dropdown Menu */}
               <AnimatePresence>
                 {isDropdownOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95, y: -10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                    className="absolute right-0 top-full mt-2 w-64 bg-white/[0.08] backdrop-blur-md border border-white/[0.12] rounded-xl p-2 shadow-xl"
-                  >
-                    {/* User Info */}
-                    <div className="px-3 py-3 border-b border-white/10">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                          <User className="w-5 h-5 text-white" />
+                  <>
+                    {/* Backdrop overlay for mobile */}
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 md:hidden"
+                      onClick={() => setIsDropdownOpen(false)}
+                    />
+                    
+                    {/* Dropdown content */}
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95, y: -10 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute right-0 top-full mt-2 w-64 bg-gray-900/95 backdrop-blur-xl border border-white/[0.15] rounded-xl shadow-2xl z-50"
+                      style={{ 
+                        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05)' 
+                      }}
+                    >
+                      <div className="p-2">
+                        {/* User Info */}
+                        <div className="px-3 py-3 border-b border-white/10">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                              <User className="w-5 h-5 text-white" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="text-sm font-medium text-white truncate">{user?.name}</div>
+                              <div className="text-xs text-gray-400 truncate">{user?.email}</div>
+                            </div>
+                          </div>
                         </div>
-                        <div>
-                          <div className="text-sm font-medium text-white">{user?.name}</div>
-                          <div className="text-xs text-gray-400">{user?.email}</div>
+
+                        {/* Credits (Mobile) */}
+                        <div className="sm:hidden px-3 py-2 border-b border-white/10">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <CreditCard className="w-4 h-4 text-yellow-400" />
+                              <span className="text-sm text-gray-300">Credits</span>
+                            </div>
+                            <span className="text-sm font-medium text-white">{user?.credits || 0}</span>
+                          </div>
+                        </div>
+
+                        {/* Menu Items */}
+                        <div className="py-2">
+                          <Link
+                            to="/credits"
+                            onClick={() => setIsDropdownOpen(false)}
+                            className="flex items-center gap-3 px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/[0.08] rounded-lg transition-colors duration-200"
+                          >
+                            <CreditCard className="w-4 h-4" />
+                            <span>Manage Credits</span>
+                          </Link>
+                          
+                          <Link
+                            to="/settings"
+                            onClick={() => setIsDropdownOpen(false)}
+                            className="flex items-center gap-3 px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/[0.08] rounded-lg transition-colors duration-200"
+                          >
+                            <Settings className="w-4 h-4" />
+                            <span>Settings</span>
+                          </Link>
+                          
+                          <Link
+                            to="/help"
+                            onClick={() => setIsDropdownOpen(false)}
+                            className="flex items-center gap-3 px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/[0.08] rounded-lg transition-colors duration-200"
+                          >
+                            <HelpCircle className="w-4 h-4" />
+                            <span>Help & Support</span>
+                          </Link>
+                        </div>
+
+                        {/* Logout */}
+                        <div className="border-t border-white/10 pt-2">
+                          <button
+                            onClick={handleLogout}
+                            className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors duration-200"
+                          >
+                            <LogOut className="w-4 h-4" />
+                            <span>Sign Out</span>
+                          </button>
                         </div>
                       </div>
-                    </div>
-
-                    {/* Credits (Mobile) */}
-                    <div className="sm:hidden px-3 py-2 border-b border-white/10">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <CreditCard className="w-4 h-4 text-yellow-400" />
-                          <span className="text-sm text-gray-300">Credits</span>
-                        </div>
-                        <span className="text-sm font-medium text-white">{user?.credits || 0}</span>
-                      </div>
-                    </div>
-
-                    {/* Menu Items */}
-                    <div className="py-2">
-                      <Link
-                        to="/credits"
-                        onClick={() => setIsDropdownOpen(false)}
-                        className="flex items-center gap-3 px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/[0.08] rounded-lg transition-colors duration-200"
-                      >
-                        <CreditCard className="w-4 h-4" />
-                        <span>Manage Credits</span>
-                      </Link>
-                      
-                      <Link
-                        to="/settings"
-                        onClick={() => setIsDropdownOpen(false)}
-                        className="flex items-center gap-3 px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/[0.08] rounded-lg transition-colors duration-200"
-                      >
-                        <Settings className="w-4 h-4" />
-                        <span>Settings</span>
-                      </Link>
-                      
-                      <Link
-                        to="/help"
-                        onClick={() => setIsDropdownOpen(false)}
-                        className="flex items-center gap-3 px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/[0.08] rounded-lg transition-colors duration-200"
-                      >
-                        <HelpCircle className="w-4 h-4" />
-                        <span>Help & Support</span>
-                      </Link>
-                    </div>
-
-                    {/* Logout */}
-                    <div className="border-t border-white/10 pt-2">
-                      <button
-                        onClick={handleLogout}
-                        className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors duration-200"
-                      >
-                        <LogOut className="w-4 h-4" />
-                        <span>Sign Out</span>
-                      </button>
-                    </div>
-                  </motion.div>
+                    </motion.div>
+                  </>
                 )}
               </AnimatePresence>
             </div>
