@@ -148,7 +148,16 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
             </AnimatePresence>
 
             {/* Loading indicator */}
-
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.5 }}
+              className="absolute bottom-20 left-1/2 transform -translate-x-1/2"
+            >
+              
+            </motion.div>
+          </div>
+        </motion.div>
       )}
     </AnimatePresence>
   );
