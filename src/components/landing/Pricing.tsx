@@ -76,32 +76,8 @@ const plans = [
   }
 ];
 
-const faqs = [
-  {
-    question: 'What are AI credits?',
-    answer: 'AI credits are used to run our AI-powered tools. Each tool consumes a different amount of credits based on complexity. For example, Market Research uses 10 credits, while a comprehensive Business Plan uses 20 credits.'
-  },
-  {
-    question: 'Can I upgrade or downgrade my plan?',
-    answer: 'Yes! You can change your plan at any time. When upgrading, you\'ll get immediate access to new features. When downgrading, changes take effect at your next billing cycle.'
-  },
-  {
-    question: 'Do credits expire?',
-    answer: 'No, your credits never expire. Any unused credits roll over to the next month, so you never lose what you\'ve paid for.'
-  },
-  {
-    question: 'Is there a free trial?',
-    answer: 'Yes! Every new user gets 100 free credits to explore all our AI tools. No credit card required to get started.'
-  },
-  {
-    question: 'What if I need more credits?',
-    answer: 'You can purchase additional credit packs at any time, or upgrade to a higher plan for better value and additional features.'
-  }
-];
-
 export const Pricing: React.FC = () => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
     <section id="pricing" className="py-32 px-6 relative">
@@ -168,7 +144,7 @@ export const Pricing: React.FC = () => {
         </motion.div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {plans.map((plan, index) => {
             const Icon = plan.icon;
             return (
@@ -247,54 +223,6 @@ export const Pricing: React.FC = () => {
             );
           })}
         </div>
-
-        {/* FAQ Section - Moved to end of pricing */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="max-w-3xl mx-auto"
-        >
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-white mb-4">Frequently Asked Questions</h3>
-            <p className="text-gray-400">Everything you need to know about our pricing and plans.</p>
-          </div>
-
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white/[0.03] backdrop-blur-md border border-white/[0.08] rounded-xl overflow-hidden"
-              >
-                <button
-                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                  className="w-full p-6 text-left flex items-center justify-between hover:bg-white/[0.05] transition-colors"
-                >
-                  <span className="text-white font-medium">{faq.question}</span>
-                  <div className={`transform transition-transform duration-200 ${openFaq === index ? 'rotate-180' : ''}`}>
-                    <ArrowRight className="w-5 h-5 text-gray-400 rotate-90" />
-                  </div>
-                </button>
-                
-                {openFaq === index && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="px-6 pb-6"
-                  >
-                    <p className="text-gray-400 leading-relaxed">{faq.answer}</p>
-                  </motion.div>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );
