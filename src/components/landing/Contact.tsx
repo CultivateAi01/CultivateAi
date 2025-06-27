@@ -333,19 +333,19 @@ export const Contact: React.FC = () => {
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">General Inquiries</span>
-                  <span className="text-orange-400 font-medium">< 2 hours</span>
+                  <span className="text-orange-400 font-medium">{'< 2 hours'}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Technical Support</span>
-                  <span className="text-orange-400 font-medium">< 1 hour</span>
+                  <span className="text-orange-400 font-medium">{'< 1 hour'}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Sales Questions</span>
-                  <span className="text-orange-400 font-medium">< 30 minutes</span>
+                  <span className="text-orange-400 font-medium">{'< 30 minutes'}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-300">Enterprise Inquiries</span>
-                  <span className="text-orange-400 font-medium">< 15 minutes</span>
+                  <span className="text-orange-400 font-medium">{'< 15 minutes'}</span>
                 </div>
               </div>
             </div>
