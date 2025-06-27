@@ -64,7 +64,7 @@ export const Hero: React.FC = () => {
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] mb-6">
             <span className="text-white">Turn your </span>
             <span className="relative">
-              <span className="bg-gradient-to-r from-orange-400 to-yellow-500 bg-clip-text text-transparent">
+              <span className="text-white">
                 ideas
               </span>
               <motion.div
@@ -80,7 +80,7 @@ export const Hero: React.FC = () => {
               startups
             </span>
             <span className="text-white">, in </span>
-            <span className="bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent">
+            <span className="text-white">
               minutes
             </span>
           </h1>
