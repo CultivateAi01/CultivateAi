@@ -132,16 +132,18 @@ export const Dashboard: React.FC = () => {
         <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-b from-transparent to-orange-500/5" />
       </div>
 
-      {/* Header Section */}
+      {/* Header Section - Reduced text sizes */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="text-center relative z-10"
       >
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
+        {/* Reduced from 6xl to 4xl */}
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
           What would you build today?
         </h1>
-        <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+        {/* Reduced from xl to lg */}
+        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
           Select AI actions and describe your idea to get comprehensive analysis.
         </p>
       </motion.div>
@@ -162,7 +164,7 @@ export const Dashboard: React.FC = () => {
                 value={appIdea}
                 onChange={(e) => setAppIdea(e.target.value)}
                 placeholder="Describe the app you want to create..."
-                className="w-full h-32 px-6 py-4 bg-transparent text-white placeholder-gray-400 text-lg resize-none focus:outline-none"
+                className="w-full h-32 px-6 py-4 bg-transparent text-white placeholder-gray-400 text-base resize-none focus:outline-none"
               />
               
               {uploadedFiles.length > 0 && (
@@ -252,7 +254,8 @@ export const Dashboard: React.FC = () => {
         className="relative z-10"
       >
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-bold text-white">My Recent Projects</h2>
+          {/* Reduced from 2xl to xl */}
+          <h2 className="text-xl font-bold text-white">My Recent Projects</h2>
           <Button variant="glass" size="sm" onClick={() => navigate('/projects')}>
             View All
           </Button>
@@ -263,7 +266,8 @@ export const Dashboard: React.FC = () => {
             <div className="w-16 h-16 bg-gray-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
               <FolderOpen className="w-8 h-8 text-gray-400" />
             </div>
-            <h3 className="text-lg font-medium text-white mb-2">No projects yet</h3>
+            {/* Reduced from lg to base */}
+            <h3 className="text-base font-medium text-white mb-2">No projects yet</h3>
             <p className="text-gray-400 mb-4">Create your first project by describing your startup idea above.</p>
             <Button variant="primary" size="sm" onClick={() => navigate('/projects')}>
               <Plus className="w-4 h-4" />

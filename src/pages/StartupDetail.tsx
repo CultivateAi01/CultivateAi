@@ -317,7 +317,7 @@ export const StartupDetail: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      {/* Header Section */}
+      {/* Header Section - Reduced text sizes */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -338,7 +338,8 @@ export const StartupDetail: React.FC = () => {
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div className="space-y-2">
             <div className="flex items-center gap-3">
-              <h1 className="text-3xl font-bold text-white">{startup.title}</h1>
+              {/* Reduced from 3xl to 2xl */}
+              <h1 className="text-2xl font-bold text-white">{startup.title}</h1>
               <div className={`px-3 py-1 rounded-full text-sm font-medium ${
                 startup.status === 'active' 
                   ? 'bg-green-500/20 text-green-400' 
@@ -347,7 +348,8 @@ export const StartupDetail: React.FC = () => {
                 {startup.status}
               </div>
             </div>
-            <p className="text-gray-400 text-lg">{startup.description}</p>
+            {/* Reduced from lg to base */}
+            <p className="text-gray-400 text-base">{startup.description}</p>
             <div className="flex items-center gap-4 text-sm text-gray-500">
               <div className="flex items-center gap-1">
                 <Clock className="w-4 h-4" />
@@ -390,7 +392,8 @@ export const StartupDetail: React.FC = () => {
           
           <div className="p-8">
             <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold text-white mb-2">{startup.tagline}</h2>
+              {/* Reduced from 2xl to xl */}
+              <h2 className="text-xl font-bold text-white mb-2">{startup.tagline}</h2>
               <p className="text-gray-400 max-w-3xl mx-auto leading-relaxed">
                 {startup.description}
               </p>
@@ -398,17 +401,18 @@ export const StartupDetail: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="text-center p-6 bg-white/[0.03] rounded-xl border border-white/[0.08]">
-                <h3 className="text-lg font-semibold text-white mb-2">Problem</h3>
+                {/* Reduced from lg to base */}
+                <h3 className="text-base font-semibold text-white mb-2">Problem</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">{startup.problem}</p>
               </div>
               
               <div className="text-center p-6 bg-white/[0.03] rounded-xl border border-white/[0.08]">
-                <h3 className="text-lg font-semibold text-white mb-2">Solution</h3>
+                <h3 className="text-base font-semibold text-white mb-2">Solution</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">{startup.solution}</p>
               </div>
               
               <div className="text-center p-6 bg-white/[0.03] rounded-xl border border-white/[0.08]">
-                <h3 className="text-lg font-semibold text-white mb-2">Target Market</h3>
+                <h3 className="text-base font-semibold text-white mb-2">Target Market</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">{startup.targetMarket}</p>
               </div>
             </div>
@@ -463,7 +467,8 @@ export const StartupDetail: React.FC = () => {
         className="space-y-6"
       >
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-white">
+          {/* Reduced from 2xl to xl */}
+          <h2 className="text-xl font-bold text-white">
             {activeSection === 'overview' ? 'All AI Results' : sectionTabs.find(t => t.id === activeSection)?.label}
           </h2>
           <div className="text-sm text-gray-400">
@@ -476,7 +481,8 @@ export const StartupDetail: React.FC = () => {
             <div className="w-16 h-16 bg-gray-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
               <FileText className="w-8 h-8 text-gray-400" />
             </div>
-            <h3 className="text-lg font-medium text-white mb-2">No results yet</h3>
+            {/* Reduced from lg to base */}
+            <h3 className="text-base font-medium text-white mb-2">No results yet</h3>
             <p className="text-gray-400 mb-4">Run AI actions to generate insights for this section.</p>
             <Button variant="primary" size="sm" onClick={handleAddNewAction}>
               <Plus className="w-4 h-4" />
@@ -505,7 +511,8 @@ export const StartupDetail: React.FC = () => {
                             <Icon className="w-6 h-6 text-white" />
                           </div>
                           <div>
-                            <h3 className="text-lg font-semibold text-white">{result.actionName}</h3>
+                            {/* Reduced from lg to base */}
+                            <h3 className="text-base font-semibold text-white">{result.actionName}</h3>
                             <div className="flex items-center gap-4 text-sm text-gray-400">
                               <div className="flex items-center gap-1">
                                 {result.status === 'completed' ? (
@@ -605,7 +612,8 @@ export const StartupDetail: React.FC = () => {
         >
           <Card>
             <div className="p-6 border-b border-white/10">
-              <h3 className="text-lg font-semibold text-white">Activity Log</h3>
+              {/* Reduced from lg to base */}
+              <h3 className="text-base font-semibold text-white">Activity Log</h3>
             </div>
             <div className="p-6 space-y-4">
               {startup.activityLog.map((activity) => (
@@ -630,7 +638,8 @@ export const StartupDetail: React.FC = () => {
           <Card>
             <div className="p-6 border-b border-white/10">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-white">Notes</h3>
+                {/* Reduced from lg to base */}
+                <h3 className="text-base font-semibold text-white">Notes</h3>
                 <Button
                   variant="glass"
                   size="sm"

@@ -68,17 +68,17 @@ export const Hero: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Main headline */}
+        {/* Main headline - Further reduced sizes */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
           className="mb-8"
         >
-          <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[1.1] mb-6">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] mb-6">
             <span className="text-white">Turn your </span>
             <span className="relative">
-              <span className="bg-gradient-to-r from-orange-400 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r bg-clip-text text-transparent">
                 ideas
               </span>
               <motion.div
@@ -99,7 +99,8 @@ export const Hero: React.FC = () => {
             </span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-gray-400 max-w-4xl mx-auto leading-relaxed font-light">
+          {/* Subtext - Further reduced from lg to base */}
+          <p className="text-base md:text-lg text-gray-400 max-w-4xl mx-auto leading-relaxed font-light">
             The first all-in-one AI platform to research, validate, and build your startup ideas with 
             <span className="text-white font-medium"> professional-grade tools</span>
           </p>
@@ -122,7 +123,7 @@ export const Hero: React.FC = () => {
                     value={idea}
                     onChange={(e) => setIdea(e.target.value)}
                     placeholder="Describe your startup idea... e.g., 'AI-powered fitness app for busy professionals'"
-                    className="flex-1 px-6 py-4 bg-transparent text-white placeholder-gray-400 text-lg focus:outline-none"
+                    className="flex-1 px-6 py-4 bg-transparent text-white placeholder-gray-400 text-base focus:outline-none"
                   />
                   <Button
                     variant="primary"

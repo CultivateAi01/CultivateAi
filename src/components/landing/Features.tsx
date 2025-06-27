@@ -79,7 +79,7 @@ export const Features: React.FC = () => {
       </div>
       
       <div className="max-w-7xl mx-auto relative">
-        {/* Header */}
+        {/* Header - Reduced text sizes */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -92,7 +92,8 @@ export const Features: React.FC = () => {
             <span className="text-sm font-medium text-gray-300">Powerful AI Tools</span>
           </div>
           
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+          {/* Reduced from 6xl to 4xl */}
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
             Everything you need to
             <br />
             <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
@@ -100,7 +101,8 @@ export const Features: React.FC = () => {
             </span>
           </h2>
           
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+          {/* Reduced from xl to lg */}
+          <p className="text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed">
             Our AI-powered suite handles the complex research and planning, so you can focus on building and growing your startup.
           </p>
         </motion.div>
@@ -115,7 +117,7 @@ export const Features: React.FC = () => {
         >
           {stats.map((stat, index) => (
             <div key={stat.label} className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-white mb-2">{stat.number}</div>
+              <div className="text-2xl md:text-3xl font-bold text-white mb-2">{stat.number}</div>
               <div className="text-gray-400 text-sm">{stat.label}</div>
             </div>
           ))}
@@ -151,7 +153,7 @@ export const Features: React.FC = () => {
 
                     {/* Content */}
                     <div className="mb-6">
-                      <h3 className="text-xl font-semibold text-white mb-3">{feature.title}</h3>
+                      <h3 className="text-lg font-semibold text-white mb-3">{feature.title}</h3>
                       <p className="text-gray-400 leading-relaxed mb-4">{feature.description}</p>
                       
                       {/* Benefits */}

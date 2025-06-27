@@ -90,7 +90,7 @@ export const Pricing: React.FC = () => {
       </div>
       
       <div className="max-w-7xl mx-auto relative">
-        {/* Header */}
+        {/* Header - Reduced text sizes */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -103,7 +103,8 @@ export const Pricing: React.FC = () => {
             <span className="text-sm font-medium text-gray-300">Simple, Transparent Pricing</span>
           </div>
           
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+          {/* Reduced from 6xl to 4xl */}
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
             Choose your
             <br />
             <span className="bg-gradient-to-r from-purple-400 via-pink-500 to-orange-500 bg-clip-text text-transparent">
@@ -111,7 +112,8 @@ export const Pricing: React.FC = () => {
             </span>
           </h2>
           
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed mb-8">
+          {/* Reduced from xl to lg */}
+          <p className="text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed mb-8">
             Start free, scale as you grow. All plans include access to our complete AI toolkit.
           </p>
 
@@ -173,14 +175,16 @@ export const Pricing: React.FC = () => {
                         <Icon className="w-8 h-8 text-white" />
                       </div>
                       
-                      <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
+                      {/* Reduced from 2xl to xl */}
+                      <h3 className="text-xl font-bold text-white mb-2">{plan.name}</h3>
                       <p className="text-gray-400 text-sm mb-4">{plan.description}</p>
                       
                       <div className="flex items-center justify-center gap-2 mb-2">
                         {plan.originalPrice && (
                           <span className="text-gray-500 line-through text-lg">{plan.originalPrice}</span>
                         )}
-                        <span className="text-4xl font-bold text-white">{plan.price}</span>
+                        {/* Reduced from 4xl to 3xl */}
+                        <span className="text-3xl font-bold text-white">{plan.price}</span>
                         {plan.price !== 'Free' && (
                           <span className="text-gray-400">/{billingCycle === 'monthly' ? 'mo' : 'yr'}</span>
                         )}

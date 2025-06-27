@@ -102,7 +102,7 @@ export const About: React.FC = () => {
       </div>
       
       <div className="max-w-7xl mx-auto relative">
-        {/* Header */}
+        {/* Header - Reduced text sizes */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -115,7 +115,8 @@ export const About: React.FC = () => {
             <span className="text-sm font-medium text-gray-300">Our Story</span>
           </div>
           
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+          {/* Reduced from 6xl to 4xl */}
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
             Empowering the next
             <br />
             <span className="bg-gradient-to-r from-green-400 via-emerald-500 to-teal-500 bg-clip-text text-transparent">
@@ -123,7 +124,8 @@ export const About: React.FC = () => {
             </span>
           </h2>
           
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+          {/* Reduced from xl to lg */}
+          <p className="text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed">
             We believe every entrepreneur deserves access to world-class tools and insights. 
             That's why we built UnCubed - to democratize startup success through AI.
           </p>
@@ -144,7 +146,8 @@ export const About: React.FC = () => {
                 <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                   <Icon className="w-8 h-8 text-white" />
                 </div>
-                <div className="text-3xl md:text-4xl font-bold text-white mb-2">{stat.number}</div>
+                {/* Reduced from 4xl to 3xl */}
+                <div className="text-2xl md:text-3xl font-bold text-white mb-2">{stat.number}</div>
                 <div className="text-gray-400 text-sm">{stat.label}</div>
               </div>
             );
@@ -162,8 +165,10 @@ export const About: React.FC = () => {
           <div className="absolute -inset-1 bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 rounded-3xl blur opacity-20" />
           <div className="relative bg-white/[0.03] backdrop-blur-md border border-white/[0.08] rounded-3xl p-12 text-center">
             <Rocket className="w-16 h-16 text-green-400 mx-auto mb-6" />
-            <h3 className="text-3xl font-bold text-white mb-6">Our Mission</h3>
-            <p className="text-xl text-gray-300 leading-relaxed max-w-4xl mx-auto">
+            {/* Reduced from 3xl to 2xl */}
+            <h3 className="text-2xl font-bold text-white mb-6">Our Mission</h3>
+            {/* Reduced from xl to lg */}
+            <p className="text-lg text-gray-300 leading-relaxed max-w-4xl mx-auto">
               "To empower every entrepreneur with AI-driven insights and tools that were once only available 
               to well-funded startups and Fortune 500 companies. We're leveling the playing field and making 
               startup success accessible to all."
@@ -183,7 +188,8 @@ export const About: React.FC = () => {
           className="mb-20"
         >
           <div className="text-center mb-16">
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">Our Values</h3>
+            {/* Reduced from 4xl to 3xl */}
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Our Values</h3>
             <p className="text-gray-400 max-w-2xl mx-auto">
               The principles that guide everything we do and every decision we make.
             </p>
@@ -205,7 +211,8 @@ export const About: React.FC = () => {
                     <div className={`w-14 h-14 bg-gradient-to-r ${value.color} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
                       <Icon className="w-7 h-7 text-white" />
                     </div>
-                    <h4 className="text-xl font-semibold text-white mb-4">{value.title}</h4>
+                    {/* Reduced from xl to lg */}
+                    <h4 className="text-lg font-semibold text-white mb-4">{value.title}</h4>
                     <p className="text-gray-400 leading-relaxed">{value.description}</p>
                   </div>
                 </motion.div>
