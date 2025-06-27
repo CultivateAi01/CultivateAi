@@ -56,7 +56,7 @@ export const Hero: React.FC = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto text-center">
         {/* Badge */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -66,7 +66,7 @@ export const Hero: React.FC = () => {
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
             <span className="text-sm font-medium text-gray-300">AI-Powered • Trusted by 10,000+ founders</span>
           </div>
-        </motion.div>
+        </motion.div>*/}
 
         {/* Main headline - Further reduced sizes */}
         <motion.div
