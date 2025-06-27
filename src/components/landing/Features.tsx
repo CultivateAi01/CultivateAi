@@ -170,22 +170,6 @@ export const Features: React.FC = () => {
           })}
         </div>
 
-        {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="text-center mt-20"
-        >
-          <div className="inline-flex items-center gap-4 bg-white/[0.08] backdrop-blur-md border border-white/[0.12] rounded-2xl p-6">
-            <div className="text-left">
-              <div className="text-white font-semibold">Ready to get started?</div>
-              <div className="text-gray-400 text-sm">Join thousands of successful entrepreneurs</div>
-            </div>
-            <ArrowRight className="w-6 h-6 text-blue-400" />
-          </div>
-        </motion.div>
       </div>
     </section>
   );
