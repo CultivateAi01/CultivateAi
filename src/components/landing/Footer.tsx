@@ -2,6 +2,8 @@ import React from 'react';
 import { Twitter, Github, Linkedin, Mail, ArrowUpRight } from 'lucide-react';
 
 export const Footer: React.FC = () => {
+  const currentYear = new Date().getFullYear();
+
   const footerSections = {
     Product: [
       { label: 'Features', href: '#features' },
@@ -109,7 +111,7 @@ export const Footer: React.FC = () => {
         <div className="border-t border-white/10 pt-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-gray-400 text-sm">
-              © 2024 UnCubed. All rights reserved.
+              © {currentYear} UnCubed. All rights reserved.
             </p>
             
             <div className="flex items-center gap-6">
