@@ -121,7 +121,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
 
                   {/* Letters after cube */}
                   <div className="flex">
-                    {['u', 'b', 'e', 'd'].map((letter, index) => (
+                    {[ 'b', 'e', 'd'].map((letter, index) => (
                       <motion.span
                         key={`after-${index}`}
                         initial={{ opacity: 0, y: 20 }}
