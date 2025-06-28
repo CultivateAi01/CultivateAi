@@ -18,19 +18,19 @@ export const Button: React.FC<ButtonProps> = ({
   disabled,
   ...props
 }) => {
-  const baseClasses = 'font-medium rounded-2xl transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed';
+  const baseClasses = 'font-medium rounded-xl transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed border';
   
   const variants = {
-    primary: 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl',
-    secondary: 'bg-white/10 hover:bg-white/20 text-white border border-white/20',
-    glass: 'glass-button text-white',
-    outline: 'border-2 border-white/30 hover:border-white/50 text-white bg-transparent hover:bg-white/5'
+    primary: 'bg-white text-black border-white hover:bg-gray-100 hover:border-gray-100 shadow-sm hover:shadow-md',
+    secondary: 'bg-gray-800 text-white border-gray-700 hover:bg-gray-700 hover:border-gray-600',
+    glass: 'bg-white/10 text-white border-white/20 hover:bg-white/15 hover:border-white/30 backdrop-blur-sm',
+    outline: 'bg-transparent text-white border-white/30 hover:bg-white/5 hover:border-white/50'
   };
   
   const sizes = {
     sm: 'px-4 py-2 text-sm',
-    md: 'px-6 py-3 text-base',
-    lg: 'px-8 py-4 text-lg'
+    md: 'px-6 py-2.5 text-sm',
+    lg: 'px-8 py-3 text-base'
   };
 
   return (

@@ -210,7 +210,7 @@ export const CTA: React.FC = () => {
                     <Button 
                       variant="primary" 
                       size="lg" 
-                      className="px-12 py-4 text-lg font-semibold bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-2xl shadow-blue-500/25"
+                      className="px-12 py-4 text-lg font-semibold shadow-2xl"
                       onClick={() => navigate('/signup')}
                     >
                       Start Building Now
@@ -230,7 +230,7 @@ export const CTA: React.FC = () => {
                     <Button 
                       variant="glass" 
                       size="lg" 
-                      className="px-12 py-4 text-lg font-semibold border-white/20 hover:border-white/30"
+                      className="px-12 py-4 text-lg font-semibold"
                     >
                       Watch Demo
                     </Button>

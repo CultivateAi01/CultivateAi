@@ -33,6 +33,27 @@ body {
     @apply bg-white/[0.05] border border-white/[0.08] backdrop-blur-md focus:border-white/20 focus:bg-white/[0.08] transition-all duration-200;
   }
 
+  /* Modern button styles inspired by Pica OS */
+  .btn-modern {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-medium rounded-xl border transition-all duration-200;
+  }
+  
+  .btn-primary {
+    @apply bg-white text-black border-white hover:bg-gray-100 hover:border-gray-100 shadow-sm hover:shadow-md;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-800 text-white border-gray-700 hover:bg-gray-700 hover:border-gray-600;
+  }
+  
+  .btn-glass {
+    @apply bg-white/10 text-white border-white/20 hover:bg-white/15 hover:border-white/30 backdrop-blur-sm;
+  }
+  
+  .btn-outline {
+    @apply bg-transparent text-white border-white/30 hover:bg-white/5 hover:border-white/50;
+  }
+
   /* 3D Cube transforms */
   .transform-gpu {
     transform-style: preserve-3d;

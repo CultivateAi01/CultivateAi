@@ -136,7 +136,7 @@ export const Hero: React.FC = () => {
                   {/* Small Get Started button in bottom right corner */}
                   <button
                     onClick={handleGetStarted}
-                    className="absolute bottom-4 right-4 w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
+                    className="absolute bottom-4 right-4 w-10 h-10 bg-white text-black hover:bg-gray-100 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110 border border-white"
                   >
                     <ArrowRight className="w-5 h-5" />
                   </button>
