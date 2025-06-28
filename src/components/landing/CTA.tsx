@@ -23,14 +23,13 @@ export const CTA: React.FC = () => {
 
   return (
     <section id="cta" className="py-32 px-6 relative">
-      {/* Clean background that starts and ends with black - matching About section */}
+      {/* Clean background that starts and ends with black - pure black theme */}
       <div className="absolute inset-0">
         {/* Start with black from contact */}
         <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black to-transparent" />
         
-        {/* Main CTA background with enhanced gradients - matching About section */}
+        {/* Main CTA background - pure black */}
         <div className="absolute inset-0 bg-black" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.1),transparent_70%)]" />
         
         {/* End with black for footer transition */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-black" />
@@ -75,7 +74,7 @@ export const CTA: React.FC = () => {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 bg-white/[0.08] backdrop-blur-md border border-white/[0.12] rounded-full px-4 py-2 mb-6">
-            <Sparkles className="w-4 h-4 text-green-400" />
+            <Sparkles className="w-4 h-4 text-white" />
             <span className="text-sm font-medium text-gray-300">Ready to transform your idea?</span>
           </div>
           
@@ -83,7 +82,7 @@ export const CTA: React.FC = () => {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
             Start building your
             <br />
-            <span className="bg-gradient-to-r from-green-400 via-emerald-500 to-teal-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-white via-gray-200 to-gray-300 bg-clip-text text-transparent">
               dream startup
             </span>
             {' '}today
@@ -95,7 +94,7 @@ export const CTA: React.FC = () => {
           </p>
         </motion.div>
 
-        {/* Main CTA Card - matching About section style */}
+        {/* Main CTA Card - matching About section style with black theme */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -103,9 +102,9 @@ export const CTA: React.FC = () => {
           viewport={{ once: true }}
           className="relative mb-20"
         >
-          <div className="absolute -inset-1 bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 rounded-3xl blur opacity-20" />
+          <div className="absolute -inset-1 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-600 rounded-3xl blur opacity-20" />
           <div className="relative bg-white/[0.03] backdrop-blur-md border border-white/[0.08] rounded-3xl p-12 text-center">
-            <Rocket className="w-16 h-16 text-green-400 mx-auto mb-6" />
+            <Rocket className="w-16 h-16 text-white mx-auto mb-6" />
             
             {/* Reduced from 3xl to 2xl to match About section */}
             <h3 className="text-2xl font-bold text-white mb-6">Transform Your Idea Into Reality</h3>
@@ -209,7 +208,7 @@ export const CTA: React.FC = () => {
                   className="text-center group"
                 >
                   <div className="text-3xl mb-2">{stat.icon}</div>
-                  <div className="text-2xl font-bold text-white mb-1 group-hover:text-green-400 transition-colors">
+                  <div className="text-2xl font-bold text-white mb-1 group-hover:text-gray-300 transition-colors">
                     {stat.number}
                   </div>
                   <div className="text-sm text-gray-400">{stat.label}</div>
