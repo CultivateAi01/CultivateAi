@@ -160,76 +160,66 @@ export const Pricing: React.FC = () => {
                 className={`relative group ${plan.popular ? 'scale-105' : ''}`}
               >
                 {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-white text-black px-4 py-1 rounded-full text-sm font-medium">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-medium">
                     Most Popular
                   </div>
                 )}
                 
-                <div className="relative h-full">
-                  {/* Simple border */}
-                  <div className={`absolute -inset-px rounded-2xl ${
-                    plan.popular 
-                      ? 'bg-gradient-to-b from-white/20 to-white/5' 
-                      : 'bg-white/[0.08]'
-                  }`} />
-                  
-                  <div className={`relative h-full bg-black/80 backdrop-blur-md rounded-2xl overflow-hidden ${
-                    plan.popular 
-                      ? 'border border-white/20' 
-                      : 'border border-white/[0.08]'
-                  }`}>
-                    <div className="p-8">
-                      {/* Plan Header */}
-                      <div className="text-center mb-8">
-                        <div className="w-12 h-12 bg-white/[0.1] rounded-xl flex items-center justify-center mx-auto mb-4">
-                          <Icon className="w-6 h-6 text-white" />
-                        </div>
-                        
-                        <h3 className="text-xl font-bold text-white mb-2">{plan.name}</h3>
-                        <p className="text-gray-400 text-sm mb-4">{plan.description}</p>
-                        
-                        <div className="flex items-center justify-center gap-2 mb-2">
-                          {plan.originalPrice && (
-                            <span className="text-gray-500 line-through text-lg">{plan.originalPrice}</span>
-                          )}
-                          <span className="text-3xl font-bold text-white">{plan.price}</span>
-                          {plan.price !== 'Free' && (
-                            <span className="text-gray-400">/{billingCycle === 'monthly' ? 'mo' : 'yr'}</span>
-                          )}
-                        </div>
-                        
-                        <div className="text-gray-400 text-sm">
-                          {plan.credits} AI credits included
-                        </div>
+                <div className={`glass-card rounded-2xl overflow-hidden h-full ${
+                  plan.popular 
+                    ? 'border-blue-500/50 ring-1 ring-blue-500/30' 
+                    : ''
+                }`}>
+                  <div className="p-8">
+                    {/* Plan Header */}
+                    <div className="text-center mb-8">
+                      <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+                        <Icon className="w-6 h-6 text-white" />
                       </div>
-
-                      {/* Features */}
-                      <div className="space-y-3 mb-8">
-                        {plan.features.map((feature, idx) => (
-                          <div key={idx} className="flex items-center gap-3">
-                            <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
-                            <span className="text-gray-300 text-sm">{feature}</span>
-                          </div>
-                        ))}
-                        
-                        {plan.limitations.map((limitation, idx) => (
-                          <div key={idx} className="flex items-center gap-3 opacity-60">
-                            <div className="w-4 h-4 border border-gray-500 rounded flex-shrink-0" />
-                            <span className="text-gray-400 text-sm">{limitation}</span>
-                          </div>
-                        ))}
+                      
+                      <h3 className="text-xl font-bold text-white mb-2">{plan.name}</h3>
+                      <p className="text-gray-400 text-sm mb-4">{plan.description}</p>
+                      
+                      <div className="flex items-center justify-center gap-2 mb-2">
+                        {plan.originalPrice && (
+                          <span className="text-gray-500 line-through text-lg">{plan.originalPrice}</span>
+                        )}
+                        <span className="text-3xl font-bold text-white">{plan.price}</span>
+                        {plan.price !== 'Free' && (
+                          <span className="text-gray-400">/{billingCycle === 'monthly' ? 'mo' : 'yr'}</span>
+                        )}
                       </div>
-
-                      {/* CTA Button */}
-                      <Button
-                        variant={plan.popular ? 'primary' : 'glass'}
-                        size="lg"
-                        className="w-full"
-                      >
-                        {plan.price === 'Free' ? 'Get Started Free' : 'Start Free Trial'}
-                        <ArrowRight className="w-4 h-4" />
-                      </Button>
+                      
+                      <div className="text-gray-400 text-sm">
+                        {plan.credits} AI credits included
+                      </div>
                     </div>
+
+                    {/* Features */}
+                    <div className="space-y-3 mb-8">
+                      {plan.features.map((feature, idx) => (
+                        <div key={idx} className="flex items-center gap-3">
+                          <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
+                          <span className="text-gray-300 text-sm">{feature}</span>
+                        </div>
+                      ))}
+                      
+                      {plan.limitations.map((limitation, idx) => (
+                        <div key={idx} className="flex items-center gap-3">
+                          <span className="text-gray-500 text-sm">{limitation}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* CTA Button */}
+                    <Button
+                      variant={plan.popular ? 'primary' : 'glass'}
+                      size="lg"
+                      className="w-full"
+                    >
+                      {plan.price === 'Free' ? 'Get Started Free' : 'Start Free Trial'}
+                      <ArrowRight className="w-4 h-4" />
+                    </Button>
                   </div>
                 </div>
               </motion.div>
@@ -245,7 +235,7 @@ export const Pricing: React.FC = () => {
           viewport={{ once: true }}
           className="text-center"
         >
-          <div className="bg-white/[0.02] backdrop-blur-md border border-white/[0.05] rounded-xl p-6">
+          <div className="glass-card rounded-xl p-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 { number: '10,000+', label: 'Active users' },
