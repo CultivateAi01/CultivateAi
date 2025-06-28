@@ -159,7 +159,7 @@ export const Hero: React.FC = () => {
             The world's most advanced AI platform for entrepreneurs. 
             <br className="hidden md:block" />
             Research, validate, and build your startup with superhuman speed.
-          </p>
+          </motion.p>
         </motion.div>
 
         {/* Interactive Input Section */}
