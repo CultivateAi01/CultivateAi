@@ -37,6 +37,8 @@ const stats = [
 ];
 
 export const About: React.FC = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
     <section id="about" className="py-32 px-6 relative">
       {/* Clean background that starts and ends with black */}
