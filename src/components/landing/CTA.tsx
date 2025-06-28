@@ -94,7 +94,7 @@ export const CTA: React.FC = () => {
           </p>
         </motion.div>
 
-        {/* Main CTA Card - matching About section style with black theme */}
+        {/* Main CTA Card - REMOVED (opacity: 0) */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -102,8 +102,8 @@ export const CTA: React.FC = () => {
           viewport={{ once: true }}
           className="relative mb-20"
         >
-          <div className="absolute -inset-1 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-600 rounded-3xl blur opacity-20" />
-          <div className="relative bg-white/[0.03] backdrop-blur-md border border-white/[0.08] rounded-3xl p-12 text-center">
+          <div className="absolute -inset-1 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-600 rounded-3xl blur opacity-0" />
+          <div className="relative bg-transparent border-transparent rounded-3xl p-12 text-center" style={{ opacity: 0 }}>
             <Rocket className="w-16 h-16 text-white mx-auto mb-6" />
             
             {/* Reduced from 3xl to 2xl to match About section */}
@@ -216,6 +216,106 @@ export const CTA: React.FC = () => {
               ))}
             </motion.div>
           </div>
+        </motion.div>
+
+        {/* Benefits grid - now directly in section without card wrapper */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          viewport={{ once: true }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
+        >
+          {benefits.map((benefit, index) => {
+            const Icon = benefit.icon;
+            return (
+              <motion.div
+                key={benefit.text}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
+                viewport={{ once: true }}
+                className="flex flex-col items-center gap-3 p-4 bg-white/[0.03] backdrop-blur-sm border border-white/[0.08] rounded-xl hover:bg-white/[0.06] transition-all duration-300 group"
+              >
+                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br from-white/10 to-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                  <Icon className={`w-5 h-5 ${benefit.color}`} />
+                </div>
+                <span className="text-gray-300 text-sm font-medium text-center leading-tight">{benefit.text}</span>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+        
+        {/* CTA Buttons - now directly in section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          viewport={{ once: true }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
+        >
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Button 
+              variant="primary" 
+              size="lg" 
+              className="px-12 py-4 text-lg font-semibold shadow-2xl"
+              onClick={() => navigate('/signup')}
+            >
+              Start Building Now
+              <motion.div
+                animate={{ x: [0, 5, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                <ArrowRight className="w-5 h-5" />
+              </motion.div>
+            </Button>
+          </motion.div>
+          
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Button 
+              variant="glass" 
+              size="lg" 
+              className="px-12 py-4 text-lg font-semibold"
+            >
+              Watch Demo
+            </Button>
+          </motion.div>
+        </motion.div>
+        
+        {/* Trust indicators - now directly in section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1 }}
+          viewport={{ once: true }}
+          className="flex flex-col md:flex-row items-center justify-center gap-8 pt-8 border-t border-white/10"
+        >
+          {[
+            { number: '10,000+', label: 'Active users', icon: '👥' },
+            { number: '50,000+', label: 'Ideas validated', icon: '💡' },
+            { number: '$2M+', label: 'Funding raised', icon: '💰' }
+          ].map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 1.1 + index * 0.1 }}
+              viewport={{ once: true }}
+              className="text-center group"
+            >
+              <div className="text-3xl mb-2">{stat.icon}</div>
+              <div className="text-2xl font-bold text-white mb-1 group-hover:text-gray-300 transition-colors">
+                {stat.number}
+              </div>
+              <div className="text-sm text-gray-400">{stat.label}</div>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </section>
