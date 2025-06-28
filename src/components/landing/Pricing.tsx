@@ -299,7 +299,7 @@ export const Pricing: React.FC = () => {
                   14-day money-back guarantee • No setup fees • Cancel anytime
                 </p>
               </div>
-            </div>
+            </motion.div>
           </div>
         </motion.div>
       </div>
