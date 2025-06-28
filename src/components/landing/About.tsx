@@ -57,7 +57,7 @@ export const About: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.4 }}
           viewport={{ once: true }}
           className="text-center mb-20"
         >
@@ -86,7 +86,7 @@ export const About: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
           viewport={{ once: true }}
           className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20"
         >
@@ -94,7 +94,7 @@ export const About: React.FC = () => {
             const Icon = stat.icon;
             return (
               <div key={stat.label} className="text-center group">
-                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-200">
                   <Icon className="w-8 h-8 text-white" />
                 </div>
                 {/* Reduced from 4xl to 3xl */}
@@ -109,7 +109,7 @@ export const About: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          transition={{ duration: 0.4, delay: 0.15 }}
           viewport={{ once: true }}
           className="relative mb-20"
         >
@@ -134,7 +134,7 @@ export const About: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
           viewport={{ once: true }}
           className="mb-20"
         >
@@ -154,12 +154,12 @@ export const About: React.FC = () => {
                   key={value.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  transition={{ duration: 0.3, delay: 0.25 + index * 0.05 }}
                   viewport={{ once: true }}
                   className="group"
                 >
-                  <div className="bg-white/[0.03] backdrop-blur-md border border-white/[0.08] rounded-2xl p-8 h-full group-hover:bg-white/[0.06] transition-all duration-300">
-                    <div className={`w-14 h-14 bg-gradient-to-r ${value.color} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                  <div className="bg-white/[0.03] backdrop-blur-md border border-white/[0.08] rounded-2xl p-8 h-full group-hover:bg-white/[0.06] transition-all duration-200">
+                    <div className={`w-14 h-14 bg-gradient-to-r ${value.color} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-200`}>
                       <Icon className="w-7 h-7 text-white" />
                     </div>
                     {/* Reduced from xl to lg */}

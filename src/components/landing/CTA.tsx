@@ -12,10 +12,10 @@ const benefits = [
 ];
 
 const floatingElements = [
-  { icon: Star, delay: 0, duration: 6, x: '10%', y: '20%' },
-  { icon: Sparkles, delay: 1, duration: 8, x: '80%', y: '15%' },
-  { icon: Zap, delay: 2, duration: 7, x: '15%', y: '70%' },
-  { icon: Rocket, delay: 3, duration: 9, x: '85%', y: '75%' },
+  { icon: Star, delay: 0, duration: 4, x: '10%', y: '20%' },
+  { icon: Sparkles, delay: 0.5, duration: 5, x: '80%', y: '15%' },
+  { icon: Zap, delay: 1, duration: 4.5, x: '15%', y: '70%' },
+  { icon: Rocket, delay: 1.5, duration: 5.5, x: '85%', y: '75%' },
 ];
 
 export const CTA: React.FC = () => {
@@ -69,7 +69,7 @@ export const CTA: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.4 }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
@@ -98,7 +98,7 @@ export const CTA: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
           viewport={{ once: true }}
           className="relative mb-20"
         >
@@ -120,7 +120,7 @@ export const CTA: React.FC = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
               viewport={{ once: true }}
               className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
             >
@@ -131,11 +131,11 @@ export const CTA: React.FC = () => {
                     key={benefit.text}
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
+                    transition={{ duration: 0.3, delay: 0.3 + index * 0.05 }}
                     viewport={{ once: true }}
-                    className="flex flex-col items-center gap-3 p-4 bg-white/[0.03] backdrop-blur-sm border border-white/[0.08] rounded-xl hover:bg-white/[0.06] transition-all duration-300 group"
+                    className="flex flex-col items-center gap-3 p-4 bg-white/[0.03] backdrop-blur-sm border border-white/[0.08] rounded-xl hover:bg-white/[0.06] transition-all duration-200 group"
                   >
-                    <div className={`w-10 h-10 rounded-xl bg-gradient-to-br from-white/10 to-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                    <div className={`w-10 h-10 rounded-xl bg-gradient-to-br from-white/10 to-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-200`}>
                       <Icon className={`w-5 h-5 ${benefit.color}`} />
                     </div>
                     <span className="text-gray-300 text-sm font-medium text-center leading-tight">{benefit.text}</span>
@@ -148,7 +148,7 @@ export const CTA: React.FC = () => {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
+              transition={{ duration: 0.4, delay: 0.4 }}
               viewport={{ once: true }}
               className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
             >
@@ -190,7 +190,7 @@ export const CTA: React.FC = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1 }}
+              transition={{ duration: 0.4, delay: 0.5 }}
               viewport={{ once: true }}
               className="flex flex-col md:flex-row items-center justify-center gap-8 pt-8 border-t border-white/10"
             >
@@ -203,7 +203,7 @@ export const CTA: React.FC = () => {
                   key={stat.label}
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 1.1 + index * 0.1 }}
+                  transition={{ duration: 0.3, delay: 0.6 + index * 0.05 }}
                   viewport={{ once: true }}
                   className="text-center group"
                 >

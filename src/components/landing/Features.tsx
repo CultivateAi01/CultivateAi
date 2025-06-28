@@ -70,7 +70,7 @@ export const Features: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.4 }}
           viewport={{ once: true }}
           className="text-center mb-20"
         >
@@ -98,7 +98,7 @@ export const Features: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
           viewport={{ once: true }}
           className="max-w-6xl mx-auto"
         >
@@ -118,14 +118,14 @@ export const Features: React.FC = () => {
                     key={feature.title}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
                     viewport={{ once: true }}
                     className="group"
                   >
-                    <div className="h-full bg-white/[0.05] border border-white/[0.08] rounded-xl p-6 hover:bg-white/[0.08] transition-all duration-300">
+                    <div className="h-full bg-white/[0.05] border border-white/[0.08] rounded-xl p-6 hover:bg-white/[0.08] transition-all duration-200">
                       {/* Icon with minimal styling */}
                       <div className="relative mb-4">
-                        <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                           <Icon className="w-6 h-6 text-white" />
                         </div>
                         <div className="absolute -top-1 -right-1 bg-red-500/20 text-red-400 text-xs font-bold px-2 py-0.5 rounded-full border border-red-500/30">
@@ -150,7 +150,7 @@ export const Features: React.FC = () => {
                       </div>
 
                       {/* Simple CTA */}
-                      <div className="flex items-center text-red-400 font-medium text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="flex items-center text-red-400 font-medium text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                         <span>Learn more</span>
                         <ArrowRight className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform duration-200" />
                       </div>

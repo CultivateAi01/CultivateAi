@@ -52,7 +52,7 @@ export const Hero: React.FC = () => {
             rotate: [0, 5, 0]
           }}
           transition={{ 
-            duration: 6,
+            duration: 4,
             repeat: Infinity,
             ease: "easeInOut"
           }}
@@ -64,10 +64,10 @@ export const Hero: React.FC = () => {
             rotate: [0, -5, 0]
           }}
           transition={{ 
-            duration: 8,
+            duration: 5,
             repeat: Infinity,
             ease: "easeInOut",
-            delay: 2
+            delay: 1
           }}
           className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-xl"
         />
@@ -78,7 +78,7 @@ export const Hero: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
+          transition={{ duration: 0.4, delay: 0.05 }}
           className="mb-8"
         >
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] mb-6">
@@ -109,12 +109,12 @@ export const Hero: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
           className="mb-12"
         >
           <div className="max-w-3xl mx-auto">
             <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-300" />
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-200" />
               <div className="relative bg-white/[0.08] backdrop-blur-md border border-white/[0.12] rounded-3xl p-3">
                 <div className="relative">
                   <textarea
@@ -153,7 +153,7 @@ export const Hero: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
+          transition={{ duration: 0.4, delay: 0.15 }}
           className="flex flex-col md:flex-row items-center justify-center gap-8"
         >
           <div className="flex items-center gap-3 text-gray-400">
