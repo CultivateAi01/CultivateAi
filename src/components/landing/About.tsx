@@ -125,7 +125,7 @@ export const About: React.FC = () => {
               startup success accessible to all."
             </p>
             <div className="mt-8 text-gray-400">
-              — Sarah Chen, CEO & Co-founder
+              — Ankit Kumar, CEO & Co-founder
             </div>
           </div>
         </motion.div>
