@@ -8,8 +8,8 @@ const plans = [
     id: 'starter',
     name: 'Starter',
     description: 'Perfect for exploring your first startup idea',
-    price: 'Free',
-    originalPrice: null,
+    monthlyPrice: 'Free',
+    yearlyPrice: 'Free',
     credits: 100,
     icon: Rocket,
     popular: false,
@@ -30,8 +30,10 @@ const plans = [
     id: 'professional',
     name: 'Professional',
     description: 'For serious entrepreneurs ready to launch',
-    price: '$29',
-    originalPrice: '$49',
+    monthlyPrice: '$29',
+    yearlyPrice: '$17',
+    originalMonthlyPrice: '$49',
+    originalYearlyPrice: '$29',
     credits: 500,
     icon: Star,
     popular: true,
@@ -52,8 +54,10 @@ const plans = [
     id: 'enterprise',
     name: 'Enterprise',
     description: 'For teams and agencies scaling multiple ventures',
-    price: '$99',
-    originalPrice: '$149',
+    monthlyPrice: '$99',
+    yearlyPrice: '$59',
+    originalMonthlyPrice: '$149',
+    originalYearlyPrice: '$99',
     credits: 2000,
     icon: Crown,
     popular: false,
@@ -78,22 +82,15 @@ export const Pricing: React.FC = () => {
 
   return (
     <section id="pricing" className="py-32 px-6 relative">
-      {/* Clean minimalistic background */}
+      {/* Premium black background */}
       <div className="absolute inset-0">
-        {/* Start with black from features */}
         <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black to-transparent" />
-        
-        {/* Simple single gradient background */}
         <div className="absolute inset-0 bg-black" />
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900/50 via-black to-gray-900/30" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02),transparent_70%)]" />
-        
-        {/* End with black for about transition */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-black" />
       </div>
       
       <div className="max-w-7xl mx-auto relative">
-        {/* Clean Header */}
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -101,15 +98,15 @@ export const Pricing: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 bg-white/[0.05] backdrop-blur-md border border-white/[0.08] rounded-full px-4 py-2 mb-6">
-            <Zap className="w-4 h-4 text-gray-400" />
+          <div className="inline-flex items-center gap-2 bg-white/[0.08] backdrop-blur-md border border-white/[0.12] rounded-full px-4 py-2 mb-6">
+            <Zap className="w-4 h-4 text-blue-400" />
             <span className="text-sm font-medium text-gray-300">Simple Pricing</span>
           </div>
           
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
             Choose your
             <br />
-            <span className="text-gray-300">
+            <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
               startup journey
             </span>
           </h2>
@@ -118,13 +115,13 @@ export const Pricing: React.FC = () => {
             Start free, scale as you grow. All plans include access to our complete AI toolkit.
           </p>
 
-          {/* Simple Billing Toggle */}
-          <div className="inline-flex items-center bg-white/[0.05] backdrop-blur-md border border-white/[0.08] rounded-xl p-1">
+          {/* Billing Toggle */}
+          <div className="inline-flex items-center bg-white/[0.08] backdrop-blur-md border border-white/[0.12] rounded-xl p-1">
             <button
               onClick={() => setBillingCycle('monthly')}
               className={`px-6 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                 billingCycle === 'monthly'
-                  ? 'bg-white/[0.1] text-white'
+                  ? 'bg-white text-black'
                   : 'text-gray-400 hover:text-white'
               }`}
             >
@@ -134,22 +131,27 @@ export const Pricing: React.FC = () => {
               onClick={() => setBillingCycle('yearly')}
               className={`px-6 py-2 rounded-lg text-sm font-medium transition-all duration-200 relative ${
                 billingCycle === 'yearly'
-                  ? 'bg-white/[0.1] text-white'
+                  ? 'bg-white text-black'
                   : 'text-gray-400 hover:text-white'
               }`}
             >
               Yearly
-              <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">
-                Save 40%
-              </span>
+              {billingCycle === 'monthly' && (
+                <span className="absolute -top-2 -right-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs px-2 py-0.5 rounded-full font-semibold">
+                  Save 40%
+                </span>
+              )}
             </button>
           </div>
         </motion.div>
 
-        {/* Clean Pricing Cards */}
+        {/* Pricing Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {plans.map((plan, index) => {
             const Icon = plan.icon;
+            const currentPrice = billingCycle === 'monthly' ? plan.monthlyPrice : plan.yearlyPrice;
+            const originalPrice = billingCycle === 'monthly' ? plan.originalMonthlyPrice : plan.originalYearlyPrice;
+            
             return (
               <motion.div
                 key={plan.id}
@@ -157,36 +159,44 @@ export const Pricing: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className={`relative group ${plan.popular ? 'scale-105' : ''}`}
+                className={`relative ${plan.popular ? 'scale-105' : ''}`}
               >
                 {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-medium">
-                    Most Popular
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                    <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
+                      Most Popular
+                    </div>
                   </div>
                 )}
                 
-                <div className={`glass-card rounded-2xl overflow-hidden h-full ${
+                <div className={`relative h-full bg-white/[0.03] backdrop-blur-md border rounded-2xl overflow-hidden ${
                   plan.popular 
-                    ? 'border-blue-500/50 ring-1 ring-blue-500/30' 
-                    : ''
-                }`}>
-                  <div className="p-8">
+                    ? 'border-blue-500/50 shadow-2xl shadow-blue-500/20' 
+                    : 'border-white/[0.08] hover:border-white/[0.15]'
+                } transition-all duration-300 group hover:bg-white/[0.05]`}>
+                  
+                  {/* Gradient accent line for popular plan */}
+                  {plan.popular && (
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-600" />
+                  )}
+                  
+                  <div className="p-8 h-full flex flex-col">
                     {/* Plan Header */}
                     <div className="text-center mb-8">
-                      <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                        <Icon className="w-6 h-6 text-white" />
+                      <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <Icon className="w-8 h-8 text-white" />
                       </div>
                       
-                      <h3 className="text-xl font-bold text-white mb-2">{plan.name}</h3>
-                      <p className="text-gray-400 text-sm mb-4">{plan.description}</p>
+                      <h3 className="text-2xl font-bold text-white mb-3">{plan.name}</h3>
+                      <p className="text-gray-400 text-sm mb-6 leading-relaxed">{plan.description}</p>
                       
-                      <div className="flex items-center justify-center gap-2 mb-2">
-                        {plan.originalPrice && (
-                          <span className="text-gray-500 line-through text-lg">{plan.originalPrice}</span>
+                      <div className="flex items-center justify-center gap-2 mb-3">
+                        {originalPrice && (
+                          <span className="text-gray-500 line-through text-xl">{originalPrice}</span>
                         )}
-                        <span className="text-3xl font-bold text-white">{plan.price}</span>
-                        {plan.price !== 'Free' && (
-                          <span className="text-gray-400">/{billingCycle === 'monthly' ? 'mo' : 'yr'}</span>
+                        <span className="text-4xl font-bold text-white">{currentPrice}</span>
+                        {currentPrice !== 'Free' && (
+                          <span className="text-gray-400 text-lg">/{billingCycle === 'monthly' ? 'mo' : 'yr'}</span>
                         )}
                       </div>
                       
@@ -196,30 +206,39 @@ export const Pricing: React.FC = () => {
                     </div>
 
                     {/* Features */}
-                    <div className="space-y-3 mb-8">
+                    <div className="space-y-4 mb-8 flex-grow">
                       {plan.features.map((feature, idx) => (
-                        <div key={idx} className="flex items-center gap-3">
-                          <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
-                          <span className="text-gray-300 text-sm">{feature}</span>
+                        <div key={idx} className="flex items-start gap-3">
+                          <div className="w-5 h-5 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <Check className="w-3 h-3 text-green-400" />
+                          </div>
+                          <span className="text-gray-300 text-sm leading-relaxed">{feature}</span>
                         </div>
                       ))}
                       
                       {plan.limitations.map((limitation, idx) => (
-                        <div key={idx} className="flex items-center gap-3">
-                          <span className="text-gray-500 text-sm">{limitation}</span>
+                        <div key={idx} className="flex items-start gap-3 opacity-60">
+                          <div className="w-5 h-5 border border-gray-500 rounded-full flex-shrink-0 mt-0.5" />
+                          <span className="text-gray-500 text-sm leading-relaxed">{limitation}</span>
                         </div>
                       ))}
                     </div>
 
                     {/* CTA Button */}
-                    <Button
-                      variant={plan.popular ? 'primary' : 'glass'}
-                      size="lg"
-                      className="w-full"
-                    >
-                      {plan.price === 'Free' ? 'Get Started Free' : 'Start Free Trial'}
-                      <ArrowRight className="w-4 h-4" />
-                    </Button>
+                    <div className="mt-auto">
+                      <Button
+                        variant={plan.popular ? 'primary' : 'glass'}
+                        size="lg"
+                        className={`w-full h-14 text-base font-semibold ${
+                          plan.popular 
+                            ? 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-lg hover:shadow-xl' 
+                            : 'border-white/20 hover:border-white/30 hover:bg-white/[0.08]'
+                        } transition-all duration-300`}
+                      >
+                        {currentPrice === 'Free' ? 'Get Started Free' : 'Start Free Trial'}
+                        <ArrowRight className="w-5 h-5 ml-2" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -227,7 +246,7 @@ export const Pricing: React.FC = () => {
           })}
         </div>
 
-        {/* Simple Trust Indicators */}
+        {/* Trust Indicators */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -235,24 +254,24 @@ export const Pricing: React.FC = () => {
           viewport={{ once: true }}
           className="text-center"
         >
-          <div className="glass-card rounded-xl p-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white/[0.03] backdrop-blur-md border border-white/[0.08] rounded-2xl p-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
               {[
                 { number: '10,000+', label: 'Active users' },
                 { number: '50,000+', label: 'Ideas validated' },
                 { number: '$2M+', label: 'Funding raised' }
               ].map((stat, index) => (
                 <div key={stat.label} className="text-center">
-                  <div className="text-2xl font-bold text-white mb-1">
+                  <div className="text-3xl font-bold text-white mb-2">
                     {stat.number}
                   </div>
-                  <div className="text-sm text-gray-400">{stat.label}</div>
+                  <div className="text-gray-400">{stat.label}</div>
                 </div>
               ))}
             </div>
             
-            <div className="mt-6 pt-4 border-t border-white/[0.05]">
-              <p className="text-gray-400 text-sm">
+            <div className="pt-6 border-t border-white/[0.08]">
+              <p className="text-gray-400">
                 14-day money-back guarantee • No setup fees • Cancel anytime
               </p>
             </div>
