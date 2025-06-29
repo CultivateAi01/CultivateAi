@@ -115,19 +115,6 @@ export const Actions: React.FC = () => {
         </motion.div>
       )}
 
-      {/* Credits Display */}
-      <div className="glass-card rounded-2xl p-6 border border-blue-500/20 relative z-10">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-semibold text-white">Available Credits</h2>
-            <p className="text-gray-400 text-sm">Use credits to run AI actions on your startup projects</p>
-          </div>
-          <div className="text-right">
-            <div className="text-2xl font-bold text-yellow-400">{user?.credits || 0}</div>
-            <div className="text-sm text-gray-400">credits remaining</div>
-          </div>
-        </div>
-      </div>
 
       {/* Action Grid */}
       <div className="relative z-10">
