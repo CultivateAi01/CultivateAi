@@ -99,7 +99,7 @@ export const Actions: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="relative z-10"
+          className="relative z-20 mb-8"
         >
           <div className="mb-4">
             <h2 className="text-lg font-medium text-gray-300 mb-2">Select Project:</h2>
@@ -114,7 +114,6 @@ export const Actions: React.FC = () => {
           />
         </motion.div>
       )}
-
 
       {/* Action Grid */}
       <div className="relative z-10">

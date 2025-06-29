@@ -50,51 +50,66 @@ export const ProjectSelector: React.FC<ProjectSelectorProps> = ({
       </button>
 
       {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          className="absolute top-full left-0 right-0 mt-2 bg-white/[0.08] backdrop-blur-md border border-white/[0.12] rounded-xl p-2 z-50 max-h-64 overflow-y-auto"
-        >
-          <Button
-            variant="glass"
-            size="sm"
-            className="w-full justify-start mb-2"
-            onClick={onCreateProject}
-          >
-            <Plus className="w-4 h-4" />
-            Create New Project
-          </Button>
+        <>
+          {/* Backdrop overlay */}
+          <div 
+            className="fixed inset-0 bg-transparent z-30"
+            onClick={onToggle}
+          />
           
-          <div className="space-y-1">
-            {projects.map((project) => (
-              <button
-                key={project.id}
-                onClick={() => {
-                  onProjectSelect(project);
-                  onToggle();
-                }}
-                className="w-full p-3 text-left hover:bg-white/[0.08] rounded-lg transition-colors duration-200"
-              >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-white font-medium">{project.title}</div>
-                    <div className="text-gray-400 text-sm">{project.description.substring(0, 50)}...</div>
+          {/* Dropdown content */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="absolute top-full left-0 right-0 mt-2 bg-black border border-white/20 rounded-xl p-2 z-40 max-h-64 overflow-y-auto shadow-2xl"
+            style={{ 
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1)' 
+            }}
+          >
+            <Button
+              variant="glass"
+              size="sm"
+              className="w-full justify-start mb-2"
+              onClick={() => {
+                onCreateProject();
+                onToggle();
+              }}
+            >
+              <Plus className="w-4 h-4" />
+              Create New Project
+            </Button>
+            
+            <div className="space-y-1">
+              {projects.map((project) => (
+                <button
+                  key={project.id}
+                  onClick={() => {
+                    onProjectSelect(project);
+                    onToggle();
+                  }}
+                  className="w-full p-3 text-left hover:bg-white/[0.08] rounded-lg transition-colors duration-200"
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-white font-medium">{project.title}</div>
+                      <div className="text-gray-400 text-sm">{project.description.substring(0, 50)}...</div>
+                    </div>
+                    <div className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      project.status === 'active' 
+                        ? 'bg-green-500/20 text-green-400' 
+                        : project.status === 'completed'
+                        ? 'bg-blue-500/20 text-blue-400'
+                        : 'bg-gray-500/20 text-gray-400'
+                    }`}>
+                      {project.status}
+                    </div>
                   </div>
-                  <div className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    project.status === 'active' 
-                      ? 'bg-green-500/20 text-green-400' 
-                      : project.status === 'completed'
-                      ? 'bg-blue-500/20 text-blue-400'
-                      : 'bg-gray-500/20 text-gray-400'
-                  }`}>
-                    {project.status}
-                  </div>
-                </div>
-              </button>
-            ))}
+                </button>
+              ))}
+            </div>
           </div>
-        </motion.div>
+        </>
       )}
     </div>
   );
