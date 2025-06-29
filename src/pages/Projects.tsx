@@ -188,7 +188,10 @@ export const Projects: React.FC = () => {
                         <motion.div
                           initial={{ opacity: 0, scale: 0.95, y: -10 }}
                           animate={{ opacity: 1, scale: 1, y: 0 }}
-                          className="absolute right-0 top-8 bg-white/[0.08] backdrop-blur-md border border-white/[0.12] rounded-xl p-2 z-10 min-w-[140px]"
+                          className="absolute right-0 top-8 bg-black border border-white/20 rounded-xl p-2 z-10 min-w-[140px] shadow-2xl"
+                          style={{ 
+                            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1)' 
+                          }}
                         >
                           <button
                             onClick={() => openEditModal(project)}
@@ -409,7 +412,7 @@ export const Projects: React.FC = () => {
         </form>
       </Modal>
 
-      {/* Delete Confirmation Modal */}
+      {/* Delete Confirmation Modal - Pure Black */}
       <Modal
         isOpen={!!projectToDelete}
         onClose={() => setProjectToDelete(null)}

@@ -39,7 +39,10 @@ export const Modal: React.FC<ModalProps> = ({
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className={`relative w-full ${sizes[size]} glass-card border border-white/20 rounded-2xl`}
+            className={`relative w-full ${sizes[size]} bg-black border border-white/20 rounded-2xl shadow-2xl`}
+            style={{ 
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1)' 
+            }}
           >
             <div className="flex items-center justify-between p-6 border-b border-white/10">
               {title && <h2 className="text-xl font-semibold text-white">{title}</h2>}

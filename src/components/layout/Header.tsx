@@ -120,7 +120,7 @@ export const Header: React.FC = () => {
                 <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
 
-              {/* Dropdown Menu */}
+              {/* Dropdown Menu - Pure Black */}
               <AnimatePresence>
                 {isDropdownOpen && (
                   <>
@@ -133,15 +133,15 @@ export const Header: React.FC = () => {
                       onClick={() => setIsDropdownOpen(false)}
                     />
                     
-                    {/* Dropdown content */}
+                    {/* Dropdown content - Pure Black */}
                     <motion.div
                       initial={{ opacity: 0, scale: 0.95, y: -10 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.95, y: -10 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute right-0 top-full mt-2 w-64 bg-gray-900/95 backdrop-blur-xl border border-white/[0.15] rounded-xl shadow-2xl z-50"
+                      className="absolute right-0 top-full mt-2 w-64 bg-black border border-white/20 rounded-xl shadow-2xl z-50"
                       style={{ 
-                        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05)' 
+                        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1)' 
                       }}
                     >
                       <div className="p-2">
