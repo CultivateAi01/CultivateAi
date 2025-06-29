@@ -100,11 +100,23 @@ export const ActionGrid: React.FC<ActionGridProps> = ({ onActionSelect, agents }
     return acc;
   }, {} as Record<string, Agent[]>);
 
-  // Sort categories by order
+  // Sort categories by order, then sort agents within each category (active first, then alphabetically)
   const sortedCategories = Object.entries(groupedAgents).sort(([a], [b]) => {
     const orderA = categoryMapping[a]?.order || 999;
     const orderB = categoryMapping[b]?.order || 999;
     return orderA - orderB;
+  }).map(([categoryKey, categoryAgents]) => {
+    // Sort agents: active first, then alphabetically within each group
+    const sortedAgents = categoryAgents.sort((a, b) => {
+      // First sort by active status (active first)
+      if (a.is_active !== b.is_active) {
+        return b.is_active ? 1 : -1;
+      }
+      // Then sort alphabetically by name
+      return a.name.localeCompare(b.name);
+    });
+    
+    return [categoryKey, sortedAgents] as [string, Agent[]];
   });
 
   if (agents.length === 0) {
@@ -131,6 +143,9 @@ export const ActionGrid: React.FC<ActionGridProps> = ({ onActionSelect, agents }
           color: 'from-gray-500 to-gray-600'
         };
 
+        const activeCount = categoryAgents.filter(agent => agent.is_active).length;
+        const totalCount = categoryAgents.length;
+
         return (
           <motion.div
             key={categoryKey}
@@ -145,7 +160,12 @@ export const ActionGrid: React.FC<ActionGridProps> = ({ onActionSelect, agents }
                 <Icons.Folder className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-white">{categoryInfo.name}</h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-bold text-white">{categoryInfo.name}</h3>
+                  <div className="text-gray-500 text-sm">
+                    ({activeCount}/{totalCount} active)
+                  </div>
+                </div>
                 <p className="text-gray-400 text-sm">{categoryInfo.description}</p>
               </div>
             </div>
