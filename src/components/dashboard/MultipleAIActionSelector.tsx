@@ -100,10 +100,8 @@ export const MultipleAIActionSelector: React.FC<MultipleAIActionSelectorProps> =
 }) => {
   const [selectedDetailAction, setSelectedDetailAction] = useState<string | null>(null);
   
-  // Group agents by category
+  // Group agents by category - include ALL agents, not just active ones
   const groupedAgents = agents.reduce((acc, agent) => {
-    if (!agent.is_active) return acc;
-    
     const category = agent.category || 'other';
     if (!acc[category]) {
       acc[category] = [];
@@ -118,6 +116,10 @@ export const MultipleAIActionSelector: React.FC<MultipleAIActionSelectorProps> =
     const orderB = categoryMapping[b]?.order || 999;
     return orderA - orderB;
   });
+
+  // Only count active agents for "select all" functionality
+  const activeAgents = agents.filter(agent => agent.is_active);
+  const allActiveActionsSelected = activeAgents.length > 0 && activeAgents.every(agent => selectedActions.includes(agent.id));
 
   if (agents.length === 0) {
     return (
@@ -150,8 +152,8 @@ export const MultipleAIActionSelector: React.FC<MultipleAIActionSelectorProps> =
             onClick={onSelectAll}
             className="gap-2"
           >
-            {allActionsSelected ? <CheckSquare className="w-4 h-4" /> : <Square className="w-4 h-4" />}
-            {allActionsSelected ? 'Deselect All' : 'Select All'}
+            {allActiveActionsSelected ? <CheckSquare className="w-4 h-4" /> : <Square className="w-4 h-4" />}
+            {allActiveActionsSelected ? 'Deselect All' : 'Select All Active'}
           </Button>
           
           {selectedActions.length > 0 && (
@@ -177,6 +179,7 @@ export const MultipleAIActionSelector: React.FC<MultipleAIActionSelectorProps> =
           };
           
           const selectedInCategory = categoryAgents.filter(agent => selectedActions.includes(agent.id)).length;
+          const activeInCategory = categoryAgents.filter(agent => agent.is_active).length;
 
           return (
             <motion.div
@@ -201,6 +204,9 @@ export const MultipleAIActionSelector: React.FC<MultipleAIActionSelectorProps> =
                         </span>
                       </div>
                     )}
+                    <div className="text-gray-500 text-xs">
+                      ({activeInCategory} active)
+                    </div>
                   </div>
                   <p className="text-gray-400 text-sm">{categoryInfo.description}</p>
                 </div>
@@ -211,6 +217,7 @@ export const MultipleAIActionSelector: React.FC<MultipleAIActionSelectorProps> =
                 {categoryAgents.map((agent, index) => {
                   const IconComponent = (Icons as any)[agent.icon] || Icons.FileText;
                   const isSelected = selectedActions.includes(agent.id);
+                  const isActive = agent.is_active;
                   
                   return (
                     <motion.div
@@ -218,44 +225,76 @@ export const MultipleAIActionSelector: React.FC<MultipleAIActionSelectorProps> =
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: (categoryIndex * 0.05) + (index * 0.02) }}
-                      className={`relative p-3 rounded-lg border transition-all duration-200 group cursor-pointer ${
-                        isSelected
-                          ? 'bg-blue-500/20 border-blue-500/40 ring-1 ring-blue-500/30'
-                          : 'bg-white/[0.02] hover:bg-white/[0.04] border-white/[0.05] hover:border-white/[0.1]'
+                      className={`relative p-3 rounded-lg border transition-all duration-200 group ${
+                        !isActive 
+                          ? 'opacity-50 cursor-not-allowed bg-gray-800/30 border-gray-700/50'
+                          : isSelected
+                          ? 'bg-blue-500/20 border-blue-500/40 ring-1 ring-blue-500/30 cursor-pointer'
+                          : 'bg-white/[0.02] hover:bg-white/[0.04] border-white/[0.05] hover:border-white/[0.1] cursor-pointer'
                       }`}
-                      onClick={() => onActionToggle(agent.id)}
+                      onClick={() => isActive && onActionToggle(agent.id)}
                     >
+                      {/* Inactive overlay */}
+                      {!isActive && (
+                        <div className="absolute inset-0 bg-gray-900/30 rounded-lg flex items-center justify-center z-10">
+                          <div className="text-center">
+                            <div className="text-gray-500 text-xs font-medium">Coming Soon</div>
+                          </div>
+                        </div>
+                      )}
+
                       <div className="flex items-start gap-2">
-                        <div className={`w-8 h-8 bg-gradient-to-r ${categoryInfo.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                        <div className={`w-8 h-8 bg-gradient-to-r ${categoryInfo.color} rounded-lg flex items-center justify-center flex-shrink-0 ${
+                          !isActive ? 'grayscale' : ''
+                        }`}>
                           <IconComponent className="w-4 h-4 text-white" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-start justify-between mb-1">
-                            <h5 className="text-white font-medium text-sm leading-tight">{agent.name}</h5>
+                            <h5 className={`font-medium text-sm leading-tight ${
+                              isActive ? 'text-white' : 'text-gray-500'
+                            }`}>
+                              {agent.name}
+                            </h5>
                             <div className="flex items-center gap-1 ml-2">
                               <button
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   setSelectedDetailAction(agent.id);
                                 }}
-                                className="w-4 h-4 text-gray-400 hover:text-blue-400 transition-colors"
+                                className={`w-4 h-4 transition-colors ${
+                                  isActive 
+                                    ? 'text-gray-400 hover:text-blue-400'
+                                    : 'text-gray-600 cursor-not-allowed'
+                                }`}
+                                disabled={!isActive}
                               >
                                 <HelpCircle className="w-4 h-4" />
                               </button>
-                              {isSelected ? (
-                                <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
-                                  <CheckSquare className="w-2.5 h-2.5 text-white" />
-                                </div>
-                              ) : (
-                                <div className="w-4 h-4 border border-gray-400 rounded-full flex items-center justify-center group-hover:border-blue-400 transition-colors duration-200">
-                                  <Plus className="w-2.5 h-2.5 text-gray-400 group-hover:text-blue-400 transition-colors duration-200" />
-                                </div>
+                              {isActive && (
+                                isSelected ? (
+                                  <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                                    <CheckSquare className="w-2.5 h-2.5 text-white" />
+                                  </div>
+                                ) : (
+                                  <div className="w-4 h-4 border border-gray-400 rounded-full flex items-center justify-center group-hover:border-blue-400 transition-colors duration-200">
+                                    <Plus className="w-2.5 h-2.5 text-gray-400 group-hover:text-blue-400 transition-colors duration-200" />
+                                  </div>
+                                )
                               )}
                             </div>
                           </div>
-                          <p className="text-gray-400 text-xs leading-relaxed mb-2 line-clamp-2">{agent.description}</p>
+                          <p className={`text-xs leading-relaxed mb-2 line-clamp-2 ${
+                            isActive ? 'text-gray-400' : 'text-gray-600'
+                          }`}>
+                            {agent.description}
+                          </p>
                           <div className="flex items-center justify-between">
-                            <span className="text-yellow-400 text-xs font-medium">{agent.cost} credits</span>
+                            <span className={`text-xs font-medium ${
+                              isActive ? 'text-yellow-400' : 'text-gray-600'
+                            }`}>
+                              {agent.cost} credits
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -283,13 +322,22 @@ export const MultipleAIActionSelector: React.FC<MultipleAIActionSelectorProps> =
                 const IconComponent = (Icons as any)[selectedAgent.icon] || Icons.FileText;
                 const categoryInfo = categoryMapping[selectedAgent.category] || { color: 'from-gray-500 to-gray-600' };
                 return (
-                  <div className={`w-12 h-12 bg-gradient-to-r ${categoryInfo.color} rounded-xl flex items-center justify-center`}>
+                  <div className={`w-12 h-12 bg-gradient-to-r ${categoryInfo.color} rounded-xl flex items-center justify-center ${
+                    !selectedAgent.is_active ? 'grayscale' : ''
+                  }`}>
                     <IconComponent className="w-6 h-6 text-white" />
                   </div>
                 );
               })()}
               <div className="flex-1">
-                <h3 className="text-xl font-semibold text-white mb-2">{selectedAgent.name}</h3>
+                <div className="flex items-center gap-3 mb-2">
+                  <h3 className="text-xl font-semibold text-white">{selectedAgent.name}</h3>
+                  {!selectedAgent.is_active && (
+                    <div className="px-2 py-1 bg-gray-700 text-gray-300 text-xs rounded-full">
+                      Coming Soon
+                    </div>
+                  )}
+                </div>
                 <p className="text-gray-400 leading-relaxed">{selectedDetail.fullDescription}</p>
               </div>
             </div>
@@ -353,14 +401,19 @@ export const MultipleAIActionSelector: React.FC<MultipleAIActionSelectorProps> =
               <Button
                 variant="primary"
                 onClick={() => {
-                  if (selectedDetailAction && !selectedActions.includes(selectedDetailAction)) {
+                  if (selectedDetailAction && selectedAgent.is_active && !selectedActions.includes(selectedDetailAction)) {
                     onActionToggle(selectedDetailAction);
                   }
                   setSelectedDetailAction(null);
                 }}
-                disabled={selectedDetailAction ? selectedActions.includes(selectedDetailAction) : false}
+                disabled={!selectedAgent.is_active || selectedActions.includes(selectedDetailAction!)}
               >
-                {selectedDetailAction && selectedActions.includes(selectedDetailAction) ? 'Already Selected' : 'Select Action'}
+                {!selectedAgent.is_active 
+                  ? 'Coming Soon' 
+                  : selectedActions.includes(selectedDetailAction!) 
+                  ? 'Already Selected' 
+                  : 'Select Action'
+                }
               </Button>
             </div>
           </div>

@@ -90,10 +90,8 @@ const generateActionDetails = (agent: Agent) => {
 export const ActionGrid: React.FC<ActionGridProps> = ({ onActionSelect, agents }) => {
   const [selectedDetailAction, setSelectedDetailAction] = useState<string | null>(null);
   
-  // Group agents by category
+  // Group agents by category - include ALL agents, not just active ones
   const groupedAgents = agents.reduce((acc, agent) => {
-    if (!agent.is_active) return acc;
-    
     const category = agent.category || 'other';
     if (!acc[category]) {
       acc[category] = [];
@@ -156,6 +154,7 @@ export const ActionGrid: React.FC<ActionGridProps> = ({ onActionSelect, agents }
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {categoryAgents.map((agent, index) => {
                 const IconComponent = (Icons as any)[agent.icon] || Icons.FileText;
+                const isActive = agent.is_active;
                 
                 return (
                   <motion.div
@@ -164,38 +163,80 @@ export const ActionGrid: React.FC<ActionGridProps> = ({ onActionSelect, agents }
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: (categoryIndex * 0.05) + (index * 0.02) }}
                   >
-                    <Card hover className="h-full relative">
+                    <Card 
+                      hover={isActive} 
+                      className={`h-full relative transition-all duration-200 ${
+                        !isActive 
+                          ? 'opacity-50 cursor-not-allowed bg-gray-800/30' 
+                          : 'cursor-pointer'
+                      }`}
+                    >
+                      {/* Inactive overlay */}
+                      {!isActive && (
+                        <div className="absolute inset-0 bg-gray-900/50 rounded-2xl flex items-center justify-center z-10">
+                          <div className="text-center">
+                            <div className="text-gray-400 text-sm font-medium mb-1">Coming Soon</div>
+                            <div className="text-gray-500 text-xs">This action is not available yet</div>
+                          </div>
+                        </div>
+                      )}
+
                       <div className="absolute top-3 right-3">
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             setSelectedDetailAction(agent.id);
                           }}
-                          className="w-6 h-6 text-gray-400 hover:text-blue-400 transition-colors bg-white/[0.05] hover:bg-white/[0.1] rounded-full flex items-center justify-center"
+                          className={`w-6 h-6 transition-colors rounded-full flex items-center justify-center ${
+                            isActive 
+                              ? 'text-gray-400 hover:text-blue-400 bg-white/[0.05] hover:bg-white/[0.1]'
+                              : 'text-gray-600 bg-gray-800/50 cursor-not-allowed'
+                          }`}
+                          disabled={!isActive}
                         >
                           <HelpCircle className="w-4 h-4" />
                         </button>
                       </div>
                       
-                      <div className={`w-10 h-10 bg-gradient-to-r ${categoryInfo.color} rounded-lg flex items-center justify-center mb-3`}>
+                      <div className={`w-10 h-10 bg-gradient-to-r ${categoryInfo.color} rounded-lg flex items-center justify-center mb-3 ${
+                        !isActive ? 'grayscale' : ''
+                      }`}>
                         <IconComponent className="w-5 h-5 text-white" />
                       </div>
                       
-                      <h4 className="text-base font-semibold text-white mb-2 pr-8">{agent.name}</h4>
-                      <p className="text-gray-400 text-sm mb-4 flex-grow line-clamp-2">{agent.description}</p>
+                      <h4 className={`text-base font-semibold mb-2 pr-8 ${
+                        isActive ? 'text-white' : 'text-gray-500'
+                      }`}>
+                        {agent.name}
+                      </h4>
+                      <p className={`text-sm mb-4 flex-grow line-clamp-2 ${
+                        isActive ? 'text-gray-400' : 'text-gray-600'
+                      }`}>
+                        {agent.description}
+                      </p>
                       
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2">
-                          <span className="text-yellow-400 font-medium text-sm">{agent.cost}</span>
-                          <span className="text-gray-500 text-xs">credits</span>
+                          <span className={`font-medium text-sm ${
+                            isActive ? 'text-yellow-400' : 'text-gray-600'
+                          }`}>
+                            {agent.cost}
+                          </span>
+                          <span className={`text-xs ${
+                            isActive ? 'text-gray-500' : 'text-gray-700'
+                          }`}>
+                            credits
+                          </span>
                         </div>
                         
                         <Button
-                          variant="primary"
+                          variant={isActive ? "primary" : "glass"}
                           size="sm"
-                          onClick={() => onActionSelect(agent.id)}
+                          onClick={() => isActive && onActionSelect(agent.id)}
+                          disabled={!isActive}
+                          className={!isActive ? 'opacity-50 cursor-not-allowed' : ''}
                         >
-                          Run
+                          {isActive ? 'Run' : 'Soon'}
                         </Button>
                       </div>
                     </Card>
@@ -222,13 +263,22 @@ export const ActionGrid: React.FC<ActionGridProps> = ({ onActionSelect, agents }
                 const IconComponent = (Icons as any)[selectedAgent.icon] || Icons.FileText;
                 const categoryInfo = categoryMapping[selectedAgent.category] || { color: 'from-gray-500 to-gray-600' };
                 return (
-                  <div className={`w-12 h-12 bg-gradient-to-r ${categoryInfo.color} rounded-xl flex items-center justify-center`}>
+                  <div className={`w-12 h-12 bg-gradient-to-r ${categoryInfo.color} rounded-xl flex items-center justify-center ${
+                    !selectedAgent.is_active ? 'grayscale' : ''
+                  }`}>
                     <IconComponent className="w-6 h-6 text-white" />
                   </div>
                 );
               })()}
               <div className="flex-1">
-                <h3 className="text-xl font-semibold text-white mb-2">{selectedAgent.name}</h3>
+                <div className="flex items-center gap-3 mb-2">
+                  <h3 className="text-xl font-semibold text-white">{selectedAgent.name}</h3>
+                  {!selectedAgent.is_active && (
+                    <div className="px-2 py-1 bg-gray-700 text-gray-300 text-xs rounded-full">
+                      Coming Soon
+                    </div>
+                  )}
+                </div>
                 <p className="text-gray-400 leading-relaxed">{selectedDetail.fullDescription}</p>
               </div>
             </div>
@@ -292,13 +342,14 @@ export const ActionGrid: React.FC<ActionGridProps> = ({ onActionSelect, agents }
               <Button
                 variant="primary"
                 onClick={() => {
-                  if (selectedDetailAction) {
+                  if (selectedDetailAction && selectedAgent.is_active) {
                     onActionSelect(selectedDetailAction);
                   }
                   setSelectedDetailAction(null);
                 }}
+                disabled={!selectedAgent.is_active}
               >
-                Run Action
+                {selectedAgent.is_active ? 'Run Action' : 'Coming Soon'}
               </Button>
             </div>
           </div>

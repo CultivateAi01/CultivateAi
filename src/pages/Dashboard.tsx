@@ -48,6 +48,9 @@ export const Dashboard: React.FC = () => {
   const recentProjects = projects.slice(0, 3);
 
   const handleActionToggle = (actionId: string) => {
+    const agent = agents.find(a => a.id === actionId);
+    if (!agent || !agent.is_active) return; // Only allow toggling active agents
+    
     setSelectedActions(prev => 
       prev.includes(actionId) 
         ? prev.filter(id => id !== actionId)
@@ -56,10 +59,13 @@ export const Dashboard: React.FC = () => {
   };
 
   const handleSelectAllActions = () => {
-    if (selectedActions.length === agents.length) {
+    const activeAgents = agents.filter(agent => agent.is_active);
+    const allActiveSelected = activeAgents.every(agent => selectedActions.includes(agent.id));
+    
+    if (allActiveSelected) {
       setSelectedActions([]);
     } else {
-      setSelectedActions(agents.map(agent => agent.id));
+      setSelectedActions(activeAgents.map(agent => agent.id));
     }
   };
 
@@ -91,8 +97,11 @@ export const Dashboard: React.FC = () => {
         startup_idea: appIdea
       });
 
-      // Run each selected action
+      // Run each selected action (only active ones)
       for (const agentId of selectedActions) {
+        const agent = agents.find(a => a.id === agentId);
+        if (!agent || !agent.is_active) continue; // Skip inactive agents
+        
         try {
           await runAgent({
             project_id: project.id,
@@ -126,12 +135,11 @@ export const Dashboard: React.FC = () => {
   };
 
   const canRunActions = selectedActions.length > 0 && appIdea.trim() && !isProcessing;
-  const allActionsSelected = selectedActions.length === agents.length;
-
-  // Calculate total cost of selected actions
+  
+  // Calculate total cost of selected actions (only active ones)
   const totalCost = selectedActions.reduce((sum, agentId) => {
     const agent = agents.find(a => a.id === agentId);
-    return sum + (agent?.cost || 0);
+    return sum + (agent?.is_active ? (agent?.cost || 0) : 0);
   }, 0);
 
   if (projectsLoading || agentsLoading) {
@@ -289,7 +297,7 @@ export const Dashboard: React.FC = () => {
           onActionToggle={handleActionToggle}
           onClearAll={handleClearAllActions}
           onSelectAll={handleSelectAllActions}
-          allActionsSelected={allActionsSelected}
+          allActionsSelected={false} // This will be calculated inside the component
           agents={agents}
         />
       </motion.div>
