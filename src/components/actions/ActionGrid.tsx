@@ -100,11 +100,25 @@ export const ActionGrid: React.FC<ActionGridProps> = ({ onActionSelect, agents }
     return acc;
   }, {} as Record<string, Agent[]>);
 
-  // Sort categories by order, then sort agents within each category (active first, then alphabetically)
-  const sortedCategories = Object.entries(groupedAgents).sort(([a], [b]) => {
+  // Sort categories: active categories first, then by original order, then alphabetically
+  const sortedCategories = Object.entries(groupedAgents).sort(([a, agentsA], [b, agentsB]) => {
+    const hasActiveA = agentsA.some(agent => agent.is_active);
+    const hasActiveB = agentsB.some(agent => agent.is_active);
+    
+    // First sort by whether category has active agents (active categories first)
+    if (hasActiveA !== hasActiveB) {
+      return hasActiveB ? 1 : -1;
+    }
+    
+    // Then sort by original order
     const orderA = categoryMapping[a]?.order || 999;
     const orderB = categoryMapping[b]?.order || 999;
-    return orderA - orderB;
+    if (orderA !== orderB) {
+      return orderA - orderB;
+    }
+    
+    // Finally sort alphabetically
+    return a.localeCompare(b);
   }).map(([categoryKey, categoryAgents]) => {
     // Sort agents: active first, then alphabetically within each group
     const sortedAgents = categoryAgents.sort((a, b) => {
@@ -145,6 +159,7 @@ export const ActionGrid: React.FC<ActionGridProps> = ({ onActionSelect, agents }
 
         const activeCount = categoryAgents.filter(agent => agent.is_active).length;
         const totalCount = categoryAgents.length;
+        const hasActiveAgents = activeCount > 0;
 
         return (
           <motion.div
@@ -156,17 +171,28 @@ export const ActionGrid: React.FC<ActionGridProps> = ({ onActionSelect, agents }
           >
             {/* Compact Category Header */}
             <div className="flex items-center gap-3">
-              <div className={`w-10 h-10 bg-gradient-to-r ${categoryInfo.color} rounded-lg flex items-center justify-center`}>
+              <div className={`w-10 h-10 bg-gradient-to-r ${categoryInfo.color} rounded-lg flex items-center justify-center ${
+                !hasActiveAgents ? 'grayscale opacity-60' : ''
+              }`}>
                 <Icons.Folder className="w-5 h-5 text-white" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-bold text-white">{categoryInfo.name}</h3>
-                  <div className="text-gray-500 text-sm">
+                  <h3 className={`text-lg font-bold ${hasActiveAgents ? 'text-white' : 'text-gray-500'}`}>
+                    {categoryInfo.name}
+                  </h3>
+                  <div className={`text-sm ${hasActiveAgents ? 'text-gray-400' : 'text-gray-600'}`}>
                     ({activeCount}/{totalCount} active)
                   </div>
+                  {!hasActiveAgents && (
+                    <div className="px-2 py-1 bg-gray-700/50 text-gray-400 text-xs rounded-full">
+                      Coming Soon
+                    </div>
+                  )}
                 </div>
-                <p className="text-gray-400 text-sm">{categoryInfo.description}</p>
+                <p className={`text-sm ${hasActiveAgents ? 'text-gray-400' : 'text-gray-600'}`}>
+                  {categoryInfo.description}
+                </p>
               </div>
             </div>
 

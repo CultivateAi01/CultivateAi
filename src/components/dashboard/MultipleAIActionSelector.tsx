@@ -110,11 +110,25 @@ export const MultipleAIActionSelector: React.FC<MultipleAIActionSelectorProps> =
     return acc;
   }, {} as Record<string, Agent[]>);
 
-  // Sort categories by order, then sort agents within each category (active first, then alphabetically)
-  const sortedCategories = Object.entries(groupedAgents).sort(([a], [b]) => {
+  // Sort categories: active categories first, then by original order, then alphabetically
+  const sortedCategories = Object.entries(groupedAgents).sort(([a, agentsA], [b, agentsB]) => {
+    const hasActiveA = agentsA.some(agent => agent.is_active);
+    const hasActiveB = agentsB.some(agent => agent.is_active);
+    
+    // First sort by whether category has active agents (active categories first)
+    if (hasActiveA !== hasActiveB) {
+      return hasActiveB ? 1 : -1;
+    }
+    
+    // Then sort by original order
     const orderA = categoryMapping[a]?.order || 999;
     const orderB = categoryMapping[b]?.order || 999;
-    return orderA - orderB;
+    if (orderA !== orderB) {
+      return orderA - orderB;
+    }
+    
+    // Finally sort alphabetically
+    return a.localeCompare(b);
   }).map(([categoryKey, categoryAgents]) => {
     // Sort agents: active first, then alphabetically within each group
     const sortedAgents = categoryAgents.sort((a, b) => {
@@ -193,6 +207,7 @@ export const MultipleAIActionSelector: React.FC<MultipleAIActionSelectorProps> =
           const selectedInCategory = categoryAgents.filter(agent => selectedActions.includes(agent.id)).length;
           const activeInCategory = categoryAgents.filter(agent => agent.is_active).length;
           const totalInCategory = categoryAgents.length;
+          const hasActiveAgents = activeInCategory > 0;
 
           return (
             <motion.div
@@ -204,12 +219,16 @@ export const MultipleAIActionSelector: React.FC<MultipleAIActionSelectorProps> =
             >
               {/* Compact Category Header */}
               <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 bg-gradient-to-r ${categoryInfo.color} rounded-lg flex items-center justify-center`}>
+                <div className={`w-10 h-10 bg-gradient-to-r ${categoryInfo.color} rounded-lg flex items-center justify-center ${
+                  !hasActiveAgents ? 'grayscale opacity-60' : ''
+                }`}>
                   <Icons.Folder className="w-5 h-5 text-white" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
-                    <h4 className="text-lg font-bold text-white">{categoryInfo.name}</h4>
+                    <h4 className={`text-lg font-bold ${hasActiveAgents ? 'text-white' : 'text-gray-500'}`}>
+                      {categoryInfo.name}
+                    </h4>
                     {selectedInCategory > 0 && (
                       <div className="bg-blue-500/20 border border-blue-500/30 rounded-full px-2 py-0.5">
                         <span className="text-blue-400 text-xs font-medium">
@@ -217,11 +236,18 @@ export const MultipleAIActionSelector: React.FC<MultipleAIActionSelectorProps> =
                         </span>
                       </div>
                     )}
-                    <div className="text-gray-500 text-xs">
+                    <div className={`text-xs ${hasActiveAgents ? 'text-gray-400' : 'text-gray-600'}`}>
                       ({activeInCategory}/{totalInCategory} active)
                     </div>
+                    {!hasActiveAgents && (
+                      <div className="px-2 py-1 bg-gray-700/50 text-gray-400 text-xs rounded-full">
+                        Coming Soon
+                      </div>
+                    )}
                   </div>
-                  <p className="text-gray-400 text-sm">{categoryInfo.description}</p>
+                  <p className={`text-sm ${hasActiveAgents ? 'text-gray-400' : 'text-gray-600'}`}>
+                    {categoryInfo.description}
+                  </p>
                 </div>
               </div>
 
