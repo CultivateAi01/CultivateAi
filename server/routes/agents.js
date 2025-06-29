@@ -10,7 +10,7 @@ router.get('/', optionalAuth, async (req, res) => {
     const { data: agents, error } = await supabase
       .from('agents')
       .select('*')
-      .eq('is_active', true)
+      //.eq('is_active', true)
       .order('category', { ascending: true });
 
     if (error) {
