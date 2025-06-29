@@ -26,6 +26,26 @@ export const authHelpers = {
     return { data, error };
   },
 
+  signInWithGithub: async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'github',
+      options: {
+        redirectTo: `${window.location.origin}/home`
+      }
+    });
+    return { data, error };
+  },
+
+  signInWithGoogle: async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/home`
+      }
+    });
+    return { data, error };
+  },
+
   signOut: async () => {
     const { error } = await supabase.auth.signOut();
     return { error };
