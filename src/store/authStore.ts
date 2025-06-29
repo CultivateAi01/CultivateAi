@@ -1,5 +1,13 @@
 import { create } from 'zustand';
-import { User } from '../types';
+import { useAuth } from '@clerk/clerk-react';
+
+interface User {
+  id: string;
+  email: string;
+  name: string;
+  credits: number;
+  created_at: string;
+}
 
 interface AuthState {
   user: User | null;
@@ -19,17 +27,12 @@ export const useAuthStore = create<AuthState>((set) => ({
       // Clear user from store immediately
       set({ user: null });
       
-      // Sign out from Supabase with proper scope
-      const { supabase } = await import('../lib/supabase');
-      const { error } = await supabase.auth.signOut({ scope: 'global' });
+      // Import Clerk's signOut function dynamically
+      const { useAuth } = await import('@clerk/clerk-react');
       
-      if (error) {
-        console.error('Logout error:', error);
-      }
-      
-      // Force clear any remaining session data
-      localStorage.removeItem('supabase.auth.token');
-      sessionStorage.clear();
+      // Note: This approach won't work directly in Zustand
+      // We'll need to handle logout from components that have access to Clerk hooks
+      console.log('Logout should be handled from a component with Clerk hooks');
       
       // Force reload to ensure clean state
       window.location.href = '/';

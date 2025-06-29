@@ -10,6 +10,7 @@ import {
   FolderOpen, 
   ChevronDown 
 } from 'lucide-react';
+import { useAuth, useUser } from '@clerk/clerk-react';
 import { useAuthStore } from '../../store/authStore';
 import { Button } from '../ui/Button';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
@@ -21,7 +22,9 @@ const navigationItems = [
 ];
 
 export const Header: React.FC = () => {
-  const { user, logout } = useAuthStore();
+  const { user: clerkUser } = useUser();
+  const { signOut } = useAuth();
+  const { user } = useAuthStore();
   const location = useLocation();
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -42,8 +45,8 @@ export const Header: React.FC = () => {
   const handleLogout = async () => {
     try {
       setIsDropdownOpen(false);
-      await logout();
-      // The logout function now handles the redirect
+      await signOut();
+      // Clerk will handle the redirect automatically
     } catch (error) {
       console.error('Logout error:', error);
       // Force redirect even if logout fails
@@ -111,7 +114,15 @@ export const Header: React.FC = () => {
                 className="flex items-center gap-3 p-2 hover:bg-white/[0.08] rounded-xl transition-all duration-200"
               >
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                  <User className="w-4 h-4 text-white" />
+                  {clerkUser?.imageUrl ? (
+                    <img 
+                      src={clerkUser.imageUrl} 
+                      alt={clerkUser.fullName || 'User'} 
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                  ) : (
+                    <User className="w-4 h-4 text-white" />
+                  )}
                 </div>
                 <div className="hidden sm:block text-left">
                   <div className="text-sm font-medium text-white">{user?.name}</div>
@@ -149,7 +160,15 @@ export const Header: React.FC = () => {
                         <div className="px-3 py-3 border-b border-white/10">
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                              <User className="w-5 h-5 text-white" />
+                              {clerkUser?.imageUrl ? (
+                                <img 
+                                  src={clerkUser.imageUrl} 
+                                  alt={clerkUser.fullName || 'User'} 
+                                  className="w-10 h-10 rounded-full object-cover"
+                                />
+                              ) : (
+                                <User className="w-5 h-5 text-white" />
+                              )}
                             </div>
                             <div className="flex-1 min-w-0">
                               <div className="text-sm font-medium text-white truncate">{user?.name}</div>

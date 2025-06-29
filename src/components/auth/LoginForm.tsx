@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, Github } from 'lucide-react';
+import { useSignIn } from '@clerk/clerk-react';
 import { Button } from '../ui/Button';
-import { authHelpers } from '../../lib/supabase';
-import { apiClient } from '../../lib/api';
-import { useAuthStore } from '../../store/authStore';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginFormData {
   email: string;
@@ -16,53 +15,47 @@ export const LoginForm: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { setUser } = useAuthStore();
+  const { signIn, setActive, isLoaded } = useSignIn();
+  const navigate = useNavigate();
   
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>();
 
   const onSubmit = async (data: LoginFormData) => {
+    if (!isLoaded) return;
+
     setLoading(true);
     setError(null);
     
     try {
-      const { data: authData, error: authError } = await authHelpers.signIn(data.email, data.password);
-      if (authError) throw authError;
-      
-      if (authData.user) {
-        // Get user profile from backend
-        try {
-          const profileResponse = await apiClient.getProfile();
-          setUser({
-            id: authData.user.id,
-            email: authData.user.email!,
-            name: profileResponse.profile?.first_name || authData.user.user_metadata?.name || 'User',
-            credits: profileResponse.credits?.balance || 0,
-            created_at: authData.user.created_at!
-          });
-        } catch (profileError) {
-          console.error('Failed to fetch profile:', profileError);
-          // Fallback to basic user data
-          setUser({
-            id: authData.user.id,
-            email: authData.user.email!,
-            name: authData.user.user_metadata?.name || 'User',
-            credits: 0,
-            created_at: authData.user.created_at!
-          });
-        }
+      const result = await signIn.create({
+        identifier: data.email,
+        password: data.password,
+      });
+
+      if (result.status === 'complete') {
+        await setActive({ session: result.createdSessionId });
+        navigate('/home');
+      } else {
+        // Handle other statuses if needed
+        console.log('Sign in result:', result);
       }
-    } catch (error: any) {
-      console.error('Login error:', error);
-      setError(error.message || 'Login failed. Please try again.');
+    } catch (err: any) {
+      console.error('Login error:', err);
+      setError(err.errors?.[0]?.message || 'Login failed. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
   const handleGithubLogin = async () => {
+    if (!isLoaded) return;
+
     try {
-      const { error } = await authHelpers.signInWithGithub();
-      if (error) throw error;
+      await signIn.authenticateWithRedirect({
+        strategy: 'oauth_github',
+        redirectUrl: '/sso-callback',
+        redirectUrlComplete: '/home'
+      });
     } catch (error: any) {
       console.error('GitHub login error:', error);
       setError(error.message || 'GitHub login failed. Please try again.');
@@ -70,9 +63,14 @@ export const LoginForm: React.FC = () => {
   };
 
   const handleGoogleLogin = async () => {
+    if (!isLoaded) return;
+
     try {
-      const { error } = await authHelpers.signInWithGoogle();
-      if (error) throw error;
+      await signIn.authenticateWithRedirect({
+        strategy: 'oauth_google',
+        redirectUrl: '/sso-callback',
+        redirectUrlComplete: '/home'
+      });
     } catch (error: any) {
       console.error('Google login error:', error);
       setError(error.message || 'Google login failed. Please try again.');

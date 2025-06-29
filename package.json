@@ -12,6 +12,7 @@
     "server:dev": "nodemon server/index.js"
   },
   "dependencies": {
+    "@clerk/clerk-react": "^4.30.0",
     "@supabase/supabase-js": "^2.39.0",
     "framer-motion": "^10.16.16",
     "lucide-react": "^0.344.0",

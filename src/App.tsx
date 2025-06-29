@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useUser, useAuth } from '@clerk/clerk-react';
 import { useAuthStore } from './store/authStore';
-import { supabase } from './lib/supabase';
-// import { LoadingScreen } from './components/ui/LoadingScreen';
 import { Header } from './components/layout/Header';
 import { Dashboard } from './pages/Dashboard';
 import { Projects } from './pages/Projects';
@@ -13,100 +12,31 @@ import { Signup } from './pages/Signup';
 import { Landing } from './pages/Landing';
 
 function App() {
-  const { user, setUser, setLoading, isLoading } = useAuthStore();
-  // const [showLoadingScreen, setShowLoadingScreen] = useState(true);
+  const { user, isLoaded } = useUser();
+  const { isSignedIn } = useAuth();
+  const { setUser, setLoading } = useAuthStore();
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        // Get current session
-        const { data: { session }, error } = await supabase.auth.getSession();
-        
-        if (error) {
-          console.error('Session error:', error);
-          setUser(null);
-          setLoading(false);
-          return;
-        }
-        
-        if (session?.user) {
-          // Verify the session is still valid
-          const { data: { user: currentUser }, error: userError } = await supabase.auth.getUser();
-          
-          if (userError || !currentUser) {
-            console.log('Invalid session, clearing...');
-            await supabase.auth.signOut({ scope: 'global' });
-            setUser(null);
-          } else {
-            // Set user data from valid session
-            setUser({
-              id: currentUser.id,
-              email: currentUser.email!,
-              name: currentUser.user_metadata?.name || currentUser.email?.split('@')[0] || 'User',
-              credits: 100, // Default credits
-              created_at: currentUser.created_at!
-            });
-          }
-        } else {
-          setUser(null);
-        }
-      } catch (error) {
-        console.error('Auth check error:', error);
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkAuth();
-
-    // Listen for auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log('Auth state changed:', event, session?.user?.email);
+    if (isLoaded) {
+      setLoading(false);
       
-      if (event === 'SIGNED_OUT' || !session) {
-        console.log('User signed out, clearing state...');
+      if (isSignedIn && user) {
+        // Set user data from Clerk
+        setUser({
+          id: user.id,
+          email: user.primaryEmailAddress?.emailAddress || '',
+          name: user.fullName || user.firstName || 'User',
+          credits: 100, // Default credits - this should be fetched from your backend
+          created_at: user.createdAt?.toISOString() || new Date().toISOString()
+        });
+      } else {
         setUser(null);
-        // Clear any cached data
-        localStorage.removeItem('supabase.auth.token');
-      } else if (event === 'SIGNED_IN' && session?.user) {
-        console.log('User signed in, setting state...');
-        setUser({
-          id: session.user.id,
-          email: session.user.email!,
-          name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
-          credits: 100, // Default credits
-          created_at: session.user.created_at!
-        });
-      } else if (event === 'TOKEN_REFRESHED' && session?.user) {
-        // Update user data on token refresh
-        setUser({
-          id: session.user.id,
-          email: session.user.email!,
-          name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
-          credits: 100, // Default credits
-          created_at: session.user.created_at!
-        });
       }
-    });
+    }
+  }, [isLoaded, isSignedIn, user, setUser, setLoading]);
 
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [setUser, setLoading]);
-
-  // Show loading screen on initial load - COMMENTED OUT
-  // if (showLoadingScreen) {
-  //   return (
-  //     <LoadingScreen 
-  //       onComplete={() => setShowLoadingScreen(false)}
-  //       minDuration={2500}
-  //     />
-  //   );
-  // }
-
-  // Show simple spinner while checking auth
-  if (isLoading) {
+  // Show loading screen while Clerk is initializing
+  if (!isLoaded) {
     return (
       <div className="min-h-screen bg-black relative flex items-center justify-center">
         {/* Global grid background */}
@@ -129,12 +59,12 @@ function App() {
         <div className="relative z-10">
           <Routes>
             {/* Public routes */}
-            <Route path="/" element={user ? <Navigate to="/home" replace /> : <Landing />} />
-            <Route path="/login" element={user ? <Navigate to="/home" replace /> : <Login />} />
-            <Route path="/signup" element={user ? <Navigate to="/home" replace /> : <Signup />} />
+            <Route path="/" element={isSignedIn ? <Navigate to="/home" replace /> : <Landing />} />
+            <Route path="/login" element={isSignedIn ? <Navigate to="/home" replace /> : <Login />} />
+            <Route path="/signup" element={isSignedIn ? <Navigate to="/home" replace /> : <Signup />} />
             
             {/* Protected routes */}
-            {user ? (
+            {isSignedIn ? (
               <Route path="/*" element={
                 <>
                   <Header />

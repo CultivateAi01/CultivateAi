@@ -9,10 +9,11 @@ class ApiClient {
 
   private async getAuthToken(): Promise<string | null> {
     try {
-      // Try to get token from Supabase session
-      const { supabase } = await import('./supabase');
-      const { data: { session } } = await supabase.auth.getSession();
-      return session?.access_token || null;
+      // Get token from Clerk session
+      const { getToken } = await import('@clerk/clerk-react');
+      // Note: This won't work directly in a class method
+      // We'll need to pass the token from components that have access to Clerk hooks
+      return null;
     } catch (error) {
       console.error('Error getting auth token:', error);
       return null;
@@ -21,12 +22,10 @@ class ApiClient {
 
   private async request<T>(
     endpoint: string,
-    options: RequestInit = {}
+    options: RequestInit = {},
+    token?: string
   ): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
-    
-    // Get auth token
-    const token = await this.getAuthToken();
     
     const config: RequestInit = {
       headers: {
@@ -65,39 +64,39 @@ class ApiClient {
     });
   }
 
-  async getProfile() {
-    return this.request('/auth/profile');
+  async getProfile(token?: string) {
+    return this.request('/auth/profile', {}, token);
   }
 
   async updateProfile(profileData: {
     first_name?: string;
     last_name?: string;
     avatar_url?: string;
-  }) {
+  }, token?: string) {
     return this.request('/auth/profile', {
       method: 'PUT',
       body: JSON.stringify(profileData),
-    });
+    }, token);
   }
 
   // Projects endpoints
-  async getProjects() {
-    return this.request('/projects');
+  async getProjects(token?: string) {
+    return this.request('/projects', {}, token);
   }
 
-  async getProject(id: string) {
-    return this.request(`/projects/${id}`);
+  async getProject(id: string, token?: string) {
+    return this.request(`/projects/${id}`, {}, token);
   }
 
   async createProject(projectData: {
     title: string;
     description: string;
     startup_idea: string;
-  }) {
+  }, token?: string) {
     return this.request('/projects', {
       method: 'POST',
       body: JSON.stringify(projectData),
-    });
+    }, token);
   }
 
   async updateProject(id: string, projectData: {
@@ -105,69 +104,68 @@ class ApiClient {
     description?: string;
     startup_idea?: string;
     status?: string;
-  }) {
+  }, token?: string) {
     return this.request(`/projects/${id}`, {
       method: 'PUT',
       body: JSON.stringify(projectData),
-    });
+    }, token);
   }
 
-  async deleteProject(id: string) {
+  async deleteProject(id: string, token?: string) {
     return this.request(`/projects/${id}`, {
       method: 'DELETE',
-    });
+    }, token);
   }
 
   // Agents endpoints
-  async getAgents() {
-    return this.request('/agents');
+  async getAgents(token?: string) {
+    return this.request('/agents', {}, token);
   }
 
   async runAgent(agentData: {
     project_id: string;
     agent_id: string;
     input_data: any;
-  }) {
+  }, token?: string) {
     return this.request('/agents/run', {
       method: 'POST',
       body: JSON.stringify(agentData),
-    });
+    }, token);
   }
 
-  async getAgentRun(id: string) {
-    return this.request(`/agents/runs/${id}`);
+  async getAgentRun(id: string, token?: string) {
+    return this.request(`/agents/runs/${id}`, {}, token);
   }
 
   // Credits endpoints
-  async getCredits() {
-    return this.request('/credits');
+  async getCredits(token?: string) {
+    return this.request('/credits', {}, token);
   }
 
   async purchaseCredits(purchaseData: {
     amount: number;
     payment_intent_id?: string;
-  }) {
+  }, token?: string) {
     return this.request('/credits/purchase', {
       method: 'POST',
       body: JSON.stringify(purchaseData),
-    });
+    }, token);
   }
 
-  async getCreditPackages() {
-    return this.request('/credits/packages');
+  async getCreditPackages(token?: string) {
+    return this.request('/credits/packages', {}, token);
   }
 
   // Outputs endpoints
-  async getProjectOutputs(projectId: string) {
-    return this.request(`/outputs/project/${projectId}`);
+  async getProjectOutputs(projectId: string, token?: string) {
+    return this.request(`/outputs/project/${projectId}`, {}, token);
   }
 
-  async getOutput(id: string) {
-    return this.request(`/outputs/${id}`);
+  async getOutput(id: string, token?: string) {
+    return this.request(`/outputs/${id}`, {}, token);
   }
 
-  async exportOutput(id: string, format: 'markdown' | 'txt' | 'json') {
-    const token = await this.getAuthToken();
+  async exportOutput(id: string, format: 'markdown' | 'txt' | 'json', token?: string) {
     const response = await fetch(`${this.baseURL}/outputs/${id}/export/${format}`, {
       headers: {
         ...(token && { Authorization: `Bearer ${token}` }),
