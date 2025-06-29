@@ -108,7 +108,7 @@ export const ProjectSelector: React.FC<ProjectSelectorProps> = ({
                 </button>
               ))}
             </div>
-          </div>
+          </motion.div>
         </>
       )}
     </div>
