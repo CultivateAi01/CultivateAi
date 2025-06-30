@@ -187,7 +187,7 @@ export const Hero: React.FC = () => {
         </motion.div>
 
         {/* Simple trust indicators */}
-        <motion.div
+        {/*} <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
@@ -206,7 +206,7 @@ export const Hero: React.FC = () => {
               <span>95% success rate</span>
             </div>
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );
