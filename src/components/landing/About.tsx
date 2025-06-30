@@ -28,14 +28,14 @@ const values = [
     color: 'from-pink-500 to-rose-500'
   }
 ];
-{/*}
+
 const stats = [
   { number: '10,000+', label: 'Entrepreneurs Served', icon: Users },
   { number: '50,000+', label: 'Ideas Validated', icon: Lightbulb },
   { number: '$50M+', label: 'Funding Raised', icon: TrendingUp },
   { number: '95%', label: 'Success Rate', icon: Award }
 ];
-*/}
+
 export const About: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
@@ -85,7 +85,7 @@ export const About: React.FC = () => {
         </motion.div>
 
         {/* Stats */}
-        <motion.div
+         {/*   <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
@@ -99,13 +99,14 @@ export const About: React.FC = () => {
                 <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-200">
                   <Icon className="w-8 h-8 text-white" />
                 </div>
-                {/* Reduced from 4xl to 3xl */}
                 <div className="text-2xl md:text-3xl font-bold text-white mb-2">{stat.number}</div>
                 <div className="text-gray-400 text-sm">{stat.label}</div>
               </div>
             );
           })}
         </motion.div>
+    */}
+    
 
         {/* Mission Statement */}
         <motion.div
