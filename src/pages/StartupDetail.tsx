@@ -472,7 +472,8 @@ export const StartupDetail: React.FC = () => {
             {activeSection === 'overview' ? 'All AI Results' : sectionTabs.find(t => t.id === activeSection)?.label}
           </h2>
           <div className="text-sm text-gray-400">
-            {filteredResults.length} result{filteredResults.length !== 1 ? 's' : ''}
+            {/* {filteredResults.length} result{filteredResults.length !== 1 ? 's' : ''} */}
+            hello
           </div>
         </div>
 
