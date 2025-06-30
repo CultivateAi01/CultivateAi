@@ -42,232 +42,7 @@ const mockStartupData = {
       actionName: 'Market Research',
       status: 'completed' as const,
       timestamp: '2024-01-20T10:30:00Z',
-      content: `<h1 id="market-research-analysis">Market Research Analysis</h1>
-<h2 id="market-size-opportunity">Market Size & Opportunity</h2>
-<p>The sustainable food delivery market is experiencing rapid growth, with a projected CAGR of 15.2% through 2028. The total addressable market (TAM) is estimated at $45B globally.</p>
-
-<h3 id="key-market-insights">Key Market Insights:</h3>
-<ul>
-<li>73% of consumers willing to pay premium for sustainable options</li>
-<li>Urban markets show highest adoption rates (85% in major cities)</li>
-<li>Competitor analysis reveals significant gaps in eco-packaging solutions</li>
-</ul>
-
-<h2 id="target-demographics">Target Demographics:</h2>
-<ul>
-<li>Primary: Ages 25-40, household income $50K+</li>
-<li>Secondary: Eco-conscious families with children</li>
-<li>Geographic focus: Major metropolitan areas</li>
-</ul>
-
-<h2 id="competitive-landscape">Competitive Landscape:</h2>
-<ol>
-<li><strong>DoorDash</strong>: Limited sustainability features</li>
-<li><strong>Uber Eats</strong>: Basic carbon offset program</li>
-<li><strong>Grubhub</strong>: No significant green initiatives</li>
-</ol>
-
-<h2 id="market-entry-strategy">Market Entry Strategy:</h2>
-<p>Focus on 3-5 pilot cities with high environmental awareness and strong restaurant density.</p>`,
-      creditsUsed: 10
-    },
-    {
-      id: '2',
-      actionId: '2',
-      actionName: 'MVP Builder',
-      status: 'completed' as const,
-      timestamp: '2024-01-20T11:45:00Z',
-      content: `<h1 id="mvp-development-roadmap">MVP Development Roadmap</h1>
-
-<h2 id="core-features-phase-1">Core Features (Phase 1 - 3 months)</h2>
-<h3 id="customer-app">Customer App:</h3>
-<ul>
-<li>Restaurant discovery with sustainability ratings</li>
-<li>Eco-packaging options selection</li>
-<li>Carbon footprint tracking per order</li>
-<li>Delivery route optimization display</li>
-</ul>
-
-<h3 id="restaurant-dashboard">Restaurant Dashboard:</h3>
-<ul>
-<li>Sustainability metrics tracking</li>
-<li>Eco-packaging inventory management</li>
-<li>Customer feedback on green initiatives</li>
-</ul>
-
-<h3 id="delivery-platform">Delivery Platform:</h3>
-<ul>
-<li>Route optimization for minimal emissions</li>
-<li>Electric vehicle integration</li>
-<li>Real-time carbon offset calculations</li>
-</ul>
-
-<h2 id="technical-architecture">Technical Architecture:</h2>
-<ul>
-<li><strong>Frontend</strong>: React Native for mobile apps</li>
-<li><strong>Backend</strong>: Node.js with Express</li>
-<li><strong>Database</strong>: PostgreSQL with Redis caching</li>
-<li><strong>Maps</strong>: Google Maps API with custom routing</li>
-<li><strong>Payments</strong>: Stripe with carbon offset integration</li>
-</ul>
-
-<h2 id="development-timeline">Development Timeline:</h2>
-<ul>
-<li><strong>Month 1</strong>: Core ordering system</li>
-<li><strong>Month 2</strong>: Sustainability features</li>
-<li><strong>Month 3</strong>: Delivery optimization</li>
-<li><strong>Month 4</strong>: Beta testing and refinement</li>
-</ul>
-
-<h2 id="estimated-costs">Estimated Costs:</h2>
-<ul>
-<li>Development team: $180K</li>
-<li>Infrastructure: $15K</li>
-<li>Third-party integrations: $25K</li>
-<li><strong>Total MVP Cost</strong>: $220K</li>
-</ul>`,
-      creditsUsed: 15
-    },
-    {
-      id: '3',
-      actionId: '3',
-      actionName: 'Pitch Deck Generator',
-      status: 'completed' as const,
-      timestamp: '2024-01-20T14:20:00Z',
-      content: `<h1 id="ecodelivery-pitch-deck">EcoDelivery Pitch Deck</h1>
-
-<h2 id="slide-1-problem">Slide 1: Problem</h2>
-<p>🌍 <strong>The food delivery industry generates 1.5B tons of packaging waste annually</strong></p>
-<ul>
-<li>89% of delivery packaging is non-recyclable</li>
-<li>Average delivery creates 2.3kg CO2 emissions</li>
-<li>Consumers increasingly demand sustainable options</li>
-</ul>
-
-<h2 id="slide-2-solution">Slide 2: Solution</h2>
-<p>🚀 <strong>EcoDelivery: The world's first carbon-neutral food delivery platform</strong></p>
-<ul>
-<li>AI-optimized routing reduces emissions by 40%</li>
-<li>100% compostable packaging partnerships</li>
-<li>Real-time carbon offset integration</li>
-</ul>
-
-<h2 id="slide-3-market-opportunity">Slide 3: Market Opportunity</h2>
-<p>📈 <strong>$45B TAM with 15.2% CAGR</strong></p>
-<ul>
-<li>73% of consumers willing to pay 10-15% premium</li>
-<li>156M potential users in target demographics</li>
-<li>First-mover advantage in sustainability space</li>
-</ul>
-
-<h2 id="slide-4-business-model">Slide 4: Business Model</h2>
-<p>💰 <strong>Multiple Revenue Streams</strong></p>
-<ul>
-<li>Commission: 15-20% per order</li>
-<li>Sustainability premium: 5% additional</li>
-<li>Carbon offset marketplace: 2-3% transaction fee</li>
-<li>Restaurant sustainability consulting: $500-2K/month</li>
-</ul>
-
-<h2 id="slide-5-traction">Slide 5: Traction</h2>
-<p>🎯 <strong>Early Validation</strong></p>
-<ul>
-<li>2,500 pre-registered users</li>
-<li>45 restaurant partnerships signed</li>
-<li>$125K in pre-seed funding secured</li>
-</ul>
-
-<h2 id="slide-6-financial-projections">Slide 6: Financial Projections</h2>
-<p>📊 <strong>5-Year Growth Plan</strong></p>
-<ul>
-<li>Year 1: $2.5M revenue, 50K orders</li>
-<li>Year 3: $45M revenue, 2M orders</li>
-<li>Year 5: $180M revenue, 12M orders</li>
-<li>Break-even: Month 18</li>
-</ul>
-
-<h2 id="slide-7-team">Slide 7: Team</h2>
-<p>👥 <strong>Experienced Leadership</strong></p>
-<ul>
-<li>CEO: Former Uber Eats operations director</li>
-<li>CTO: Ex-Google Maps engineer</li>
-<li>CMO: Sustainability marketing expert</li>
-</ul>
-
-<h2 id="slide-8-funding-ask">Slide 8: Funding Ask</h2>
-<p>💵 <strong>Seeking $2M Series A</strong></p>
-<ul>
-<li>40% Product development</li>
-<li>30% Market expansion</li>
-<li>20% Team growth</li>
-<li>10% Marketing & partnerships</li>
-</ul>`,
-      creditsUsed: 12
-    },
-    {
-      id: '4',
-      actionId: '5',
-      actionName: 'Marketing Strategy',
-      status: 'in_progress' as const,
-      timestamp: '2024-01-20T15:00:00Z',
-      content: `<h1 id="marketing-strategy-in-progress">Marketing Strategy (In Progress)</h1>
-
-<h2 id="brand-positioning">Brand Positioning</h2>
-<p>"The conscious choice for conscious consumers"</p>
-
-<h2 id="go-to-market-strategy">Go-to-Market Strategy</h2>
-<h3 id="phase-1-community-building">Phase 1: Community Building (Months 1-3)</h3>
-<ul>
-<li>Partner with environmental organizations</li>
-<li>Influencer collaborations with eco-lifestyle creators</li>
-<li>University campus pilot programs</li>
-</ul>
-
-<h3 id="phase-2-market-penetration">Phase 2: Market Penetration (Months 4-8)</h3>
-<ul>
-<li>Targeted digital advertising in pilot cities</li>
-<li>Restaurant partnership announcements</li>
-<li>Sustainability impact reporting</li>
-</ul>
-
-<h2 id="customer-acquisition-channels">Customer Acquisition Channels</h2>
-<ol>
-<li><strong>Digital Marketing</strong> (40% budget)
-<ul>
-<li>Instagram/TikTok campaigns</li>
-<li>Google Ads for "sustainable delivery"</li>
-<li>Content marketing on environmental blogs</li>
-</ul>
-</li>
-<li><strong>Partnerships</strong> (30% budget)
-<ul>
-<li>Environmental NGO collaborations</li>
-<li>Corporate sustainability programs</li>
-<li>University partnerships</li>
-</ul>
-</li>
-<li><strong>PR & Events</strong> (20% budget)
-<ul>
-<li>Earth Day activations</li>
-<li>Sustainability conference presence</li>
-<li>Local environmental events</li>
-</ul>
-</li>
-<li><strong>Referral Program</strong> (10% budget)
-<ul>
-<li>Carbon credit rewards for referrals</li>
-<li>Gamified sustainability challenges</li>
-</ul>
-</li>
-</ol>
-
-<h2 id="success-metrics">Success Metrics</h2>
-<ul>
-<li>Customer Acquisition Cost (CAC): &lt;$25</li>
-<li>Lifetime Value (LTV): &gt;$150</li>
-<li>Monthly Active Users growth: 20%</li>
-<li>Brand awareness in target markets: 35%</li>
-</ul>`,
+      content: `<h1 id=finalreporttherelationshipbetweendonaldtrumpandjeffreyepstein">Final Report: The Relationship Between Donald Trump and Jeffrey Epstein</h1>\n<h2 id="introduction">Introduction</h2>\n<p>The association between Donald Trump, the 45th President of the United States, and Jeffrey Epstein, a convicted sex offender who was implicated in numerous scandals involving sexual abuse and trafficking, has raised numerous questions regarding political collusion, social connections, and implications for public trust. This report compiles findings from various investigations, social observations, and public claims to explore the nuances of their relationship, the implications of such a connection, and recent developments pertaining to disclosures related to Epstein.</p>\n<h2 id="backgroundonjeffreyepstein">Background on Jeffrey Epstein</h2>\n<p>Jeffrey Epstein was a financier and convicted sex offender known for his high-profile connections. His life took a dramatic turn following his arrest in 2019 for sex trafficking charges. Epstein's social network included many influential figures in various sectors, including politics, business, and entertainment. His connections, coupled with his criminal activities, have cast a long shadow over those associated with him.</p>\n<h2 id="donaldtrumpandjeffreyepsteinachronologicalperspective">Donald Trump and Jeffrey Epstein: A Chronological Perspective</h2>\n<h3 id="early1990stheemergenceofafriendship">Early 1990s: The Emergence of a Friendship</h3>\n<ul>\n<li><strong>Social Interactions</strong>: Trump and Epstein became acquainted in the early 1990s, frequenting upscale social settings. This period marked the beginning of a long-standing friendship, characterized by shared interests in affluent lifestyles and young women. </li>\n<li><strong>Notable Events at Mar-a-Lago</strong>: Trump hosted various high-profile events at his Mar-a-Lago estate, including a calendar girl competition in which Epstein was notably present among VIP attendees, suggesting a comfortable rapport.</li>\n</ul>\n<h3 id="late1990stoearly2000sflightlogsandallegations">Late 1990s to Early 2000s: Flight Logs and Allegations</h3>\n<ul>\n<li><strong>Flight Logs</strong>: Investigations have confirmed that Trump flew on Epstein's private plane at least seven times between 1999 and 2002. Notably, these flights included family members, though there were no reported instances directly linking Trump to any illegal activities during these flights.</li>\n<li><strong>Public Persona</strong>: Despite his associations, there were no direct allegations against Trump during this period that implicated him in Epstein's criminal activities.</li>\n</ul>\n<h3 id="2004theallegedfallingout">2004: The Alleged Falling Out</h3>\n<ul>\n<li><strong>Rival Real Estate Interests</strong>: Trump claimed to have distanced himself from Epstein after experiencing a falling out in 2004, allegedly due to their competing real estate interests in Palm Beach.</li>\n<li><strong>Claims of Distancing</strong>: In subsequent years, Trump publicly disassociated himself from Epstein, particularly following Epstein's 2008 conviction. However, Trump's comments about Ghislaine Maxwell, Epstein's close associate, raised eyebrows when he wished her well during her legal troubles, indicating a more complex and potentially ambivalent relationship.</li>\n</ul>\n<h2 id="recentdevelopments">Recent Developments</h2>\n<h3 id="elonmusksaccusations">Elon Musk's Accusations</h3>\n<ul>\n<li><strong>Public Claims</strong>: In a surprising turn, Elon Musk publicly accused Trump of being named in government files related to Epstein. Musk suggested that the government was withholding these files to protect Trump, a statement made without substantial evidence.</li>\n</ul>\n<h3 id="callsfortransparency">Calls for Transparency</h3>\n<ul>\n<li><strong>Congressional Demands</strong>: On June 5, 2025, Representatives Robert Garcia and Stephen F. Lynch demanded greater transparency concerning the Epstein files, proposing that they could contain evidence implicating Trump. This has raised suspicions about possible governmental suppression of information that could impact public perception of Trump.</li>\n</ul>\n<h3 id="socialandpoliticalimplications">Social and Political Implications</h3>\n<ul>\n<li><strong>Impact on Trust</strong>: The surfacing of allegations and demands for transparency has fostered a climate of skepticism regarding Trump's previous assertions and the nature of his relationships. The conflicting narratives surrounding his distancing from Epstein juxtaposed with maintaining ties through mutual acquaintances have significant repercussions for public trust in political leadership.</li>\n</ul>\n<h2 id="summaryoffindings">Summary of Findings</h2>\n<table>\n<thead>\n<tr>\n<th><strong>Aspect</strong></th>\n<th><strong>Details</strong></th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><strong>Friendship Origin</strong></td>\n<td>Began in the early 1990s, involving social interactions in affluent settings.</td>\n</tr>\n<tr>\n<td><strong>Flight Logs</strong></td>\n<td>Confirmed flights on Epstein's plane at least seven times between 1999 and 2002; no direct accusations of misconduct during flights.</td>\n</tr>\n<tr>\n<td><strong>Alleged Falling Out</strong></td>\n<td>Trump claims to have distanced himself in 2004 over real estate competition; maintains ambivalent ties through mutual acquaintances.</td>\n</tr>\n<tr>\n<td><strong>Elon Musk's Accusations</strong></td>\n<td>Claims Trump is implicated in undisclosed Epstein files; lack of substantial evidence prompts doubts.</td>\n</tr>\n<tr>\n<td><strong>Congressional Transparency Calls</strong></td>\n<td>Calls for the release of Epstein files that might contain critical information regarding Trump's associations; raises questions about suppression.</td>\n</tr>\n</tbody>\n</table>\n<h2 id="conclusion">Conclusion</h2>\n<p>The relationship between Donald Trump and Jeffrey Epstein presents a complex narrative characterized by social proximity, public distancing, and ongoing scrutiny. Despite Trump's declarations of separation from Epstein post-2004, the resurging interest in this dynamic—especially in light of recent allegations and calls for transparency—suggests that this association will continue to be a point of interest in both public discourse and political investigation.</p>\n<p>The implications of this relationship extend beyond Trump's past affiliations, challenging societal perceptions of accountability in leadership and the importance of transparent governance. As new information emerges, the focus on Trump's past connections to Epstein is likely to persist, necessitating ongoing examination and dialogue.</p>`,
       creditsUsed: 10
     }
   ],
@@ -313,9 +88,7 @@ export const StartupDetail: React.FC = () => {
 
   const copyToClipboard = async (content: string) => {
     try {
-      // Strip HTML tags for clipboard
-      const textContent = content.replace(/<[^>]*>/g, '');
-      await navigator.clipboard.writeText(textContent);
+      await navigator.clipboard.writeText(content);
       // TODO: Show success toast
     } catch (err) {
       console.error('Failed to copy:', err);
@@ -616,7 +389,7 @@ export const StartupDetail: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Result Content - Now renders HTML properly */}
+                    {/* Result Content */}
                     {isExpanded && (
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
@@ -625,15 +398,9 @@ export const StartupDetail: React.FC = () => {
                         className="p-6"
                       >
                         <div className="prose prose-invert max-w-none">
-                          <div 
-                            className="text-gray-300 leading-relaxed"
-                            dangerouslySetInnerHTML={{ __html: result.content }}
-                            style={{
-                              // Custom styles for the rendered HTML
-                              fontSize: '14px',
-                              lineHeight: '1.6'
-                            }}
-                          />
+                          <pre className="whitespace-pre-wrap text-gray-300 leading-relaxed">
+                            {result.content}
+                          </pre>
                         </div>
                         
                         <div className="flex items-center gap-3 mt-6 pt-4 border-t border-white/10">
