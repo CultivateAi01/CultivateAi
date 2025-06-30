@@ -473,7 +473,8 @@ export const StartupDetail: React.FC = () => {
           </h2>
           <div className="text-sm text-gray-400">
             {/* {filteredResults.length} result{filteredResults.length !== 1 ? 's' : ''} */}
-            hello
+            hell
+            
           </div>
         </div>
 
