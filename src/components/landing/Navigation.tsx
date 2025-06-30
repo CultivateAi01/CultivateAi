@@ -35,6 +35,11 @@ export const Navigation: React.FC = () => {
     setIsOpen(false);
   };
 
+  const handleNavigation = (path: string) => {
+    navigate(path);
+    setIsOpen(false);
+  };
+
   return (
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
@@ -52,7 +57,7 @@ export const Navigation: React.FC = () => {
           <motion.div 
             className="flex items-center gap-3 cursor-pointer"
             whileHover={{ scale: 1.05 }}
-            onClick={() => navigate('/')}
+            onClick={() => handleNavigation('/')}
           >
             <div className="w-8 h-8 flex items-center justify-center">
               <svg width="32" height="32" viewBox="0 0 503 567" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -84,80 +89,131 @@ export const Navigation: React.FC = () => {
             <Button 
               variant="glass" 
               size="sm"
-              onClick={() => navigate('/login')}
+              onClick={() => handleNavigation('/login')}
             >
               Sign In
             </Button>
             <Button 
               variant="primary" 
               size="sm"
-              onClick={() => navigate('/signup')}
+              onClick={() => handleNavigation('/signup')}
             >
               Get Started
             </Button>
           </div>
 
-          {/* Mobile menu button - Enhanced visibility */}
+          {/* Mobile menu button - Enhanced visibility and touch target */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden relative p-3 rounded-xl bg-white/10 border border-white/20 backdrop-blur-sm hover:bg-white/15 hover:border-white/30 transition-all duration-200 group"
+            className="md:hidden relative p-4 rounded-xl bg-white/10 border-2 border-white/30 backdrop-blur-sm hover:bg-white/20 hover:border-white/50 transition-all duration-200 group touch-manipulation"
+            style={{ 
+              minWidth: '48px', 
+              minHeight: '48px',
+              WebkitTapHighlightColor: 'transparent'
+            }}
             aria-label="Toggle mobile menu"
           >
             <div className="relative w-6 h-6 flex items-center justify-center">
-              {isOpen ? (
-                <X className="w-5 h-5 text-white group-hover:text-gray-200 transition-colors" />
-              ) : (
-                <Menu className="w-5 h-5 text-white group-hover:text-gray-200 transition-colors" />
-              )}
+              <motion.div
+                animate={{ rotate: isOpen ? 180 : 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {isOpen ? (
+                  <X className="w-6 h-6 text-white drop-shadow-lg" strokeWidth={2.5} />
+                ) : (
+                  <Menu className="w-6 h-6 text-white drop-shadow-lg" strokeWidth={2.5} />
+                )}
+              </motion.div>
             </div>
-            {/* Visual indicator for better visibility */}
-            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+            {/* Enhanced visual indicator */}
+            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/30 to-purple-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
           </button>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation - Enhanced */}
         <motion.div
           initial={false}
           animate={{ 
             height: isOpen ? 'auto' : 0,
             opacity: isOpen ? 1 : 0
           }}
-          transition={{ duration: 0.2 }}
-          className="md:hidden overflow-hidden border-t border-white/10"
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          className="md:hidden overflow-hidden"
         >
-          <div className="py-4 space-y-4 bg-black/50 backdrop-blur-md rounded-b-xl">
-            {navItems.map((item) => (
-              <button
+          <div className="py-6 space-y-2 bg-black/80 backdrop-blur-md rounded-b-2xl border-t border-white/10 mt-2">
+            {navItems.map((item, index) => (
+              <motion.button
                 key={item.label}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ 
+                  opacity: isOpen ? 1 : 0, 
+                  x: isOpen ? 0 : -20 
+                }}
+                transition={{ 
+                  delay: isOpen ? index * 0.1 : 0,
+                  duration: 0.2 
+                }}
                 onClick={() => scrollToSection(item.href)}
-                className="block text-gray-300 hover:text-white transition-colors duration-200 font-medium py-2 w-full text-left px-4 hover:bg-white/5 rounded-lg"
+                className="block w-full text-left text-gray-300 hover:text-white hover:bg-white/10 transition-all duration-200 font-medium py-3 px-6 rounded-lg mx-2 touch-manipulation"
+                style={{ 
+                  minHeight: '48px',
+                  WebkitTapHighlightColor: 'transparent'
+                }}
               >
                 {item.label}
-              </button>
+              </motion.button>
             ))}
+            
             <div className="flex flex-col gap-3 pt-4 border-t border-white/10 px-4">
-              <Button 
-                variant="glass" 
-                size="sm" 
-                className="w-full"
-                onClick={() => {
-                  navigate('/login');
-                  setIsOpen(false);
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ 
+                  opacity: isOpen ? 1 : 0, 
+                  y: isOpen ? 0 : 20 
+                }}
+                transition={{ 
+                  delay: isOpen ? navItems.length * 0.1 : 0,
+                  duration: 0.2 
                 }}
               >
-                Sign In
-              </Button>
-              <Button 
-                variant="primary" 
-                size="sm" 
-                className="w-full"
-                onClick={() => {
-                  navigate('/signup');
-                  setIsOpen(false);
+                <Button 
+                  variant="glass" 
+                  size="md" 
+                  className="w-full touch-manipulation"
+                  style={{ 
+                    minHeight: '48px',
+                    WebkitTapHighlightColor: 'transparent'
+                  }}
+                  onClick={() => handleNavigation('/login')}
+                >
+                  Sign In
+                </Button>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ 
+                  opacity: isOpen ? 1 : 0, 
+                  y: isOpen ? 0 : 20 
+                }}
+                transition={{ 
+                  delay: isOpen ? (navItems.length + 1) * 0.1 : 0,
+                  duration: 0.2 
                 }}
               >
-                Get Started
-              </Button>
+                <Button 
+                  variant="primary" 
+                  size="md" 
+                  className="w-full touch-manipulation"
+                  style={{ 
+                    minHeight: '48px',
+                    WebkitTapHighlightColor: 'transparent'
+                  }}
+                  onClick={() => handleNavigation('/signup')}
+                >
+                  Get Started
+                </Button>
+              </motion.div>
             </div>
           </div>
         </motion.div>
