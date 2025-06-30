@@ -161,95 +161,76 @@ export const Hero: React.FC = () => {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto text-center">
-        {/* Main headline with enhanced animations */}
+        {/* Main headline with enhanced animations - TWO LINES & SMALLER TEXT */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="mb-8"
+          className="mb-6"
         >
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-md border border-white/20 rounded-full px-6 py-3 mb-8"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-md border border-white/20 rounded-full px-6 py-3 mb-6"
           >
             <Sparkles className="w-4 h-4 text-blue-400" />
             <span className="text-sm font-medium text-white">AI-Powered Startup Builder</span>
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
           </motion.div>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-8">
+          {/* Two-line headline with smaller text sizes */}
+          <motion.h1 
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] mb-6"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
             <motion.span 
               className="text-white block"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
             >
-              Turn your
-            </motion.span>
-            <motion.span 
-              className="relative block"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-            >
-              <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                wildest ideas
+              Turn your{' '}
+              <span className="relative">
+                <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                  wildest ideas
+                </span>
+                <motion.div
+                  className="absolute -inset-2 bg-gradient-to-r from-blue-400/20 via-purple-500/20 to-pink-500/20 blur-xl -z-10"
+                  animate={{
+                    opacity: [0.5, 1, 0.5],
+                    scale: [1, 1.05, 1],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
               </span>
-              <motion.div
-                className="absolute -inset-2 bg-gradient-to-r from-blue-400/20 via-purple-500/20 to-pink-500/20 blur-xl -z-10"
-                animate={{
-                  opacity: [0.5, 1, 0.5],
-                  scale: [1, 1.05, 1],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
             </motion.span>
             <motion.span 
               className="text-white block"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
             >
-              into
-            </motion.span>
-            <motion.span 
-              className="text-white block"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
-            >
-              <span className="relative">
-                billion-dollar
-                <motion.div
-                  className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-yellow-400 to-orange-500"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ duration: 1, delay: 1.5 }}
-                />
+              into{' '}
+              <span className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
+                billion-dollar startups
               </span>
             </motion.span>
-            <motion.span 
-              className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent block"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 1.1 }}
-            >
-              startups
-            </motion.span>
-          </h1>
+          </motion.h1>
           
+          {/* Smaller subheading */}
           <motion.p 
-            className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed font-light"
+            className="text-base md:text-lg lg:text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed font-light"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.3 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
           >
             Our AI agents research, validate, and build your startup in{' '}
             <span className="text-blue-400 font-semibold">minutes, not months</span>.
@@ -257,12 +238,12 @@ export const Hero: React.FC = () => {
           </motion.p>
         </motion.div>
 
-        {/* Enhanced Input Section */}
+        {/* Enhanced Input Section - More compact */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.5 }}
-          className="mb-16"
+          transition={{ duration: 0.8, delay: 1.0 }}
+          className="mb-10"
         >
           <div className="max-w-4xl mx-auto">
             <div className="relative group">
@@ -278,13 +259,13 @@ export const Hero: React.FC = () => {
                 }}
               />
               
-              <div className="relative bg-black/40 backdrop-blur-xl border border-white/20 rounded-3xl p-6">
+              <div className="relative bg-black/40 backdrop-blur-xl border border-white/20 rounded-3xl p-4">
                 <div className="relative">
                   <motion.div
-                    className="absolute top-4 left-6 flex items-center gap-2"
+                    className="absolute top-3 left-4 flex items-center gap-2"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 2 }}
+                    transition={{ delay: 1.5 }}
                   >
                     <div className="w-3 h-3 bg-red-500 rounded-full" />
                     <div className="w-3 h-3 bg-yellow-500 rounded-full" />
@@ -296,10 +277,10 @@ export const Hero: React.FC = () => {
                     value={idea}
                     onChange={(e) => setIdea(e.target.value)}
                     placeholder="Describe your startup idea... e.g., 'AI-powered fitness app that creates personalized workout plans based on your DNA and lifestyle data'"
-                    className="w-full px-8 py-8 pt-16 bg-transparent text-white placeholder-gray-400 text-lg resize-none focus:outline-none leading-relaxed pr-20"
+                    className="w-full px-6 py-6 pt-12 bg-transparent text-white placeholder-gray-400 text-base resize-none focus:outline-none leading-relaxed pr-16"
                     style={{
-                      minHeight: '140px',
-                      maxHeight: '300px',
+                      minHeight: '100px',
+                      maxHeight: '200px',
                       wordWrap: 'break-word',
                       whiteSpace: 'pre-wrap',
                     }}
@@ -311,7 +292,7 @@ export const Hero: React.FC = () => {
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="absolute bottom-6 left-8 flex items-center gap-2"
+                      className="absolute bottom-4 left-6 flex items-center gap-2"
                     >
                       <div className="flex gap-1">
                         <motion.div
@@ -337,14 +318,14 @@ export const Hero: React.FC = () => {
                   {/* Enhanced CTA button */}
                   <motion.button
                     onClick={handleGetStarted}
-                    className="absolute bottom-6 right-6 group"
+                    className="absolute bottom-4 right-4 group"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     <div className="relative">
                       <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur opacity-70 group-hover:opacity-100 transition duration-300" />
-                      <div className="relative w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white shadow-2xl">
-                        <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-200" />
+                      <div className="relative w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white shadow-2xl">
+                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
                       </div>
                     </div>
                   </motion.button>
@@ -352,12 +333,12 @@ export const Hero: React.FC = () => {
               </div>
             </div>
             
-            {/* Helper text with stats */}
+            {/* Helper text with stats - More compact */}
             <motion.div 
-              className="mt-6 flex flex-col md:flex-row items-center justify-center gap-6 text-sm text-gray-400"
+              className="mt-4 flex flex-col md:flex-row items-center justify-center gap-4 text-sm text-gray-400"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 2.5 }}
+              transition={{ delay: 2.0 }}
             >
               <div className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-blue-400" />
@@ -377,16 +358,16 @@ export const Hero: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Social Proof with Testimonials */}
+        {/* Social Proof with Testimonials - More compact */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.8 }}
-          className="mb-16"
+          transition={{ duration: 0.8, delay: 1.2 }}
+          className="mb-10"
         >
-          <div className="text-center mb-8">
-            <p className="text-gray-400 mb-6">Trusted by entrepreneurs worldwide</p>
-            <div className="flex items-center justify-center gap-8 text-sm text-gray-500">
+          <div className="text-center mb-6">
+            <p className="text-gray-400 mb-4">Trusted by entrepreneurs worldwide</p>
+            <div className="flex items-center justify-center gap-6 text-sm text-gray-500">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                 <span>$50M+ funding raised</span>
@@ -402,17 +383,17 @@ export const Hero: React.FC = () => {
             </div>
           </div>
 
-          {/* Floating testimonial cards */}
-          <div className="relative h-32">
+          {/* Floating testimonial cards - Smaller */}
+          <div className="relative h-24">
             {testimonialCards.map((testimonial, index) => (
               <motion.div
                 key={index}
                 className="absolute"
                 style={{
                   left: `${20 + index * 30}%`,
-                  top: `${index * 10}px`,
+                  top: `${index * 5}px`,
                 }}
-                initial={{ opacity: 0, y: 50, rotate: -5 + index * 5 }}
+                initial={{ opacity: 0, y: 30, rotate: -5 + index * 5 }}
                 animate={{ 
                   opacity: 1, 
                   y: 0, 
@@ -421,7 +402,7 @@ export const Hero: React.FC = () => {
                 }}
                 transition={{ 
                   duration: 0.8, 
-                  delay: 2 + testimonial.delay,
+                  delay: 1.5 + testimonial.delay,
                   x: {
                     duration: 4 + index,
                     repeat: Infinity,
@@ -430,29 +411,29 @@ export const Hero: React.FC = () => {
                 }}
                 whileHover={{ scale: 1.05, rotate: 0, zIndex: 10 }}
               >
-                <div className="bg-white/[0.08] backdrop-blur-md border border-white/20 rounded-xl p-4 max-w-xs">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                <div className="bg-white/[0.08] backdrop-blur-md border border-white/20 rounded-xl p-3 max-w-xs">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-xs font-bold">
                       {testimonial.avatar}
                     </div>
                     <div>
-                      <div className="text-white text-sm font-medium">{testimonial.author}</div>
+                      <div className="text-white text-xs font-medium">{testimonial.author}</div>
                       <div className="text-gray-400 text-xs">{testimonial.role}</div>
                     </div>
                   </div>
-                  <p className="text-gray-300 text-sm">"{testimonial.text}"</p>
+                  <p className="text-gray-300 text-xs">"{testimonial.text}"</p>
                 </div>
               </motion.div>
             ))}
           </div>
         </motion.div>
 
-        {/* Enhanced CTA Section */}
+        {/* Enhanced CTA Section - More compact */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 2.2 }}
-          className="flex flex-col md:flex-row items-center justify-center gap-6"
+          transition={{ duration: 0.8, delay: 1.4 }}
+          className="flex flex-col md:flex-row items-center justify-center gap-4"
         >
           <motion.div
             whileHover={{ scale: 1.05 }}
@@ -461,7 +442,7 @@ export const Hero: React.FC = () => {
             <Button 
               variant="primary" 
               size="lg" 
-              className="px-12 py-4 text-lg font-semibold shadow-2xl relative overflow-hidden group"
+              className="px-10 py-3 text-base font-semibold shadow-2xl relative overflow-hidden group"
               onClick={handleGetStarted}
             >
               <motion.div
@@ -488,7 +469,7 @@ export const Hero: React.FC = () => {
             <Button 
               variant="glass" 
               size="lg" 
-              className="px-12 py-4 text-lg font-semibold group"
+              className="px-10 py-3 text-base font-semibold group"
             >
               <Play className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200" />
               Watch Demo
