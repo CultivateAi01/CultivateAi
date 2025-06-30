@@ -269,13 +269,90 @@ const mockStartupData = {
 <li>Brand awareness in target markets: 35%</li>
 </ul>`,
       creditsUsed: 10
+    },
+    {
+      id: '5',
+      actionId: '6',
+      actionName: 'Legal Advisor',
+      status: 'completed' as const,
+      timestamp: '2024-01-20T16:30:00Z',
+      content: `<h1 id="finalreporttherelationshipbetweendonaldtrumpandjeffreyepstein">Final Report: The Relationship Between Donald Trump and Jeffrey Epstein</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The association between Donald Trump, the 45th President of the United States, and Jeffrey Epstein, a convicted sex offender who was implicated in numerous scandals involving sexual abuse and trafficking, has raised numerous questions regarding political collusion, social connections, and implications for public trust. This report compiles findings from various investigations, social observations, and public claims to explore the nuances of their relationship, the implications of such a connection, and recent developments pertaining to disclosures related to Epstein.</p>
+<h2 id="backgroundonjeffreyepstein">Background on Jeffrey Epstein</h2>
+<p>Jeffrey Epstein was a financier and convicted sex offender known for his high-profile connections. His life took a dramatic turn following his arrest in 2019 for sex trafficking charges. Epstein's social network included many influential figures in various sectors, including politics, business, and entertainment. His connections, coupled with his criminal activities, have cast a long shadow over those associated with him.</p>
+<h2 id="donaldtrumpandjeffreyepsteinachronologicalperspective">Donald Trump and Jeffrey Epstein: A Chronological Perspective</h2>
+<h3 id="early1990stheemergenceofafriendship">Early 1990s: The Emergence of a Friendship</h3>
+<ul>
+<li><strong>Social Interactions</strong>: Trump and Epstein became acquainted in the early 1990s, frequenting upscale social settings. This period marked the beginning of a long-standing friendship, characterized by shared interests in affluent lifestyles and young women. </li>
+<li><strong>Notable Events at Mar-a-Lago</strong>: Trump hosted various high-profile events at his Mar-a-Lago estate, including a calendar girl competition in which Epstein was notably present among VIP attendees, suggesting a comfortable rapport.</li>
+</ul>
+<h3 id="late1990stoearly2000sflightlogsandallegations">Late 1990s to Early 2000s: Flight Logs and Allegations</h3>
+<ul>
+<li><strong>Flight Logs</strong>: Investigations have confirmed that Trump flew on Epstein's private plane at least seven times between 1999 and 2002. Notably, these flights included family members, though there were no reported instances directly linking Trump to any illegal activities during these flights.</li>
+<li><strong>Public Persona</strong>: Despite his associations, there were no direct allegations against Trump during this period that implicated him in Epstein's criminal activities.</li>
+</ul>
+<h3 id="2004theallegedfallingout">2004: The Alleged Falling Out</h3>
+<ul>
+<li><strong>Rival Real Estate Interests</strong>: Trump claimed to have distanced himself from Epstein after experiencing a falling out in 2004, allegedly due to their competing real estate interests in Palm Beach.</li>
+<li><strong>Claims of Distancing</strong>: In subsequent years, Trump publicly disassociated himself from Epstein, particularly following Epstein's 2008 conviction. However, Trump's comments about Ghislaine Maxwell, Epstein's close associate, raised eyebrows when he wished her well during her legal troubles, indicating a more complex and potentially ambivalent relationship.</li>
+</ul>
+<h2 id="recentdevelopments">Recent Developments</h2>
+<h3 id="elonmusksaccusations">Elon Musk's Accusations</h3>
+<ul>
+<li><strong>Public Claims</strong>: In a surprising turn, Elon Musk publicly accused Trump of being named in government files related to Epstein. Musk suggested that the government was withholding these files to protect Trump, a statement made without substantial evidence.</li>
+</ul>
+<h3 id="callsfortransparency">Calls for Transparency</h3>
+<ul>
+<li><strong>Congressional Demands</strong>: On June 5, 2025, Representatives Robert Garcia and Stephen F. Lynch demanded greater transparency concerning the Epstein files, proposing that they could contain evidence implicating Trump. This has raised suspicions about possible governmental suppression of information that could impact public perception of Trump.</li>
+</ul>
+<h3 id="socialandpoliticalimplications">Social and Political Implications</h3>
+<ul>
+<li><strong>Impact on Trust</strong>: The surfacing of allegations and demands for transparency has fostered a climate of skepticism regarding Trump's previous assertions and the nature of his relationships. The conflicting narratives surrounding his distancing from Epstein juxtaposed with maintaining ties through mutual acquaintances have significant repercussions for public trust in political leadership.</li>
+</ul>
+<h2 id="summaryoffindings">Summary of Findings</h2>
+<table>
+<thead>
+<tr>
+<th><strong>Aspect</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Friendship Origin</strong></td>
+<td>Began in the early 1990s, involving social interactions in affluent settings.</td>
+</tr>
+<tr>
+<td><strong>Flight Logs</strong></td>
+<td>Confirmed flights on Epstein's plane at least seven times between 1999 and 2002; no direct accusations of misconduct during flights.</td>
+</tr>
+<tr>
+<td><strong>Alleged Falling Out</strong></td>
+<td>Trump claims to have distanced himself in 2004 over real estate competition; maintains ambivalent ties through mutual acquaintances.</td>
+</tr>
+<tr>
+<td><strong>Elon Musk's Accusations</strong></td>
+<td>Claims Trump is implicated in undisclosed Epstein files; lack of substantial evidence prompts doubts.</td>
+</tr>
+<tr>
+<td><strong>Congressional Transparency Calls</strong></td>
+<td>Calls for the release of Epstein files that might contain critical information regarding Trump's associations; raises questions about suppression.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="conclusion">Conclusion</h2>
+<p>The relationship between Donald Trump and Jeffrey Epstein presents a complex narrative characterized by social proximity, public distancing, and ongoing scrutiny. Despite Trump's declarations of separation from Epstein post-2004, the resurging interest in this dynamic—especially in light of recent allegations and calls for transparency—suggests that this association will continue to be a point of interest in both public discourse and political investigation.</p>
+<p>The implications of this relationship extend beyond Trump's past affiliations, challenging societal perceptions of accountability in leadership and the importance of transparent governance. As new information emerges, the focus on Trump's past connections to Epstein is likely to persist, necessitating ongoing examination and dialogue.</p>`,
+      creditsUsed: 18
     }
   ],
   activityLog: [
-    { id: '1', action: 'Pitch Deck rerun', timestamp: '2 hours ago', user: 'You' },
-    { id: '2', action: 'Market Research completed', timestamp: '1 day ago', user: 'AI Assistant' },
-    { id: '3', action: 'MVP Builder analysis', timestamp: '2 days ago', user: 'AI Assistant' },
-    { id: '4', action: 'Project created', timestamp: '5 days ago', user: 'You' }
+    { id: '1', action: 'Legal Advisor analysis completed', timestamp: '30 minutes ago', user: 'AI Assistant' },
+    { id: '2', action: 'Pitch Deck rerun', timestamp: '2 hours ago', user: 'You' },
+    { id: '3', action: 'Market Research completed', timestamp: '1 day ago', user: 'AI Assistant' },
+    { id: '4', action: 'MVP Builder analysis', timestamp: '2 days ago', user: 'AI Assistant' },
+    { id: '5', action: 'Project created', timestamp: '5 days ago', user: 'You' }
   ],
   notes: [
     { id: '1', content: 'Focus on B-Corp certification for credibility', timestamp: '1 day ago' },
@@ -798,6 +875,36 @@ export const StartupDetail: React.FC = () => {
         .rendered-html-content ul ul, .rendered-html-content ol ul {
           margin-top: 0.25rem;
           margin-bottom: 0.25rem;
+        }
+        
+        .rendered-html-content table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 1rem 0;
+          background: rgba(255, 255, 255, 0.02);
+          border-radius: 0.5rem;
+          overflow: hidden;
+        }
+        
+        .rendered-html-content th,
+        .rendered-html-content td {
+          padding: 0.75rem;
+          text-align: left;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .rendered-html-content th {
+          background: rgba(255, 255, 255, 0.05);
+          color: white;
+          font-weight: 600;
+        }
+        
+        .rendered-html-content td {
+          color: #d1d5db;
+        }
+        
+        .rendered-html-content tr:last-child td {
+          border-bottom: none;
         }
       `}</style>
     </div>
