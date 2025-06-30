@@ -574,7 +574,8 @@ export const StartupDetail: React.FC = () => {
                       >
                         <div className="prose prose-invert max-w-none">
                           <pre className="whitespace-pre-wrap text-gray-300 leading-relaxed">
-                            "hello"
+                            {result.content}
+                            <div dangerouslySetInnerHTML={{ __html: result.content }} />
                           </pre>
                         </div>
                         
