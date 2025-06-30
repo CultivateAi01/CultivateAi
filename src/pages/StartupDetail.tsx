@@ -472,9 +472,7 @@ export const StartupDetail: React.FC = () => {
             {activeSection === 'overview' ? 'All AI Results' : sectionTabs.find(t => t.id === activeSection)?.label}
           </h2>
           <div className="text-sm text-gray-400">
-            {/* {filteredResults.length} result{filteredResults.length !== 1 ? 's' : ''} */}
-            hell
-            
+            {filteredResults.length} result{filteredResults.length !== 1 ? 's' : ''}
           </div>
         </div>
 
@@ -576,7 +574,7 @@ export const StartupDetail: React.FC = () => {
                       >
                         <div className="prose prose-invert max-w-none">
                           <pre className="whitespace-pre-wrap text-gray-300 leading-relaxed">
-                            {result.content}
+                            "hello"
                           </pre>
                         </div>
                         
