@@ -28,14 +28,14 @@ const values = [
     color: 'from-pink-500 to-rose-500'
   }
 ];
-
+{/*}
 const stats = [
   { number: '10,000+', label: 'Entrepreneurs Served', icon: Users },
   { number: '50,000+', label: 'Ideas Validated', icon: Lightbulb },
   { number: '$50M+', label: 'Funding Raised', icon: TrendingUp },
   { number: '95%', label: 'Success Rate', icon: Award }
 ];
-
+*/}
 export const About: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
