@@ -42,32 +42,32 @@ const mockStartupData = {
       actionName: 'Market Research',
       status: 'completed' as const,
       timestamp: '2024-01-20T10:30:00Z',
-      content: `<h1>Market Research Analysis</h1>
-<h2>Market Size & Opportunity</h2>
+      content: `<h1 id="market-research-analysis">Market Research Analysis</h1>
+<h2 id="market-size-opportunity">Market Size & Opportunity</h2>
 <p>The sustainable food delivery market is experiencing rapid growth, with a projected CAGR of 15.2% through 2028. The total addressable market (TAM) is estimated at $45B globally.</p>
 
-<h3>Key Market Insights:</h3>
+<h3 id="key-market-insights">Key Market Insights:</h3>
 <ul>
 <li>73% of consumers willing to pay premium for sustainable options</li>
 <li>Urban markets show highest adoption rates (85% in major cities)</li>
 <li>Competitor analysis reveals significant gaps in eco-packaging solutions</li>
 </ul>
 
-<h2>Target Demographics:</h2>
+<h2 id="target-demographics">Target Demographics:</h2>
 <ul>
 <li>Primary: Ages 25-40, household income $50K+</li>
 <li>Secondary: Eco-conscious families with children</li>
 <li>Geographic focus: Major metropolitan areas</li>
 </ul>
 
-<h2>Competitive Landscape:</h2>
+<h2 id="competitive-landscape">Competitive Landscape:</h2>
 <ol>
 <li><strong>DoorDash</strong>: Limited sustainability features</li>
 <li><strong>Uber Eats</strong>: Basic carbon offset program</li>
 <li><strong>Grubhub</strong>: No significant green initiatives</li>
 </ol>
 
-<h2>Market Entry Strategy:</h2>
+<h2 id="market-entry-strategy">Market Entry Strategy:</h2>
 <p>Focus on 3-5 pilot cities with high environmental awareness and strong restaurant density.</p>`,
       creditsUsed: 10
     },
@@ -77,10 +77,10 @@ const mockStartupData = {
       actionName: 'MVP Builder',
       status: 'completed' as const,
       timestamp: '2024-01-20T11:45:00Z',
-      content: `<h1>MVP Development Roadmap</h1>
+      content: `<h1 id="mvp-development-roadmap">MVP Development Roadmap</h1>
 
-<h2>Core Features (Phase 1 - 3 months)</h2>
-<h3>Customer App:</h3>
+<h2 id="core-features-phase-1">Core Features (Phase 1 - 3 months)</h2>
+<h3 id="customer-app">Customer App:</h3>
 <ul>
 <li>Restaurant discovery with sustainability ratings</li>
 <li>Eco-packaging options selection</li>
@@ -88,21 +88,21 @@ const mockStartupData = {
 <li>Delivery route optimization display</li>
 </ul>
 
-<h3>Restaurant Dashboard:</h3>
+<h3 id="restaurant-dashboard">Restaurant Dashboard:</h3>
 <ul>
 <li>Sustainability metrics tracking</li>
 <li>Eco-packaging inventory management</li>
 <li>Customer feedback on green initiatives</li>
 </ul>
 
-<h3>Delivery Platform:</h3>
+<h3 id="delivery-platform">Delivery Platform:</h3>
 <ul>
 <li>Route optimization for minimal emissions</li>
 <li>Electric vehicle integration</li>
 <li>Real-time carbon offset calculations</li>
 </ul>
 
-<h2>Technical Architecture:</h2>
+<h2 id="technical-architecture">Technical Architecture:</h2>
 <ul>
 <li><strong>Frontend</strong>: React Native for mobile apps</li>
 <li><strong>Backend</strong>: Node.js with Express</li>
@@ -111,7 +111,7 @@ const mockStartupData = {
 <li><strong>Payments</strong>: Stripe with carbon offset integration</li>
 </ul>
 
-<h2>Development Timeline:</h2>
+<h2 id="development-timeline">Development Timeline:</h2>
 <ul>
 <li><strong>Month 1</strong>: Core ordering system</li>
 <li><strong>Month 2</strong>: Sustainability features</li>
@@ -119,7 +119,7 @@ const mockStartupData = {
 <li><strong>Month 4</strong>: Beta testing and refinement</li>
 </ul>
 
-<h2>Estimated Costs:</h2>
+<h2 id="estimated-costs">Estimated Costs:</h2>
 <ul>
 <li>Development team: $180K</li>
 <li>Infrastructure: $15K</li>
@@ -134,9 +134,9 @@ const mockStartupData = {
       actionName: 'Pitch Deck Generator',
       status: 'completed' as const,
       timestamp: '2024-01-20T14:20:00Z',
-      content: `<h1>EcoDelivery Pitch Deck</h1>
+      content: `<h1 id="ecodelivery-pitch-deck">EcoDelivery Pitch Deck</h1>
 
-<h2>Slide 1: Problem</h2>
+<h2 id="slide-1-problem">Slide 1: Problem</h2>
 <p>🌍 <strong>The food delivery industry generates 1.5B tons of packaging waste annually</strong></p>
 <ul>
 <li>89% of delivery packaging is non-recyclable</li>
@@ -144,7 +144,7 @@ const mockStartupData = {
 <li>Consumers increasingly demand sustainable options</li>
 </ul>
 
-<h2>Slide 2: Solution</h2>
+<h2 id="slide-2-solution">Slide 2: Solution</h2>
 <p>🚀 <strong>EcoDelivery: The world's first carbon-neutral food delivery platform</strong></p>
 <ul>
 <li>AI-optimized routing reduces emissions by 40%</li>
@@ -152,7 +152,7 @@ const mockStartupData = {
 <li>Real-time carbon offset integration</li>
 </ul>
 
-<h2>Slide 3: Market Opportunity</h2>
+<h2 id="slide-3-market-opportunity">Slide 3: Market Opportunity</h2>
 <p>📈 <strong>$45B TAM with 15.2% CAGR</strong></p>
 <ul>
 <li>73% of consumers willing to pay 10-15% premium</li>
@@ -160,7 +160,7 @@ const mockStartupData = {
 <li>First-mover advantage in sustainability space</li>
 </ul>
 
-<h2>Slide 4: Business Model</h2>
+<h2 id="slide-4-business-model">Slide 4: Business Model</h2>
 <p>💰 <strong>Multiple Revenue Streams</strong></p>
 <ul>
 <li>Commission: 15-20% per order</li>
@@ -169,7 +169,7 @@ const mockStartupData = {
 <li>Restaurant sustainability consulting: $500-2K/month</li>
 </ul>
 
-<h2>Slide 5: Traction</h2>
+<h2 id="slide-5-traction">Slide 5: Traction</h2>
 <p>🎯 <strong>Early Validation</strong></p>
 <ul>
 <li>2,500 pre-registered users</li>
@@ -177,7 +177,7 @@ const mockStartupData = {
 <li>$125K in pre-seed funding secured</li>
 </ul>
 
-<h2>Slide 6: Financial Projections</h2>
+<h2 id="slide-6-financial-projections">Slide 6: Financial Projections</h2>
 <p>📊 <strong>5-Year Growth Plan</strong></p>
 <ul>
 <li>Year 1: $2.5M revenue, 50K orders</li>
@@ -186,7 +186,7 @@ const mockStartupData = {
 <li>Break-even: Month 18</li>
 </ul>
 
-<h2>Slide 7: Team</h2>
+<h2 id="slide-7-team">Slide 7: Team</h2>
 <p>👥 <strong>Experienced Leadership</strong></p>
 <ul>
 <li>CEO: Former Uber Eats operations director</li>
@@ -194,7 +194,7 @@ const mockStartupData = {
 <li>CMO: Sustainability marketing expert</li>
 </ul>
 
-<h2>Slide 8: Funding Ask</h2>
+<h2 id="slide-8-funding-ask">Slide 8: Funding Ask</h2>
 <p>💵 <strong>Seeking $2M Series A</strong></p>
 <ul>
 <li>40% Product development</li>
@@ -210,27 +210,27 @@ const mockStartupData = {
       actionName: 'Marketing Strategy',
       status: 'in_progress' as const,
       timestamp: '2024-01-20T15:00:00Z',
-      content: `<h1>Marketing Strategy (In Progress)</h1>
+      content: `<h1 id="marketing-strategy-in-progress">Marketing Strategy (In Progress)</h1>
 
-<h2>Brand Positioning</h2>
+<h2 id="brand-positioning">Brand Positioning</h2>
 <p>"The conscious choice for conscious consumers"</p>
 
-<h2>Go-to-Market Strategy</h2>
-<h3>Phase 1: Community Building (Months 1-3)</h3>
+<h2 id="go-to-market-strategy">Go-to-Market Strategy</h2>
+<h3 id="phase-1-community-building">Phase 1: Community Building (Months 1-3)</h3>
 <ul>
 <li>Partner with environmental organizations</li>
 <li>Influencer collaborations with eco-lifestyle creators</li>
 <li>University campus pilot programs</li>
 </ul>
 
-<h3>Phase 2: Market Penetration (Months 4-8)</h3>
+<h3 id="phase-2-market-penetration">Phase 2: Market Penetration (Months 4-8)</h3>
 <ul>
 <li>Targeted digital advertising in pilot cities</li>
 <li>Restaurant partnership announcements</li>
 <li>Sustainability impact reporting</li>
 </ul>
 
-<h2>Customer Acquisition Channels</h2>
+<h2 id="customer-acquisition-channels">Customer Acquisition Channels</h2>
 <ol>
 <li><strong>Digital Marketing</strong> (40% budget)
 <ul>
@@ -261,10 +261,10 @@ const mockStartupData = {
 </li>
 </ol>
 
-<h2>Success Metrics</h2>
+<h2 id="success-metrics">Success Metrics</h2>
 <ul>
-<li>Customer Acquisition Cost (CAC): <$25</li>
-<li>Lifetime Value (LTV): >$150</li>
+<li>Customer Acquisition Cost (CAC): &lt;$25</li>
+<li>Lifetime Value (LTV): &gt;$150</li>
 <li>Monthly Active Users growth: 20%</li>
 <li>Brand awareness in target markets: 35%</li>
 </ul>`,
@@ -616,7 +616,7 @@ export const StartupDetail: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Result Content - Now renders HTML properly with custom styles */}
+                    {/* Result Content - Now renders HTML properly */}
                     {isExpanded && (
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
@@ -624,10 +624,15 @@ export const StartupDetail: React.FC = () => {
                         exit={{ opacity: 0, height: 0 }}
                         className="p-6"
                       >
-                        <div className="max-w-none">
+                        <div className="prose prose-invert max-w-none">
                           <div 
-                            className="text-gray-300 leading-relaxed rendered-html-content"
+                            className="text-gray-300 leading-relaxed"
                             dangerouslySetInnerHTML={{ __html: result.content }}
+                            style={{
+                              // Custom styles for the rendered HTML
+                              fontSize: '14px',
+                              lineHeight: '1.6'
+                            }}
                           />
                         </div>
                         
@@ -734,72 +739,6 @@ export const StartupDetail: React.FC = () => {
           </Card>
         </motion.div>
       </div>
-
-      {/* Custom CSS for rendered HTML content */}
-      <style jsx>{`
-        .rendered-html-content h1 {
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: white;
-          margin-bottom: 1rem;
-          margin-top: 1.5rem;
-        }
-        
-        .rendered-html-content h1:first-child {
-          margin-top: 0;
-        }
-        
-        .rendered-html-content h2 {
-          font-size: 1.25rem;
-          font-weight: 600;
-          color: white;
-          margin-bottom: 0.75rem;
-          margin-top: 1.25rem;
-        }
-        
-        .rendered-html-content h3 {
-          font-size: 1.125rem;
-          font-weight: 600;
-          color: #e5e7eb;
-          margin-bottom: 0.5rem;
-          margin-top: 1rem;
-        }
-        
-        .rendered-html-content p {
-          color: #d1d5db;
-          margin-bottom: 0.75rem;
-          line-height: 1.6;
-        }
-        
-        .rendered-html-content ul, .rendered-html-content ol {
-          margin-bottom: 0.75rem;
-          padding-left: 1.5rem;
-        }
-        
-        .rendered-html-content li {
-          color: #d1d5db;
-          margin-bottom: 0.25rem;
-          line-height: 1.5;
-        }
-        
-        .rendered-html-content strong {
-          color: white;
-          font-weight: 600;
-        }
-        
-        .rendered-html-content ul {
-          list-style-type: disc;
-        }
-        
-        .rendered-html-content ol {
-          list-style-type: decimal;
-        }
-        
-        .rendered-html-content ul ul, .rendered-html-content ol ul {
-          margin-top: 0.25rem;
-          margin-bottom: 0.25rem;
-        }
-      `}</style>
     </div>
   );
 };
