@@ -1,11 +1,40 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, CheckCircle, TrendingUp, Rocket, Presentation } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { useNavigate } from 'react-router-dom';
 
+// Agent options for landing page
+const landingAgents = [
+  {
+    id: 'market-research',
+    name: 'Market Research',
+    description: 'Analyze market size, competitors, and opportunities',
+    icon: TrendingUp,
+    color: 'from-green-500 to-emerald-500',
+    cost: 10
+  },
+  {
+    id: 'mvp-builder',
+    name: 'MVP Builder',
+    description: 'Create technical roadmap and development plan',
+    icon: Rocket,
+    color: 'from-orange-500 to-amber-500',
+    cost: 15
+  },
+  {
+    id: 'pitch-deck',
+    name: 'Pitch Deck Generator',
+    description: 'Build investor-ready presentation',
+    icon: Presentation,
+    color: 'from-blue-500 to-cyan-500',
+    cost: 12
+  }
+];
+
 export const Hero: React.FC = () => {
   const [idea, setIdea] = useState('');
+  const [selectedAgents, setSelectedAgents] = useState<string[]>([]);
   const navigate = useNavigate();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
@@ -19,11 +48,22 @@ export const Hero: React.FC = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   const handleGetStarted = () => {
-    // Store the idea text in localStorage so it can be retrieved in the dashboard
+    // Store both the idea text and selected agents in localStorage
     if (idea.trim()) {
       localStorage.setItem('pendingStartupIdea', idea.trim());
     }
+    if (selectedAgents.length > 0) {
+      localStorage.setItem('pendingSelectedAgents', JSON.stringify(selectedAgents));
+    }
     navigate('/signup');
+  };
+
+  const toggleAgent = (agentId: string) => {
+    setSelectedAgents(prev => 
+      prev.includes(agentId) 
+        ? prev.filter(id => id !== agentId)
+        : [...prev, agentId]
+    );
   };
 
   // Auto-resize textarea
@@ -38,6 +78,10 @@ export const Hero: React.FC = () => {
   }, [idea]);
 
   const canGetStarted = idea.trim().length > 0;
+  const totalCost = selectedAgents.reduce((sum, agentId) => {
+    const agent = landingAgents.find(a => a.id === agentId);
+    return sum + (agent?.cost || 0);
+  }, 0);
 
   return (
     <section ref={heroRef} className="relative min-h-screen flex items-center justify-center px-6 pt-20 overflow-hidden">
@@ -111,6 +155,73 @@ export const Hero: React.FC = () => {
           <span className="text-blue-400 font-semibold">minutes, not months</span>.
         </motion.p>
 
+        {/* Agent Selection */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
+          className="mb-8"
+        >
+          <div className="max-w-3xl mx-auto">
+            <h3 className="text-lg font-semibold text-white mb-4">Choose AI Agents (Optional)</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {landingAgents.map((agent, index) => {
+                const Icon = agent.icon;
+                const isSelected = selectedAgents.includes(agent.id);
+                
+                return (
+                  <motion.div
+                    key={agent.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.8 + index * 0.1 }}
+                    className={`relative p-4 rounded-xl border transition-all duration-200 cursor-pointer group ${
+                      isSelected
+                        ? 'bg-blue-500/20 border-blue-500/40 ring-1 ring-blue-500/30'
+                        : 'bg-white/[0.05] border-white/[0.12] hover:bg-white/[0.08] hover:border-white/[0.2]'
+                    }`}
+                    onClick={() => toggleAgent(agent.id)}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className={`w-10 h-10 bg-gradient-to-r ${agent.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                        <Icon className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between mb-1">
+                          <h4 className="font-medium text-white text-sm">{agent.name}</h4>
+                          {isSelected && (
+                            <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
+                              <CheckCircle className="w-3 h-3 text-white" />
+                            </div>
+                          )}
+                        </div>
+                        <p className="text-gray-400 text-xs leading-relaxed mb-2">{agent.description}</p>
+                        <div className="text-yellow-400 text-xs font-medium">{agent.cost} credits</div>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+            
+            {selectedAgents.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="mt-4 flex items-center justify-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-lg px-4 py-2 inline-flex"
+              >
+                <span className="text-blue-400 text-sm font-medium">
+                  {selectedAgents.length} agent{selectedAgents.length > 1 ? 's' : ''} selected
+                </span>
+                <div className="w-px h-4 bg-blue-500/30" />
+                <span className="text-yellow-400 text-sm font-medium">
+                  {totalCost} credits total
+                </span>
+              </motion.div>
+            )}
+          </div>
+        </motion.div>
+
         {/* Clean input section */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -128,7 +239,7 @@ export const Hero: React.FC = () => {
                     ref={textareaRef}
                     value={idea}
                     onChange={(e) => setIdea(e.target.value)}
-                    placeholder="Describe your startup idea..."
+                    placeholder="Describe your startup idea in detail... What problem does it solve? Who is your target audience? What makes it unique? The more details you provide, the better our AI can analyze and help you build your startup."
                     className="w-full px-6 py-4 bg-transparent text-white placeholder-gray-400 text-base resize-none focus:outline-none leading-relaxed pr-16"
                     style={{
                       minHeight: '60px',

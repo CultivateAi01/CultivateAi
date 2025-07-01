@@ -25,14 +25,41 @@ export const Dashboard: React.FC = () => {
   const { agents, loading: agentsLoading, runAgent } = useAgents();
   const navigate = useNavigate();
 
-  // Check for pending startup idea from landing page
+  // Check for pending startup idea and selected agents from landing page
   useEffect(() => {
     const pendingIdea = localStorage.getItem('pendingStartupIdea');
+    const pendingAgents = localStorage.getItem('pendingSelectedAgents');
+    
     if (pendingIdea) {
       setAppIdea(pendingIdea);
       localStorage.removeItem('pendingStartupIdea'); // Clear it after using
     }
-  }, []);
+    
+    if (pendingAgents) {
+      try {
+        const agentIds = JSON.parse(pendingAgents);
+        // Map landing page agent IDs to actual database agent IDs
+        const mappedAgentIds = agentIds.map((landingId: string) => {
+          switch (landingId) {
+            case 'market-research':
+              return agents.find(a => a.name === 'Market Research')?.id;
+            case 'mvp-builder':
+              return agents.find(a => a.name === 'MVP Builder')?.id;
+            case 'pitch-deck':
+              return agents.find(a => a.name === 'Pitch Deck Generator')?.id;
+            default:
+              return null;
+          }
+        }).filter(Boolean);
+        
+        setSelectedActions(mappedAgentIds);
+        localStorage.removeItem('pendingSelectedAgents'); // Clear it after using
+      } catch (error) {
+        console.error('Error parsing pending agents:', error);
+        localStorage.removeItem('pendingSelectedAgents');
+      }
+    }
+  }, [agents]); // Depend on agents so mapping happens after they're loaded
 
   // Auto-resize textarea based on content
   useEffect(() => {
