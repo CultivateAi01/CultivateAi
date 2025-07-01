@@ -84,7 +84,7 @@ export const Hero: React.FC = () => {
           <span className="text-white block">
             Turn your{' '}
             <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-              wildest ideas
+               ideas
             </span>
           </span>
           <span className="text-white block">
