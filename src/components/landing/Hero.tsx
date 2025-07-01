@@ -90,8 +90,9 @@ export const Hero: React.FC = () => {
           <span className="text-white block">
             into{' '}
             <span className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
-              billion-dollar startups
+              startups
             </span>
+            , in minutes
           </span>
         </motion.h1>
         
@@ -185,28 +186,6 @@ export const Hero: React.FC = () => {
             Watch Demo
           </Button>
         </motion.div>
-
-        {/* Simple trust indicators */}
-        {/*} <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
-          className="mt-12 text-center"
-        >
-          <p className="text-sm text-gray-500 mb-4">
-            Trusted by 10,000+ entrepreneurs worldwide
-          </p>
-          <div className="flex items-center justify-center gap-8 text-sm text-gray-500">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-              <span>$50M+ funding raised</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
-              <span>95% success rate</span>
-            </div>
-          </div>
-        </motion.div> */}
       </div>
     </section>
   );
