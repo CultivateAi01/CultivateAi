@@ -19,6 +19,10 @@ export const Hero: React.FC = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   const handleGetStarted = () => {
+    // Store the idea text in localStorage so it can be retrieved in the dashboard
+    if (idea.trim()) {
+      localStorage.setItem('pendingStartupIdea', idea.trim());
+    }
     navigate('/signup');
   };
 
@@ -84,13 +88,13 @@ export const Hero: React.FC = () => {
           <span className="text-white block">
             Turn your{' '}
             <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-               ideas
+              wildest ideas
             </span>
           </span>
           <span className="text-white block">
             into{' '}
             <span className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
-              startup
+              startups
             </span>
             , in minutes
           </span>

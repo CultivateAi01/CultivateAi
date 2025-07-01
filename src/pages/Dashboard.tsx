@@ -25,6 +25,15 @@ export const Dashboard: React.FC = () => {
   const { agents, loading: agentsLoading, runAgent } = useAgents();
   const navigate = useNavigate();
 
+  // Check for pending startup idea from landing page
+  useEffect(() => {
+    const pendingIdea = localStorage.getItem('pendingStartupIdea');
+    if (pendingIdea) {
+      setAppIdea(pendingIdea);
+      localStorage.removeItem('pendingStartupIdea'); // Clear it after using
+    }
+  }, []);
+
   // Auto-resize textarea based on content
   useEffect(() => {
     const textarea = textareaRef.current;
