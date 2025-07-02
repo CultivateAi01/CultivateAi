@@ -9,10 +9,9 @@ class ApiClient {
 
   private async getAuthToken(): Promise<string | null> {
     try {
-      // Try to get token from Supabase session
-      const { supabase } = await import('./supabase');
-      const { data: { session } } = await supabase.auth.getSession();
-      return session?.access_token || null;
+      // Get token from Clerk session
+      const { getToken } = await import('@clerk/clerk-react');
+      return await getToken();
     } catch (error) {
       console.error('Error getting auth token:', error);
       return null;
@@ -25,7 +24,7 @@ class ApiClient {
   ): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
     
-    // Get auth token
+    // Get auth token from Clerk
     const token = await this.getAuthToken();
     
     const config: RequestInit = {

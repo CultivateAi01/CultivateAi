@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
-import { createClient } from '@supabase/supabase-js';
+import { ClerkExpressRequireAuth } from '@clerk/express';
 
 // Import routes
 import authRoutes from './routes/auth.js';
@@ -18,8 +18,8 @@ const PORT = process.env.PORT || 3001;
 
 // Validate required environment variables
 const requiredEnvVars = {
-  SUPABASE_URL: process.env.SUPABASE_URL,
-  SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY
+  CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
+  DATABASE_URL: process.env.DATABASE_URL
 };
 
 // Check for missing or placeholder environment variables
@@ -29,7 +29,7 @@ const placeholderVars = [];
 Object.entries(requiredEnvVars).forEach(([key, value]) => {
   if (!value) {
     missingVars.push(key);
-  } else if (value.includes('your-') || value === 'your-project-url' || value === 'your-anon-key' || value === 'your-service-role-key') {
+  } else if (value.includes('your-') || value === 'sk_test_your-clerk-secret-key') {
     placeholderVars.push(key);
   }
 });
@@ -43,22 +43,16 @@ if (missingVars.length > 0 || placeholderVars.length > 0) {
   
   if (placeholderVars.length > 0) {
     console.error(`Placeholder values detected in: ${placeholderVars.join(', ')}`);
-    console.error('Please update your .env file with actual values from your Supabase project.');
+    console.error('Please update your .env file with actual values from your Clerk project.');
   }
   
   console.error('\n📝 To fix this:');
   console.error('1. Copy .env.example to .env');
-  console.error('2. Replace placeholder values with your actual Supabase project credentials');
-  console.error('3. Get your credentials from: https://app.supabase.com/project/[your-project]/settings/api');
+  console.error('2. Replace placeholder values with your actual Clerk project credentials');
+  console.error('3. Get your credentials from: https://dashboard.clerk.com/');
   
   process.exit(1);
 }
-
-// Initialize Supabase client
-export const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
 
 // Middleware
 app.use(helmet());
@@ -105,5 +99,5 @@ app.use('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📊 Health check: http://localhost:${PORT}/api/health`);
-  console.log(`✅ Supabase connected to: ${process.env.SUPABASE_URL}`);
+  console.log(`✅ Clerk authentication enabled`);
 });
