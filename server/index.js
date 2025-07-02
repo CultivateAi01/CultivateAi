@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
-import { ClerkExpressRequireAuth } from '@clerk/express';
 
 // Import routes
 import authRoutes from './routes/auth.js';
