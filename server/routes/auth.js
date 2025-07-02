@@ -1,90 +1,32 @@
 import express from 'express';
-import { supabase } from '../index.js';
 import { authenticateToken } from '../middleware/auth.js';
 
 const router = express.Router();
 
-// Register new user
-router.post('/register', async (req, res) => {
-  try {
-    const { email, password, firstName, lastName } = req.body;
-
-    // Create user in Supabase Auth
-    const { data: authData, error: authError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          first_name: firstName,
-          last_name: lastName
-        }
-      }
-    });
-
-    if (authError) {
-      return res.status(400).json({ error: authError.message });
-    }
-
-    if (authData.user) {
-      // Create profile in database
-      const { data: profile, error: profileError } = await supabase
-        .from('profiles')
-        .insert({
-          clerk_id: authData.user.id,
-          email: authData.user.email,
-          first_name: firstName,
-          last_name: lastName
-        })
-        .select()
-        .single();
-
-      if (profileError) {
-        console.error('Profile creation error:', profileError);
-        return res.status(500).json({ error: 'Failed to create user profile' });
-      }
-
-      // Create initial credits record
-      await supabase
-        .from('credits')
-        .insert({
-          profile_id: profile.id,
-          balance: 100, // Welcome credits
-          total_purchased: 100
-        });
-
-      res.status(201).json({
-        message: 'User registered successfully',
-        user: {
-          id: authData.user.id,
-          email: authData.user.email,
-          profile: profile
-        }
-      });
-    }
-  } catch (error) {
-    console.error('Registration error:', error);
-    res.status(500).json({ error: 'Registration failed' });
-  }
-});
-
 // Get current user profile
 router.get('/profile', authenticateToken, async (req, res) => {
   try {
-    // Get user credits
-    const { data: credits, error: creditsError } = await supabase
-      .from('credits')
-      .select('*')
-      .eq('profile_id', req.profile.id)
-      .single();
+    // In a real app, you would fetch from your database
+    // For now, return mock data based on Clerk user
+    const profile = {
+      id: req.auth.userId,
+      clerk_id: req.auth.userId,
+      email: req.user.email || 'user@example.com',
+      first_name: req.user.first_name || 'User',
+      last_name: req.user.last_name || '',
+      avatar_url: req.user.image_url || null
+    };
 
-    if (creditsError) {
-      console.error('Credits fetch error:', creditsError);
-    }
+    const credits = {
+      balance: 100,
+      total_purchased: 100,
+      total_used: 0
+    };
 
     res.json({
       user: req.user,
-      profile: req.profile,
-      credits: credits || { balance: 0, total_purchased: 0, total_used: 0 }
+      profile: profile,
+      credits: credits
     });
   } catch (error) {
     console.error('Profile fetch error:', error);
@@ -97,21 +39,16 @@ router.put('/profile', authenticateToken, async (req, res) => {
   try {
     const { first_name, last_name, avatar_url } = req.body;
 
-    const { data: profile, error } = await supabase
-      .from('profiles')
-      .update({
-        first_name,
-        last_name,
-        avatar_url,
-        updated_at: new Date().toISOString()
-      })
-      .eq('id', req.profile.id)
-      .select()
-      .single();
-
-    if (error) {
-      return res.status(400).json({ error: error.message });
-    }
+    // In a real app, you would update your database
+    const profile = {
+      id: req.auth.userId,
+      clerk_id: req.auth.userId,
+      email: req.user.email || 'user@example.com',
+      first_name: first_name || req.user.first_name || 'User',
+      last_name: last_name || req.user.last_name || '',
+      avatar_url: avatar_url || req.user.image_url || null,
+      updated_at: new Date().toISOString()
+    };
 
     res.json({ profile });
   } catch (error) {

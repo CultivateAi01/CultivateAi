@@ -1,38 +1,22 @@
 import express from 'express';
-import { supabase } from '../index.js';
 import { authenticateToken } from '../middleware/auth.js';
 
 const router = express.Router();
 
+// Mock data store (in real app, use database)
+let projects = [];
+
 // Get all projects for authenticated user
 router.get('/', authenticateToken, async (req, res) => {
   try {
-    const { data: projects, error } = await supabase
-      .from('projects')
-      .select(`
-        *,
-        agent_runs(
-          id,
-          status,
-          credits_used,
-          created_at,
-          agents(name, icon)
-        )
-      `)
-      .eq('profile_id', req.profile.id)
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      return res.status(400).json({ error: error.message });
-    }
-
+    // Filter projects by user ID
+    const userProjects = projects.filter(p => p.profile_id === req.auth.userId);
+    
     // Calculate actions run for each project
-    const projectsWithStats = projects.map(project => ({
+    const projectsWithStats = userProjects.map(project => ({
       ...project,
-      actionsRun: project.agent_runs?.length || 0,
-      lastActivity: project.agent_runs?.length > 0 
-        ? new Date(Math.max(...project.agent_runs.map(run => new Date(run.created_at)))).toISOString()
-        : project.updated_at
+      actionsRun: 0, // Mock data
+      lastActivity: project.updated_at
     }));
 
     res.json({ projects: projectsWithStats });
@@ -47,30 +31,14 @@ router.get('/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { data: project, error } = await supabase
-      .from('projects')
-      .select(`
-        *,
-        agent_runs(
-          id,
-          status,
-          input_data,
-          credits_used,
-          execution_time_ms,
-          error_message,
-          created_at,
-          updated_at,
-          agents(id, name, icon, category, color),
-          outputs(id, title, content, format, metadata, created_at)
-        )
-      `)
-      .eq('id', id)
-      .eq('profile_id', req.profile.id)
-      .single();
+    const project = projects.find(p => p.id === id && p.profile_id === req.auth.userId);
 
-    if (error) {
+    if (!project) {
       return res.status(404).json({ error: 'Project not found' });
     }
+
+    // Add mock agent runs data
+    project.agent_runs = [];
 
     res.json({ project });
   } catch (error) {
@@ -88,21 +56,18 @@ router.post('/', authenticateToken, async (req, res) => {
       return res.status(400).json({ error: 'Title, description, and startup idea are required' });
     }
 
-    const { data: project, error } = await supabase
-      .from('projects')
-      .insert({
-        profile_id: req.profile.id,
-        title,
-        description,
-        startup_idea,
-        status: 'draft'
-      })
-      .select()
-      .single();
+    const project = {
+      id: `proj_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      profile_id: req.auth.userId,
+      title,
+      description,
+      startup_idea,
+      status: 'draft',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
 
-    if (error) {
-      return res.status(400).json({ error: error.message });
-    }
+    projects.push(project);
 
     res.status(201).json({ project });
   } catch (error) {
@@ -117,25 +82,22 @@ router.put('/:id', authenticateToken, async (req, res) => {
     const { id } = req.params;
     const { title, description, startup_idea, status } = req.body;
 
-    const { data: project, error } = await supabase
-      .from('projects')
-      .update({
-        title,
-        description,
-        startup_idea,
-        status,
-        updated_at: new Date().toISOString()
-      })
-      .eq('id', id)
-      .eq('profile_id', req.profile.id)
-      .select()
-      .single();
+    const projectIndex = projects.findIndex(p => p.id === id && p.profile_id === req.auth.userId);
 
-    if (error) {
-      return res.status(400).json({ error: error.message });
+    if (projectIndex === -1) {
+      return res.status(404).json({ error: 'Project not found' });
     }
 
-    res.json({ project });
+    projects[projectIndex] = {
+      ...projects[projectIndex],
+      title: title || projects[projectIndex].title,
+      description: description || projects[projectIndex].description,
+      startup_idea: startup_idea || projects[projectIndex].startup_idea,
+      status: status || projects[projectIndex].status,
+      updated_at: new Date().toISOString()
+    };
+
+    res.json({ project: projects[projectIndex] });
   } catch (error) {
     console.error('Project update error:', error);
     res.status(500).json({ error: 'Failed to update project' });
@@ -147,15 +109,13 @@ router.delete('/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { error } = await supabase
-      .from('projects')
-      .delete()
-      .eq('id', id)
-      .eq('profile_id', req.profile.id);
+    const projectIndex = projects.findIndex(p => p.id === id && p.profile_id === req.auth.userId);
 
-    if (error) {
-      return res.status(400).json({ error: error.message });
+    if (projectIndex === -1) {
+      return res.status(404).json({ error: 'Project not found' });
     }
+
+    projects.splice(projectIndex, 1);
 
     res.json({ message: 'Project deleted successfully' });
   } catch (error) {

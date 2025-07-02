@@ -1,43 +1,37 @@
 import express from 'express';
-import { supabase } from '../index.js';
 import { authenticateToken } from '../middleware/auth.js';
 
 const router = express.Router();
 
+// Mock credits data
+let userCredits = {};
+
 // Get user credits and transaction history
 router.get('/', authenticateToken, async (req, res) => {
   try {
-    // Get current credits
-    const { data: credits, error: creditsError } = await supabase
-      .from('credits')
-      .select('*')
-      .eq('profile_id', req.profile.id)
-      .single();
+    const userId = req.auth.userId;
+    
+    // Get current credits (mock data)
+    const credits = userCredits[userId] || {
+      balance: 100,
+      total_purchased: 100,
+      total_used: 0
+    };
 
-    if (creditsError) {
-      return res.status(400).json({ error: creditsError.message });
-    }
-
-    // Get transaction history
-    const { data: transactions, error: transactionsError } = await supabase
-      .from('transactions')
-      .select(`
-        *,
-        agent_runs(
-          agents(name, icon)
-        )
-      `)
-      .eq('profile_id', req.profile.id)
-      .order('created_at', { ascending: false })
-      .limit(50);
-
-    if (transactionsError) {
-      return res.status(400).json({ error: transactionsError.message });
-    }
+    // Mock transaction history
+    const transactions = [
+      {
+        id: 'txn_1',
+        type: 'purchase',
+        amount: 100,
+        description: 'Welcome credits',
+        created_at: new Date().toISOString()
+      }
+    ];
 
     res.json({ 
-      credits: credits || { balance: 0, total_purchased: 0, total_used: 0 },
-      transactions: transactions || []
+      credits,
+      transactions
     });
   } catch (error) {
     console.error('Credits fetch error:', error);
@@ -49,48 +43,28 @@ router.get('/', authenticateToken, async (req, res) => {
 router.post('/purchase', authenticateToken, async (req, res) => {
   try {
     const { amount, payment_intent_id } = req.body;
+    const userId = req.auth.userId;
 
     if (!amount || amount <= 0) {
       return res.status(400).json({ error: 'Invalid credit amount' });
     }
 
     // Get current credits
-    const { data: currentCredits, error: creditsError } = await supabase
-      .from('credits')
-      .select('*')
-      .eq('profile_id', req.profile.id)
-      .single();
-
-    if (creditsError) {
-      return res.status(400).json({ error: creditsError.message });
-    }
+    const currentCredits = userCredits[userId] || {
+      balance: 100,
+      total_purchased: 100,
+      total_used: 0
+    };
 
     // Update credits
-    const { data: updatedCredits, error: updateError } = await supabase
-      .from('credits')
-      .update({
-        balance: currentCredits.balance + amount,
-        total_purchased: currentCredits.total_purchased + amount,
-        updated_at: new Date().toISOString()
-      })
-      .eq('profile_id', req.profile.id)
-      .select()
-      .single();
+    const updatedCredits = {
+      balance: currentCredits.balance + amount,
+      total_purchased: currentCredits.total_purchased + amount,
+      total_used: currentCredits.total_used,
+      updated_at: new Date().toISOString()
+    };
 
-    if (updateError) {
-      return res.status(400).json({ error: updateError.message });
-    }
-
-    // Create transaction record
-    await supabase
-      .from('transactions')
-      .insert({
-        profile_id: req.profile.id,
-        type: 'purchase',
-        amount: amount,
-        description: `Purchased ${amount} credits`,
-        stripe_payment_intent_id: payment_intent_id
-      });
+    userCredits[userId] = updatedCredits;
 
     res.json({ 
       message: 'Credits purchased successfully',

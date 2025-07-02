@@ -1,22 +1,84 @@
 import express from 'express';
-import { supabase } from '../index.js';
 import { authenticateToken, optionalAuth } from '../middleware/auth.js';
 
 const router = express.Router();
 
+// Mock agents data
+const agents = [
+  {
+    id: 'agent_market_research',
+    name: 'Market Research',
+    description: 'Comprehensive market analysis, competitor research, and industry insights',
+    category: 'research',
+    cost: 10,
+    icon: 'TrendingUp',
+    is_active: true,
+    output_example: 'Detailed market analysis including TAM, SAM, competitive landscape, and growth projections.',
+    prompt_template: 'Analyze the market for this startup idea: {input}. Provide detailed market size, target demographics, competitive landscape, and market entry strategy.'
+  },
+  {
+    id: 'agent_mvp_builder',
+    name: 'MVP Builder',
+    description: 'Technical architecture, feature prioritization, and development roadmap',
+    category: 'development',
+    cost: 15,
+    icon: 'Rocket',
+    is_active: true,
+    output_example: 'Complete MVP development plan with core features, technical stack, timeline, and cost estimates.',
+    prompt_template: 'Create an MVP development plan for: {input}. Include core features, technical architecture, development timeline, and cost estimation.'
+  },
+  {
+    id: 'agent_pitch_deck',
+    name: 'Pitch Deck Generator',
+    description: 'Professional investor presentation with compelling storytelling',
+    category: 'validation',
+    cost: 12,
+    icon: 'Presentation',
+    is_active: true,
+    output_example: 'Investor-ready pitch deck with problem, solution, market opportunity, business model, and funding ask.',
+    prompt_template: 'Generate a comprehensive pitch deck for: {input}. Include problem, solution, market opportunity, business model, traction, team, and funding ask.'
+  },
+  {
+    id: 'agent_business_plan',
+    name: 'Business Plan Generator',
+    description: 'Comprehensive business strategy, financial projections, and execution plan',
+    category: 'validation',
+    cost: 20,
+    icon: 'FileText',
+    is_active: false,
+    output_example: 'Complete business plan with executive summary, market analysis, financial projections, and operational strategy.',
+    prompt_template: 'Create a detailed business plan for: {input}. Include executive summary, market analysis, financial projections, and operational strategy.'
+  },
+  {
+    id: 'agent_marketing',
+    name: 'Marketing Strategy',
+    description: 'Customer acquisition, brand positioning, and growth marketing tactics',
+    category: 'marketing',
+    cost: 10,
+    icon: 'Target',
+    is_active: false,
+    output_example: 'Comprehensive marketing strategy with brand positioning, target audience, channels, and acquisition tactics.',
+    prompt_template: 'Develop a marketing strategy for: {input}. Include brand positioning, target audience, marketing channels, and customer acquisition plan.'
+  },
+  {
+    id: 'agent_legal',
+    name: 'Legal Advisor',
+    description: 'Entity structure, intellectual property, and compliance guidance',
+    category: 'legal',
+    cost: 15,
+    icon: 'Scale',
+    is_active: false,
+    output_example: 'Legal guidance including business entity recommendations, IP strategy, and compliance requirements.',
+    prompt_template: 'Provide legal guidance for: {input}. Include business entity recommendations, intellectual property strategy, and compliance requirements.'
+  }
+];
+
+// Mock agent runs store
+let agentRuns = [];
+
 // Get all active agents
 router.get('/', optionalAuth, async (req, res) => {
   try {
-    const { data: agents, error } = await supabase
-      .from('agents')
-      .select('*')
-      //.eq('is_active', true)
-      .order('category', { ascending: true });
-
-    if (error) {
-      return res.status(400).json({ error: error.message });
-    }
-
     res.json({ agents });
   } catch (error) {
     console.error('Agents fetch error:', error);
@@ -33,119 +95,70 @@ router.post('/run', authenticateToken, async (req, res) => {
       return res.status(400).json({ error: 'Project ID, agent ID, and input data are required' });
     }
 
-    // Verify project belongs to user
-    const { data: project, error: projectError } = await supabase
-      .from('projects')
-      .select('id')
-      .eq('id', project_id)
-      .eq('profile_id', req.profile.id)
-      .single();
-
-    if (projectError || !project) {
-      return res.status(404).json({ error: 'Project not found' });
-    }
-
     // Get agent details
-    const { data: agent, error: agentError } = await supabase
-      .from('agents')
-      .select('*')
-      .eq('id', agent_id)
-      .eq('is_active', true)
-      .single();
+    const agent = agents.find(a => a.id === agent_id);
 
-    if (agentError || !agent) {
+    if (!agent) {
       return res.status(404).json({ error: 'Agent not found' });
     }
 
-    // Check user credits
-    const { data: credits, error: creditsError } = await supabase
-      .from('credits')
-      .select('balance')
-      .eq('profile_id', req.profile.id)
-      .single();
+    if (!agent.is_active) {
+      return res.status(400).json({ error: 'Agent is not active' });
+    }
 
-    if (creditsError || !credits || credits.balance < agent.cost) {
+    // Check user credits (mock - always allow for now)
+    const userCredits = 100; // Mock credits
+
+    if (userCredits < agent.cost) {
       return res.status(400).json({ error: 'Insufficient credits' });
     }
 
     // Create agent run record
-    const { data: agentRun, error: runError } = await supabase
-      .from('agent_runs')
-      .insert({
-        project_id,
-        agent_id,
-        profile_id: req.profile.id,
-        status: 'running',
-        input_data,
-        credits_used: agent.cost
-      })
-      .select()
-      .single();
+    const agentRun = {
+      id: `run_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      project_id,
+      agent_id,
+      profile_id: req.auth.userId,
+      status: 'running',
+      input_data,
+      credits_used: agent.cost,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
 
-    if (runError) {
-      return res.status(400).json({ error: runError.message });
-    }
+    agentRuns.push(agentRun);
 
-    // Deduct credits
-    await supabase
-      .from('credits')
-      .update({
-        balance: credits.balance - agent.cost,
-        total_used: supabase.sql`total_used + ${agent.cost}`,
-        updated_at: new Date().toISOString()
-      })
-      .eq('profile_id', req.profile.id);
-
-    // Create transaction record
-    await supabase
-      .from('transactions')
-      .insert({
-        profile_id: req.profile.id,
-        type: 'usage',
-        amount: -agent.cost,
-        description: `Used ${agent.cost} credits for ${agent.name}`,
-        agent_run_id: agentRun.id
-      });
-
-    // Simulate AI processing (in real app, this would call actual AI services)
+    // Simulate AI processing
     setTimeout(async () => {
       try {
         const mockOutput = generateMockOutput(agent, input_data);
         
         // Update agent run status
-        await supabase
-          .from('agent_runs')
-          .update({
+        const runIndex = agentRuns.findIndex(r => r.id === agentRun.id);
+        if (runIndex !== -1) {
+          agentRuns[runIndex] = {
+            ...agentRuns[runIndex],
             status: 'completed',
             execution_time_ms: Math.floor(Math.random() * 5000) + 2000,
             updated_at: new Date().toISOString()
-          })
-          .eq('id', agentRun.id);
+          };
+        }
 
-        // Create output record
-        await supabase
-          .from('outputs')
-          .insert({
-            agent_run_id: agentRun.id,
-            project_id,
-            profile_id: req.profile.id,
-            title: `${agent.name} Analysis`,
-            content: mockOutput,
-            format: 'markdown'
-          });
+        // In a real app, you would also create an output record here
 
       } catch (error) {
         console.error('Agent processing error:', error);
         
         // Update agent run with error status
-        await supabase
-          .from('agent_runs')
-          .update({
+        const runIndex = agentRuns.findIndex(r => r.id === agentRun.id);
+        if (runIndex !== -1) {
+          agentRuns[runIndex] = {
+            ...agentRuns[runIndex],
             status: 'failed',
             error_message: error.message,
             updated_at: new Date().toISOString()
-          })
-          .eq('id', agentRun.id);
+          };
+        }
       }
     }, 3000); // 3 second delay to simulate processing
 
@@ -167,20 +180,15 @@ router.get('/runs/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { data: agentRun, error } = await supabase
-      .from('agent_runs')
-      .select(`
-        *,
-        agents(name, icon, category),
-        outputs(id, title, content, format, created_at)
-      `)
-      .eq('id', id)
-      .eq('profile_id', req.profile.id)
-      .single();
+    const agentRun = agentRuns.find(r => r.id === id && r.profile_id === req.auth.userId);
 
-    if (error) {
+    if (!agentRun) {
       return res.status(404).json({ error: 'Agent run not found' });
     }
+
+    // Add agent details
+    const agent = agents.find(a => a.id === agentRun.agent_id);
+    agentRun.agents = agent;
 
     res.json({ agentRun });
   } catch (error) {
@@ -189,7 +197,7 @@ router.get('/runs/:id', authenticateToken, async (req, res) => {
   }
 });
 
-// Mock output generator (replace with actual AI integration)
+// Mock output generator
 function generateMockOutput(agent, inputData) {
   const templates = {
     'Market Research': `# Market Research Analysis
@@ -272,82 +280,7 @@ Founding team and key advisors.
 Revenue projections and key metrics.
 
 ### Slide 10: Funding Ask
-Investment amount and use of funds.`,
-
-    'Business Plan Generator': `# Comprehensive Business Plan
-
-## Executive Summary
-Strategic overview for: "${inputData.description || inputData}"
-
-## Company Description
-Mission, vision, and core values.
-
-## Market Analysis
-Industry overview and target market definition.
-
-## Organization & Management
-Team structure and key personnel.
-
-## Products & Services
-Detailed offering description and development roadmap.
-
-## Marketing & Sales Strategy
-Customer acquisition and retention plans.
-
-## Financial Projections
-5-year financial forecast with key assumptions.
-
-## Funding Requirements
-Capital needs and investment timeline.`,
-
-    'Marketing Strategy': `# Marketing Strategy Plan
-
-## Brand Positioning
-Strategic positioning for: "${inputData.description || inputData}"
-
-## Target Audience
-Detailed customer personas and segments.
-
-## Marketing Channels
-- Digital marketing (${Math.floor(Math.random() * 40 + 30)}% of budget)
-- Content marketing (${Math.floor(Math.random() * 30 + 20)}% of budget)
-- Partnerships (${Math.floor(Math.random() * 20 + 15)}% of budget)
-- Events & PR (${Math.floor(Math.random() * 15 + 10)}% of budget)
-
-## Customer Acquisition Strategy
-Multi-channel approach with measurable KPIs.
-
-## Budget Allocation
-Recommended marketing spend: $${Math.floor(Math.random() * 100 + 50)}K annually.
-
-## Success Metrics
-Key performance indicators and tracking methods.`,
-
-    'Legal Advisor': `# Legal Structure & Compliance Guide
-
-## Business Entity Recommendation
-Optimal legal structure for: "${inputData.description || inputData}"
-
-### Recommended Entity Type
-LLC or C-Corporation based on growth plans and funding needs.
-
-## Intellectual Property Strategy
-- Trademark protection for brand assets
-- Copyright considerations for content
-- Patent evaluation for unique innovations
-
-## Compliance Requirements
-Industry-specific regulations and ongoing obligations.
-
-## Contract Templates
-Essential agreements for operations:
-- Terms of Service
-- Privacy Policy
-- Employment agreements
-- Vendor contracts
-
-## Risk Management
-Liability protection and insurance recommendations.`
+Investment amount and use of funds.`
   };
 
   return templates[agent.name] || `# ${agent.name} Analysis\n\nDetailed analysis for your project: "${inputData.description || inputData}"\n\nThis is a comprehensive report generated by our AI system.`;
