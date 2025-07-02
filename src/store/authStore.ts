@@ -19,11 +19,16 @@ export const useAuthStore = create<AuthState>((set) => ({
       // Clear user from store immediately
       set({ user: null });
       
-      // Clerk logout is handled by the useClerk hook in components
-      // This is just for clearing local state
+      // Sign out from Supabase with proper scope
+      const { supabase } = await import('../lib/supabase');
+      const { error } = await supabase.auth.signOut({ scope: 'global' });
+      
+      if (error) {
+        console.error('Logout error:', error);
+      }
       
       // Force clear any remaining session data
-      localStorage.clear();
+      localStorage.removeItem('supabase.auth.token');
       sessionStorage.clear();
       
       // Force reload to ensure clean state
