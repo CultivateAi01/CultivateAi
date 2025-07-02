@@ -1,78 +1,12 @@
-import jwt from 'jsonwebtoken';
+import { ClerkExpressRequireAuth } from '@clerk/express';
 
-// Middleware to require authentication with Clerk JWT
-export const authenticateToken = async (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-
-  if (!token) {
-    return res.status(401).json({ error: 'Access token required' });
-  }
-
-  try {
-    // Verify Clerk JWT token
-    const decoded = jwt.verify(token, process.env.CLERK_SECRET_KEY);
-    
-    if (!decoded || !decoded.sub) {
-      return res.status(403).json({ error: 'Invalid token' });
-    }
-
-    // Get user profile from database
-    const { getUserProfile } = await import('./auth.js');
-    const profile = await getUserProfile(decoded.sub);
-
-    req.auth = {
-      userId: decoded.sub,
-      sessionId: decoded.sid,
-      ...decoded
-    };
-    req.user = decoded;
-    req.profile = profile;
-
-    next();
-  } catch (error) {
-    console.error('Auth middleware error:', error);
-    return res.status(403).json({ error: 'Token verification failed' });
-  }
-};
+// Middleware to require authentication
+export const authenticateToken = ClerkExpressRequireAuth();
 
 // Optional auth middleware (doesn't require authentication)
-export const optionalAuth = async (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-
-  if (!token) {
-    req.auth = null;
-    req.user = null;
-    req.profile = null;
-    return next();
-  }
-
-  try {
-    const decoded = jwt.verify(token, process.env.CLERK_SECRET_KEY);
-    
-    if (decoded && decoded.sub) {
-      const { getUserProfile } = await import('./auth.js');
-      const profile = await getUserProfile(decoded.sub);
-
-      req.auth = {
-        userId: decoded.sub,
-        sessionId: decoded.sid,
-        ...decoded
-      };
-      req.user = decoded;
-      req.profile = profile;
-    } else {
-      req.auth = null;
-      req.user = null;
-      req.profile = null;
-    }
-  } catch (error) {
-    req.auth = null;
-    req.user = null;
-    req.profile = null;
-  }
-
+export const optionalAuth = (req, res, next) => {
+  // For optional auth, we'll just pass through
+  // Clerk user data will be available in req.auth if user is signed in
   next();
 };
 
