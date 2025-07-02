@@ -1,41 +1,31 @@
 import express from 'express';
-import { supabase } from '../index.js';
 import { authenticateToken } from '../middleware/auth.js';
 
 const router = express.Router();
 
+// Mock data for development
+let mockProjects = [
+  {
+    id: '1',
+    profile_id: 'user_123',
+    title: 'EcoDelivery App',
+    description: 'Sustainable food delivery platform',
+    startup_idea: 'A food delivery service that focuses on eco-friendly packaging and carbon-neutral delivery',
+    status: 'active',
+    created_at: '2024-01-15T10:00:00Z',
+    updated_at: '2024-01-20T15:30:00Z',
+    actionsRun: 3,
+    lastActivity: '2 hours ago'
+  }
+];
+
 // Get all projects for authenticated user
 router.get('/', authenticateToken, async (req, res) => {
   try {
-    const { data: projects, error } = await supabase
-      .from('projects')
-      .select(`
-        *,
-        agent_runs(
-          id,
-          status,
-          credits_used,
-          created_at,
-          agents(name, icon)
-        )
-      `)
-      .eq('profile_id', req.profile.id)
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      return res.status(400).json({ error: error.message });
-    }
-
-    // Calculate actions run for each project
-    const projectsWithStats = projects.map(project => ({
-      ...project,
-      actionsRun: project.agent_runs?.length || 0,
-      lastActivity: project.agent_runs?.length > 0 
-        ? new Date(Math.max(...project.agent_runs.map(run => new Date(run.created_at)))).toISOString()
-        : project.updated_at
-    }));
-
-    res.json({ projects: projectsWithStats });
+    // Filter projects for current user
+    const userProjects = mockProjects.filter(p => p.profile_id === req.auth.userId);
+    
+    res.json({ projects: userProjects });
   } catch (error) {
     console.error('Projects fetch error:', error);
     res.status(500).json({ error: 'Failed to fetch projects' });
@@ -46,29 +36,9 @@ router.get('/', authenticateToken, async (req, res) => {
 router.get('/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
+    const project = mockProjects.find(p => p.id === id && p.profile_id === req.auth.userId);
 
-    const { data: project, error } = await supabase
-      .from('projects')
-      .select(`
-        *,
-        agent_runs(
-          id,
-          status,
-          input_data,
-          credits_used,
-          execution_time_ms,
-          error_message,
-          created_at,
-          updated_at,
-          agents(id, name, icon, category, color),
-          outputs(id, title, content, format, metadata, created_at)
-        )
-      `)
-      .eq('id', id)
-      .eq('profile_id', req.profile.id)
-      .single();
-
-    if (error) {
+    if (!project) {
       return res.status(404).json({ error: 'Project not found' });
     }
 
@@ -88,23 +58,22 @@ router.post('/', authenticateToken, async (req, res) => {
       return res.status(400).json({ error: 'Title, description, and startup idea are required' });
     }
 
-    const { data: project, error } = await supabase
-      .from('projects')
-      .insert({
-        profile_id: req.profile.id,
-        title,
-        description,
-        startup_idea,
-        status: 'draft'
-      })
-      .select()
-      .single();
+    const newProject = {
+      id: Date.now().toString(), // Simple ID generation for mock
+      profile_id: req.auth.userId,
+      title,
+      description,
+      startup_idea,
+      status: 'draft',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      actionsRun: 0,
+      lastActivity: 'Just now'
+    };
 
-    if (error) {
-      return res.status(400).json({ error: error.message });
-    }
+    mockProjects.push(newProject);
 
-    res.status(201).json({ project });
+    res.status(201).json({ project: newProject });
   } catch (error) {
     console.error('Project creation error:', error);
     res.status(500).json({ error: 'Failed to create project' });
@@ -117,25 +86,22 @@ router.put('/:id', authenticateToken, async (req, res) => {
     const { id } = req.params;
     const { title, description, startup_idea, status } = req.body;
 
-    const { data: project, error } = await supabase
-      .from('projects')
-      .update({
-        title,
-        description,
-        startup_idea,
-        status,
-        updated_at: new Date().toISOString()
-      })
-      .eq('id', id)
-      .eq('profile_id', req.profile.id)
-      .select()
-      .single();
-
-    if (error) {
-      return res.status(400).json({ error: error.message });
+    const projectIndex = mockProjects.findIndex(p => p.id === id && p.profile_id === req.auth.userId);
+    
+    if (projectIndex === -1) {
+      return res.status(404).json({ error: 'Project not found' });
     }
 
-    res.json({ project });
+    mockProjects[projectIndex] = {
+      ...mockProjects[projectIndex],
+      title: title || mockProjects[projectIndex].title,
+      description: description || mockProjects[projectIndex].description,
+      startup_idea: startup_idea || mockProjects[projectIndex].startup_idea,
+      status: status || mockProjects[projectIndex].status,
+      updated_at: new Date().toISOString()
+    };
+
+    res.json({ project: mockProjects[projectIndex] });
   } catch (error) {
     console.error('Project update error:', error);
     res.status(500).json({ error: 'Failed to update project' });
@@ -146,16 +112,13 @@ router.put('/:id', authenticateToken, async (req, res) => {
 router.delete('/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
+    const projectIndex = mockProjects.findIndex(p => p.id === id && p.profile_id === req.auth.userId);
 
-    const { error } = await supabase
-      .from('projects')
-      .delete()
-      .eq('id', id)
-      .eq('profile_id', req.profile.id);
-
-    if (error) {
-      return res.status(400).json({ error: error.message });
+    if (projectIndex === -1) {
+      return res.status(404).json({ error: 'Project not found' });
     }
+
+    mockProjects.splice(projectIndex, 1);
 
     res.json({ message: 'Project deleted successfully' });
   } catch (error) {
